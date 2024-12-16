@@ -4,7 +4,7 @@
         <div class="container">
             <div class="card web-card">
                 <div class="das-logo">
-                    <img src="{{ asset($logo->img_path ?? 'admin/assets/images/placeholder-logo.png') }}" class="img-fluid"
+                    <img src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}" class="img-fluid"
                         alt="">
                 </div>
 

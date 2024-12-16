@@ -37,43 +37,10 @@ Route::middleware('guest')->prefix('admin')->namespace('Admin')->group(function 
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashController::class, 'dashboard'])->name('dashboard');
-    Route::get('/showLogo', [SiteSettingsController::class, 'showLogo'])->name('showLogo');
-    Route::post('/saveLogo', [SiteSettingsController::class, 'saveLogo'])->name('saveLogo');
+    Route::get('/logo', [SiteSettingsController::class, 'showLogo'])->name('logo.show');
+    Route::post('/logo', [SiteSettingsController::class, 'saveLogo'])->name('logo.store');
+    Route::get('/contact', [SiteSettingsController::class, 'showContact'])->name('contact.show');
+    Route::post('/contact', [SiteSettingsController::class, 'saveContact'])->name('contact.store');
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
-
     Route::post('bulk-actions/{resource}', [BulkActionController::class, 'handle'])->name('bulk-actions');
-    Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
-
-    Route::resource('blogs', BlogController::class);
-    Route::get('media/{media}', [BlogController::class, 'deleteMedia'])->name('media.delete');
-    Route::resource('blogs-categories', BlogCategoriesController::class);
-    Route::resource('blogs-tags', BlogTagsController::class);
-
-    Route::resource('news', NewsController::class);
-    Route::resource('news-tags', NewsTagsController::class);
-    Route::resource('news-categories', NewsCategoriesController::class);
-
-    Route::resource('tours', TourController::class);
-    Route::get('tour-media/{media}', [TourController::class, 'deleteMedia'])->name('tour-media.delete');
-    Route::resource('tour-attributes', AttributesController::class);
-    Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
-    Route::resource('tour-categories', TourCategoriesController::class);
-    Route::resource('tour-reviews', ReviewController::class);
-    Route::resource('tour-availability', AvailabilityController::class);
-    Route::resource('tour-bookings', BookingController::class);
-
-    Route::resource('pages', PageController::class);
-    Route::resource('sections', SectionController::class);
-    Route::get('pages/{page}/page-builder', [PageController::class, 'editTemplate'])->name('pages.page-builder');
-    Route::post('pages/{page}/page-builder', [PageController::class, 'storeTemplate'])->name('pages.page-builder.store');
-    Route::post('pages/{page}/page-builder/sections/{section?}', [PageController::class, 'saveSectionDetails'])->name('pages.page-builder.sections.save');
-    Route::get('pages/{page}/page-builder/section-template', [PageController::class, 'getSectionTemplate'])->name('pages.page-builder.section-template');
-
-    Route::get('export-ical', IcalController::class)->name('ical.export');
-
-    Route::resource('countries', CountryController::class);
-    Route::resource('cities', CityController::class);
-    Route::resource('testimonials', TestimonialController::class);
-
-    Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');
 });

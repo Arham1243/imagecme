@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('imagetables', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('table_name')->nullable();
-            $table->string('img_path')->nullable();
-            $table->string('heading')->nullable();
-            $table->string('sub_heading')->nullable();
-            $table->text('short_desc')->nullable();
-            $table->integer('is_active')->default(1);
+            $table->string('type')->nullable();
+            $table->string('path')->nullable();
+            $table->string('alt_text')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }
@@ -26,8 +24,8 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('imagetables');
+        Schema::dropIfExists('images');
     }
 };

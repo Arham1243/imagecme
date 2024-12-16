@@ -17,7 +17,7 @@ class AdminsTableSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'admin',
-                'email' => 'admin@desertsafaricompany.com',
+                'email' => 'admin@imagecme.com',
                 'password' => Hash::make('12345678'),
                 'created_at' => now(),
                 'updated_at' => now(),

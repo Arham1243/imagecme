@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Events\SendResetPasswordLink;
 use App\Events\SendVerificationEmail;
 use App\Http\Controllers\Controller;
-use App\Models\ImageTable;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -85,7 +85,7 @@ class UserController extends Controller
         $data = [
             'full_name' => $user->full_name,
             'verify_link' => route('verify.email', ['token' => $user->email_verification_token]),
-            'logo' => asset(ImageTable::where('table_name', 'logo')->latest()->first()->img_path ?? 'assets/images/logo (1).webp'),
+            'logo' => asset(Image::where('type', 'logo')->latest()->first()->img_path ?? 'assets/images/logo (1).webp'),
         ];
 
         Mail::send('emails.verify-email', ['data' => $data], function ($message) use ($user) {

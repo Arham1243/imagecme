@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Config;
-use App\Models\ImageTable;
+use App\Models\Image;
 
 abstract class Controller
 {
     public function __construct()
     {
-        $logo = ImageTable::where('table_name', 'logo')->latest()->first();
+        $logo = Image::where('type', 'logo')->latest()->first();
         View()->share('logo', $logo);
     }
 

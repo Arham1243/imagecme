@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Config;
-use App\Models\ImageTable;
+use App\Models\Image;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
 
@@ -14,44 +14,37 @@ class SiteSettingsController extends Controller
 
     public function __construct()
     {
-        $logo = ImageTable::where('table_name', 'logo')->latest()->first();
+        $logo = Image::where('type', 'logo')->latest()->first();
         View()->share('logo', $logo);
         View()->share('config', $this->getConfig());
     }
 
     public function showLogo()
     {
-        $logo = ImageTable::where('table_name', 'logo')->latest()->first();
+        $logo = Image::where('type', 'logo')->latest()->first();
 
         return view('admin.logo-management')->with('title', 'Logo Management');
     }
 
     public function saveLogo(Request $request)
     {
-        // Validate the request input
         $request->validate([
-            'logo' => 'nullable|file|max:2048',
+            'logo' => 'required|file|max:2048',
         ]);
-
-        // Get the existing or create a new ImageTable instance
-        $imageEntry = ImageTable::updateOrCreate(
-            ['table_name' => 'logo']
+        $imageEntry = Image::updateOrCreate(
+            ['type' => 'logo']
         );
-
-        // Use the trait method to handle the file upload and update the image path
-        $this->uploadImg('logo', 'Logo', $imageEntry, 'img_path');
-
-        // Redirect back with a success message
+        $this->uploadImg('path', 'Admin/Logo', $imageEntry, 'path');
         return back()->with('notify_success', 'Logo Updated!');
     }
 
-    public function socialInfo()
+    public function showContact()
     {
         return view('admin.contact-social')->with('title', 'Contact / Social Info Management
         ');
     }
 
-    public function saveSocialInfo(Request $request)
+    public function saveContact(Request $request)
     {
         $configs = $request->except('_token');
 
@@ -61,7 +54,6 @@ class SiteSettingsController extends Controller
                 ['flag_value' => $value]
             );
         }
-
-        return redirect()->route('admin.dashboard')->with('notify_success', 'Information Updated!');
+        return redirect()->route('admin.dashboard')->with('notify_success', 'Contact Information Updated!');
     }
 }

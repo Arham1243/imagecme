@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImageTable;
+use App\Models\Image;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class AdminLoginController extends Controller
 {
     public function __construct()
     {
-        $logo = Imagetable::where('table_name', 'logo')->latest()->first();
+        $logo = Image::where('type', 'logo')->latest()->first();
         View()->share('logo', $logo);
     }
 

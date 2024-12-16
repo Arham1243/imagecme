@@ -1,6 +1,5 @@
 <?php
 
-use App\Helpers\SeoHelper;
 use Carbon\Carbon;
 
 if (! function_exists('buildUrl')) {
@@ -17,12 +16,14 @@ if (! function_exists('buildUrl')) {
         return $url;
     }
 }
+
 if (! function_exists('sanitizedLink')) {
     function sanitizedLink($url)
     {
         return '//'.preg_replace('/^(https?:\/\/)?(www\.)?/', '', $url);
     }
 }
+
 if (! function_exists('formatPrice')) {
     function formatPrice($price)
     {
@@ -32,25 +33,20 @@ if (! function_exists('formatPrice')) {
     }
 }
 
-if (! function_exists('handleSeoData')) {
-    function handleSeoData($request, $entry, $resource)
-    {
-        $seoHelper = new SeoHelper;
-        $seoHelper->handleSeoData($request, $entry, $resource);
-    }
-}
 if (! function_exists('formatDateTime')) {
     function formatDateTime($date)
     {
         return Carbon::parse($date)->format('M j, Y - g:i A');
     }
 }
+
 if (! function_exists('formatDate')) {
     function formatDate($date)
     {
         return Carbon::parse($date)->format('M j, Y');
     }
 }
+
 if (! function_exists('renderCategories')) {
     function renderCategories($categories, $selectedCategory = null, $parent_id = null, $level = 0)
     {
