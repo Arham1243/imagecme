@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ isset($title) ? $title . ' | ' . env('APP_NAME') : env('APP_NAME') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @include('admin.layouts.links')
+    @include('user.layouts.links')
     @yield('css')
     @stack('css')
 </head>
 
 @php
-    $menuItemsInit = config('admin_sidebar');
+    $menuItemsInit = config('user_sidebar');
     $menuItems = collect($menuItemsInit)->map(function ($item) {
         $item['route'] = isset($item['route']) ? route($item['route']) : '#';
 
@@ -34,12 +34,12 @@
         <div class="container-fluid p-0">
             <div class="row g-0">
                 <div class="col-md-2">
-                    @include('admin.layouts.sidebar')
+                    @include('user.layouts.sidebar')
                 </div>
                 <div class="col-md-10">
                     <div class="row g-0">
                         <div class="col-12">
-                            @include('admin.layouts.header')
+                            @include('user.layouts.header')
                         </div>
                         @yield('content')
                     </div>
@@ -51,7 +51,7 @@
         <div class="loader"></div>
     </div>
 
-    @include('admin.layouts.scripts')
+    @include('user.layouts.scripts')
     @yield('js')
     @stack('js')
     <script type="text/javascript">

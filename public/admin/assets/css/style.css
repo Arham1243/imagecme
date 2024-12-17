@@ -9,9 +9,6 @@
 /* Root Styling */
 :root {
     --heading-font: "Philosopher", sans-serif;
-    /* --color-primary: #1c4d99; */
-    /* --color-bg: #f5f3f7; */
-    /* --color-primary-light: #0d0d0d1f; */
     --color-primary: #1c4d99;
     --color-primary-dark: #053070;
     --color-bg: #f5f3f7;
@@ -72,9 +69,6 @@ i.bx {
     vertical-align: middle;
 }
 
-.padd-y {
-    padding: 5rem 0;
-}
 
 .mar-y {
     margin: 5rem 0;
@@ -178,12 +172,10 @@ i.bx {
 .sidebar-header__icon img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
 }
 
 .sidebar-header__icon {
-    width: 117px;
-    height: 35px;
+    width: 157px;
 }
 
 a.sidebar-header {
@@ -201,7 +193,7 @@ a.sidebar-header h2 {
 }
 
 ul.sidebar-nav {
-    padding: 2rem 0 3rem;
+    padding: 1rem 0 3rem;
 }
 
 .sidebar-nav .icon {

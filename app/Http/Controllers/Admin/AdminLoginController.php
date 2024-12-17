@@ -3,19 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
-    public function __construct()
-    {
-        $logo = Image::where('type', 'logo')->latest()->first();
-        View()->share('logo', $logo);
-    }
-
-    //------------------------- Authentication -------------------------
     public function login()
     {
         $adminGuard = Auth::guard('admin');
@@ -52,8 +44,6 @@ class AdminLoginController extends Controller
     {
         Auth::guard('admin')->logout();
 
-        return redirect()->route('admin.login')->with('notify_success', 'Logged Out!');
+        return redirect()->route('index')->with('notify_success', 'Logged Out!');
     }
-    //------------------------- Authentication -------------------------
-
 }

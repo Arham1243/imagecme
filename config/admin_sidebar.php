@@ -22,4 +22,10 @@ return [
             ],
         ],
     ],
+    [
+        'title' => 'Logout',
+        'icon' => 'bx bx-power-off',
+        'route' => 'admin.logout',
+        'confirm' => 'Are you sure you want to log out'
+    ],
 ];

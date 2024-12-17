@@ -10,6 +10,7 @@ abstract class Controller
     public function __construct()
     {
         $logo = Image::where('type', 'logo')->latest()->first();
+        View()->share('config', $this->getConfig());
         View()->share('logo', $logo);
     }
 

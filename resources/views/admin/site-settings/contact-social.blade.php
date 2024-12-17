@@ -50,17 +50,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6 col-md-6 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Youtube<span class="text-danger">*</span>:</label>
-                                                <div class="relative-div">
-                                                    <input type="url" name="YOUTUBE" class="field"
-                                                        value="{{ $config['YOUTUBE'] ?? '' }}"
-                                                        placeholder="Enter Youtube link">
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="col-12 pt-1 pb-4">
                                             <hr>
                                         </div>
@@ -81,16 +70,6 @@
                                                     <input type="email" name="COMPANYEMAIL" class="field"
                                                         value="{{ $config['COMPANYEMAIL'] ?? '' }}"
                                                         placeholder="Enter Email Address" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-md-12 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Address<span class="text-danger">*</span>:</label>
-                                                <div class="relative-div">
-                                                    <input type="text" name="COMPANYADDRESS" class="field"
-                                                        value="{{ $config['COMPANYADDRESS'] ?? '' }}"
-                                                        placeholder="Enter Address">
                                                 </div>
                                             </div>
                                         </div>

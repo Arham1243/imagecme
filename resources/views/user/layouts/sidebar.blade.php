@@ -23,8 +23,8 @@
             @endphp
             <li class="{{ isset($item['submenu']) ? ($isOpen ? 'custom-dropdown open' : 'custom-dropdown') : '' }}">
                 <a @if (isset($item['confirm']))
-                onclick="return confirm('{{ $item['confirm'] }}')"
-            @endif href="{{ $item['route'] ?? 'javascript:void(0)' }}"
+                    onclick="return confirm('{{ $item['confirm'] }}')"
+                @endif href="{{ $item['route'] ?? 'javascript:void(0)' }}"
                     class="{{ isset($item['submenu']) ? 'custom-dropdown__active' : '' }} {{ $isItemActive ? 'active' : '' }}">
                     <div class="info">
                         <i class="{{ $item['icon'] }}"></i>

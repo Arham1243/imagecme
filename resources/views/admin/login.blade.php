@@ -12,7 +12,7 @@
 
                     <div class="col-lg-10">
                         <h4 class="dark-gren-36 text-center">Admin Login</h4>
-                        <form method="POST" action="{{ route('admin.performLogin') }}">
+                        <form method="POST" action="{{ route('admin.login.perform') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1" class="py-2">Email Address:</label>

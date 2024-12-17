@@ -11,14 +11,7 @@ use Illuminate\Http\Request;
 class SiteSettingsController extends Controller
 {
     use UploadImageTrait;
-
-    public function __construct()
-    {
-        $logo = Image::where('type', 'logo')->latest()->first();
-        View()->share('logo', $logo);
-        View()->share('config', $this->getConfig());
-    }
-
+    
     public function showLogo()
     {
         $logo = Image::where('type', 'logo')->latest()->first();
@@ -29,7 +22,7 @@ class SiteSettingsController extends Controller
     public function saveLogo(Request $request)
     {
         $request->validate([
-            'logo' => 'required|file|max:2048',
+            'path' => 'required|file|max:2048',
         ]);
         $imageEntry = Image::updateOrCreate(
             ['type' => 'logo']
