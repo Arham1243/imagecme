@@ -7,10 +7,13 @@
                         <h2>Dashboard</h2>
                     </div>
                     <div class="col-md-5">
-                        <form class="input-search">
+                        <div class="input-search">
                             <button class="search-icon"><i class='bx bx-search'></i></button>
-                            <input type="text" placeholder="search" name="search">
-                        </form>
+                            <input type="text" autocomplete="off" placeholder="Search" name="search" id="globalSearch">
+                            <div class="search-results">
+                                <ul class="search-results__values"></ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

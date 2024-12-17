@@ -12,6 +12,23 @@
     @stack('css')
 </head>
 
+@php
+    $menuItemsInit = config('admin_sidebar');
+    $menuItems = collect($menuItemsInit)->map(function ($item) {
+        $item['route'] = isset($item['route']) ? route($item['route']) : '#';
+
+        if (isset($item['submenu'])) {
+            $item['submenu'] = collect($item['submenu'])
+                ->map(function ($subItem) {
+                    $subItem['route'] = isset($subItem['route']) ? route($subItem['route']) : '#';
+                    return $subItem;
+                })
+                ->toArray();
+        }
+        return $item;
+    });
+@endphp
+
 <body class="responsive">
     <input type="hidden" id="web_base_url" value="{{ url('/') }}" />
     <div class="dashboard">
@@ -39,6 +56,41 @@
     @yield('js')
     @stack('js')
     <script type="text/javascript">
+        const MENU_ITEMS = @json($menuItems);
+        document.getElementById('globalSearch').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const searchResults = document.querySelector('.search-results__values');
+            searchResults.innerHTML = '';
+
+            if (query.length === 0) {
+                return;
+            }
+
+            // Filter menu items
+            const results = MENU_ITEMS.flatMap(item => {
+                const matchedItems = [];
+
+                if (item.title.toLowerCase().includes(query)) {
+                    matchedItems.push(item);
+                }
+
+                if (item.submenu) {
+                    const filteredSubmenu = item.submenu.filter(sub => sub.title.toLowerCase()
+                        .includes(
+                            query));
+                    matchedItems.push(...filteredSubmenu);
+                }
+
+                return matchedItems;
+            });
+
+            // Display results
+            results.forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="${item.route}">${item.title}</a>`;
+                searchResults.appendChild(li);
+            });
+        });
         (() => {
             @if (session('notify_success'))
                 $.toast({

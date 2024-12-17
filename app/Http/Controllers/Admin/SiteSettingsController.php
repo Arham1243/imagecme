@@ -23,7 +23,7 @@ class SiteSettingsController extends Controller
     {
         $logo = Image::where('type', 'logo')->latest()->first();
 
-        return view('admin.logo-management')->with('title', 'Logo Management');
+        return view('admin.site-settings.logo-management')->with('title', 'Logo Management');
     }
 
     public function saveLogo(Request $request)
@@ -40,7 +40,7 @@ class SiteSettingsController extends Controller
 
     public function showContact()
     {
-        return view('admin.contact-social')->with('title', 'Contact / Social Info Management
+        return view('admin.site-settings.contact-social')->with('title', 'Contact / Social Info Management
         ');
     }
 

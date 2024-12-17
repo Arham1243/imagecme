@@ -1,7 +1,3 @@
-@php
-    $menuItems = config('adminSidebar');
-@endphp
-
 <div class="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="sidebar-header">
         <div class="sidebar-header__icon">

@@ -195,10 +195,10 @@ const getSelect2Config = (select, maxItems, shouldSort) => {
         allowClear: true,
         sorter: shouldSort
             ? function (data) {
-                  return data.sort(function (a, b) {
-                      return a.text.localeCompare(b.text);
-                  });
-              }
+                return data.sort(function (a, b) {
+                    return a.text.localeCompare(b.text);
+                });
+            }
             : undefined,
         language: {
             noResults: function () {
@@ -221,7 +221,7 @@ const initializeSelect2 = () => {
             : -1;
 
         // Disable sorting for categories dropdown (you can adjust this condition as needed)
-        const shouldSort = select.classList.contains("category-select") 
+        const shouldSort = select.classList.contains("category-select")
             ? false  // Disable sorting for category select
             : (select.hasAttribute("should-sort")
                 ? select.getAttribute("should-sort") === "true"
@@ -640,7 +640,7 @@ const InitializeColorPickers = (pickerContainer) => {
 
     const initialColor =
         colorPickerInput.value &&
-        /^#([0-9A-F]{3}){1,2}$/i.test(colorPickerInput.value)
+            /^#([0-9A-F]{3}){1,2}$/i.test(colorPickerInput.value)
             ? colorPickerInput.value
             : colorPickerInput.getAttribute("placeholder");
     if (colorPicker && colorPickerInput) {
