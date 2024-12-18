@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
-    <div class="banner-wrapper">
+    <div class="banner-wrapper test">
         <div class="banner-slider">
             <div class="banner">
                 <img src='https://aws.amazon.com/startups/upload/44581438-a001-7040-9a81-4d99689048d3/ffa7e866-10dd-4bf4-bba4-04785270d4e2.jpg'
