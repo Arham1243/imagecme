@@ -28,14 +28,14 @@
             </a>
             <ul class="header-main__contact">
                 <li>
-                    <i class="bx bxs-phone"></i>
+                    <i class='bx bx-headphone'></i>
                     <div class="content">
                         <a href="tel:{{ $config['COMPANYPHONE'] ?? '' }}">{{ $config['COMPANYPHONE'] ?? '' }}</a>
                         Contact Us
                     </div>
                 </li>
                 <li class="header__call">
-                    <i class="bx bxs-envelope"></i>
+                    <i class='bx bxs-chat'></i>
                     <div class="content">
                         <a href="mailto:{{ $config['COMPANYEMAIL'] ?? '' }}">{{ $config['COMPANYEMAIL'] ?? '' }}</a>
                         Email Us
