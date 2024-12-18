@@ -12,6 +12,27 @@ return [
         'route' => 'user.dashboard',
     ],
     [
+        'title' => 'Cases',
+        'icon' => 'bx bx-search-alt',
+        'submenu' => [
+            [
+                'title' => 'Cases',
+                'icon' => 'bx bx-list-ul',
+                'route' => 'user.cases.index',
+            ],
+            [
+                'title' => 'Add Case',
+                'icon' => 'bx bx-plus',
+                'route' => 'user.cases.create',
+            ],
+            [
+                'title' => 'Recovery',
+                'icon' => 'bx bx-refresh',
+                'route' => ['user.recovery.index', ['resource' => 'cases']],
+            ],
+        ],
+    ],
+    [
         'title' => 'Logout',
         'icon' => 'bx bx-power-off',
         'route' => 'user.logout',

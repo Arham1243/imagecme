@@ -54,19 +54,20 @@ class AuthController extends Controller
 
     public function performLogin(Request $request)
     {
-        
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-    
+
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->route('user.dashboard')->with('notify_success', 'Login Successful');
+            return redirect()->intended(route('user.dashboard'))
+                ->with('notify_success', 'Login Successful');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput()->with('notify_error', 'Invalid credentials');
     }
-    
+
 
 
     public function logout(Request $request)

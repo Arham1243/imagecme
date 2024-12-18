@@ -14,17 +14,27 @@
 
 @php
     $menuItemsInit = config('user_sidebar');
+
     $menuItems = collect($menuItemsInit)->map(function ($item) {
-        $item['route'] = isset($item['route']) ? route($item['route']) : '#';
+        if (isset($item['route'])) {
+            $item['route'] = is_array($item['route'])
+                ? route($item['route'][0], $item['route'][1] ?? [])
+                : route($item['route']);
+        } else {
+            $item['route'] = '#';
+        }
 
         if (isset($item['submenu'])) {
             $item['submenu'] = collect($item['submenu'])
                 ->map(function ($subItem) {
-                    $subItem['route'] = isset($subItem['route']) ? route($subItem['route']) : '#';
+                    $subItem['route'] = is_array($subItem['route'])
+                        ? route($subItem['route'][0], $subItem['route'][1] ?? [])
+                        : route($subItem['route']);
                     return $subItem;
                 })
                 ->toArray();
         }
+
         return $item;
     });
 @endphp
@@ -56,38 +66,42 @@
     @stack('js')
     <script type="text/javascript">
         const MENU_ITEMS = @json($menuItems);
-        document.getElementById('globalSearch').addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase();
-            const searchResults = document.querySelector('.search-results__values');
-            searchResults.innerHTML = '';
+        document.getElementById('globalSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const resultsContainer = document.querySelector('.search-results__values');
+            resultsContainer.innerHTML = '';
+            if (searchTerm.length === 0) return;
 
-            if (query.length === 0) {
-                return;
-            }
+            const filteredMenuItems = MENU_ITEMS.filter(item => {
 
-            // Filter menu items
-            const results = MENU_ITEMS.flatMap(item => {
-                const matchedItems = [];
-
-                if (item.title.toLowerCase().includes(query)) {
-                    matchedItems.push(item);
+                if (item.title.toLowerCase() === 'logout') {
+                    return false;
                 }
-
-                if (item.submenu) {
-                    const filteredSubmenu = item.submenu.filter(sub => sub.title.toLowerCase()
-                        .includes(
-                            query));
-                    matchedItems.push(...filteredSubmenu);
-                }
-
-                return matchedItems;
+                const matchesMainItem = item.title.toLowerCase().includes(searchTerm);
+                const filteredSubmenu = item.submenu?.filter(subItem => subItem.title.toLowerCase()
+                    .includes(searchTerm));
+                return matchesMainItem || (filteredSubmenu && filteredSubmenu.length > 0);
             });
-
-            // Display results
-            results.forEach(item => {
+            filteredMenuItems.forEach(item => {
                 const li = document.createElement('li');
-                li.innerHTML = `<a href="${item.route}">${item.title}</a>`;
-                searchResults.appendChild(li);
+                const a = document.createElement('a');
+                a.href = item.route;
+                a.textContent = item.title;
+
+                li.appendChild(a);
+                resultsContainer.appendChild(li);
+                if (item.submenu) {
+                    const filteredSubmenu = item.submenu.filter(subItem => subItem.title.toLowerCase()
+                        .includes(searchTerm));
+                    filteredSubmenu.forEach(subItem => {
+                        const subLi = document.createElement('li');
+                        const subA = document.createElement('a');
+                        subA.href = subItem.route;
+                        subA.textContent = '→ ' + subItem.title;
+                        subLi.appendChild(subA);
+                        resultsContainer.appendChild(subLi);
+                    });
+                }
             });
         });
         (() => {

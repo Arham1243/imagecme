@@ -1,10 +1,10 @@
-@extends('admin.layouts.main')
+@extends('user.layouts.main')
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.testimonials.index') }}
+            {{ Breadcrumbs::render('admin.cases.index') }}
             <form id="bulkActionForm" method="POST"
-                action="{{ route('admin.bulk-actions', ['resource' => 'testimonials']) }}">
+                action="{{ route('admin.bulk-actions', ['resource' => 'cases']) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
@@ -12,7 +12,7 @@
                             <div class="section-content">
                                 <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                             </div>
-                            <a href="{{ route('admin.testimonials.create') }}" class="themeBtn">Add Testimonial</a>
+                            <a href="{{ route('admin.cases.create') }}" class="themeBtn">Add Case</a>
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-5">
@@ -40,14 +40,13 @@
                                             </div>
                                         </th>
                                         <th>Title</th>
-                                        <th>Rating</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($testimonials as $item)
+                                    @foreach ($cases as $item)
                                         <tr>
                                             <td>
                                                 <div class="selection item-select-container"><input type="checkbox"
@@ -55,10 +54,10 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.testimonials.edit', $item->id) }}"
+                                                <a href="{{ route('admin.cases.edit', $item->id) }}"
                                                     class="link">{{ $item->title }}</a>
                                             </td>
-                                            <td style="color: orange"><x-star-rating :rating="$item->rating" /></td>
+                                            <td style="color: orange"></td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span
@@ -67,7 +66,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.testimonials.edit', $item->id) }}"
+                                                <a href="{{ route('admin.cases.edit', $item->id) }}"
                                                     class="themeBtn"><i class='bx bxs-edit'></i>Edit</a>
                                             </td>
                                         </tr>
