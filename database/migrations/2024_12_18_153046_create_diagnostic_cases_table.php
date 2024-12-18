@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('diagnostic_cases', function (Blueprint $table) {
             $table->id();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -14,8 +14,12 @@ class DiagnosticCaseController extends Controller
         $cases = DiagnosticCase::latest()->get();
         return view('user.cases-management.list')->with('title', 'Cases')->with(compact('cases'));
     }
-    public function create() {}
-    public function store(Request $request) {}
+    public function create() {
+        return view('user.cases-management.add')->with('title', 'Add Case');
+    }
+    public function store(Request $request) {
+        dd($request->all());
+    }
     public function edit(DiagnosticCase $item)
     {
         return view('user.cases-management.edit')->with('title', ucfirst(strtolower($item->title)))->with(compact('cases'));

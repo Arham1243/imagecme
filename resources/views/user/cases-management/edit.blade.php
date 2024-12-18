@@ -2,8 +2,8 @@
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.cases.edit', $item) }}
-            <form action="{{ route('admin.cases.update', $item->id) }}" method="POST" enctype="multipart/form-data"
+            {{ Breadcrumbs::render('user.cases.edit', $item) }}
+            <form action="{{ route('user.cases.update', $item->id) }}" method="POST" enctype="multipart/form-data"
                 id="validation-form">
                 @csrf
                 @method('PATCH')
@@ -65,7 +65,7 @@
                                             <ul class="multiple-upload__imgs">
                                                 @foreach ($item->media as $media)
                                                     <li class="single-image">
-                                                        <a href="{{ route('admin.media.destroy', $media->id) }}"
+                                                        <a href="{{ route('user.media.destroy', $media->id) }}"
                                                             onclick="return confirm('Are you sure you want to delete this media?')"
                                                             class="delete-btn">
                                                             <i class='bx bxs-trash-alt'></i>

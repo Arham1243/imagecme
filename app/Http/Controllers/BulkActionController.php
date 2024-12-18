@@ -20,7 +20,7 @@ class BulkActionController extends Controller
             case 'blogs':
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
-                $redirectRoute = 'admin.cases.index';
+                $redirectRoute = 'user.cases.index';
                 break;
             default:
                 return Redirect::back()->with('notify_error', 'Resource not found.');
