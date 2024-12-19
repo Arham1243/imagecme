@@ -75,10 +75,22 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-12 mb-3">
+                                            <div class="form-fields">
+                                                <hr>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 mb-2">
+                                            <div class="form-fields">
+                                                <div class="title title--sm">Case Image:</div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-6 mb-4">
                                             @php
                                                 $imageTypes = [
@@ -136,6 +148,12 @@
                                                 @error('image_quality')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 my-3">
+                                            <div class="form-fields">
+                                                <hr>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 mb-4">

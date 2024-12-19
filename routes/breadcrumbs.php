@@ -19,8 +19,12 @@ Breadcrumbs::for('admin.contact.show', function (BreadcrumbTrail $trail) {
 // --------------- Admin Dashboard---------------
 
 // --------------- Usdr Dashboard---------------
+Breadcrumbs::for('user.dashboard', function (BreadcrumbTrail $trail) {
+    $trail->push('Dashboard', route('user.dashboard'));
+});
+
 Breadcrumbs::for('user.cases.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('admin.dashboard');
+    $trail->parent('user.dashboard');
     $trail->push('Cases', route('user.cases.index'));
 });
 Breadcrumbs::for('user.cases.create', function (BreadcrumbTrail $trail) {
