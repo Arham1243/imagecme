@@ -1,39 +1,128 @@
 @extends('frontend.layouts.main')
 @section('content')
-    <div class="banner-wrapper">
-        <div class="banner-slider">
-            <div class="banner">
-                <img src='https://aws.amazon.com/startups/upload/44581438-a001-7040-9a81-4d99689048d3/ffa7e866-10dd-4bf4-bba4-04785270d4e2.jpg'
-                    alt='image' class='imgFluid banner__bg'>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-10">
-                            <div class="banner-content text-center">
-                                <img alt="Logo" class="imgFluid banner-content__logo"
-                                    src="{{ asset($logo->path ?? 'admin/assets/images/placeholder.png') }}">
-                                <h1 class="banner-content__heading">medical imaging
-                                    innovation in detection & diagnostic education
-                                </h1>
-                                <a href="{{ route('auth.signup') }}" class="themeBtn themeBtn--center"> Try For Free</a>
-                            </div>
+    <div class="banner">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="banner-content text-center">
+                        <div class="banner-content__logo">
+                            <img alt="xray" class="imgFluid" src="{{ asset('frontend/assets/images/xray.png') }}">
+                        </div>
+                        <h1 class="banner-content__heading">
+                            medical imaging
+                            innovation in detection & diagnostic education
+
+                            learners & experts share interpretation & insights
+                        </h1>
+                        <div class="btns-wrapper d-flex align-items-center justify-content-center flex-wrap">
+                            <a href="javascript:void(0)" class="themeBtn">Share <span>image diagnosis</span></a>
+                            <a href="javascript:void(0)" class="themeBtn themeBtn--outline"> Challenge <span>image
+                                    diagnosis</span></a>
+                            <a href="javascript:void(0)" class="themeBtn"> Ask <span>image diagnosis</span></a>
+                            <a href="javascript:void(0)" class="themeBtn themeBtn--outline"> Ask AI <span>image
+                                    diagnosis</span></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="banner">
-                <img src='https://aws.amazon.com/startups/upload/44581438-a001-7040-9a81-4d99689048d3/ffa7e866-10dd-4bf4-bba4-04785270d4e2.jpg'
-                    alt='image' class='imgFluid banner__bg'>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-10">
-                            <div class="banner-content text-center">
-                                <img alt="Logo" class="imgFluid banner-content__logo"
-                                    src="{{ asset($logo->path ?? 'admin/assets/images/placeholder.png') }}">
-                                <h1 class="banner-content__heading">learners & experts share interpretation & insights
-
-                                </h1>
-                                <a href="{{ route('auth.signup') }}" class="themeBtn themeBtn--center"> Try For Free</a>
-                            </div>
+        </div>
+    </div>
+    <div class="video-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-11">
+                    <div class="video-section__video">
+                        {{-- <video autoplay muted>
+                            <source src="">
+                        </video> --}}
+                        {{-- <img alt="xray" class="imgFluid" src="https://www.spinalbackrack.com/wp-content/uploads/2021/05/bilateral-sciatica-representation-1024x576.png"> --}}
+                        {{-- <img alt="xray" class="imgFluid" src="https://media.visualstories.com/uploads/images/1/136/5428385-1280_174907035-1603900_l.jpg"> --}}
+                        <img alt="xray" class="imgFluid" src="{{ asset('frontend/assets/images/xray-1.png') }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="portfolio pb-5">
+        <div class="container-fluid">
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-10">
+                    <div class="section-content text-center">
+                        <h3 class="heading">Get the most out of Complete Anatomy</h3>
+                        <p>Complete Anatomy is built to take you through each stage of your professional journey. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row portfolio-slider">
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <div class="portfolio-card__content">
+                            <div class="icon"><i class='bx bx-body'></i></div>
+                            <div class="title">X-rays</div>
+                        </div>
+                        <div class="portfolio-card__img">
+                            <img src='{{ asset('frontend/assets/images/portfolio/1.png') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <div class="portfolio-card__content">
+                            <div class="icon"><i class='bx bx-body'></i></div>
+                            <div class="title">CT scan</div>
+                        </div>
+                        <div class="portfolio-card__img">
+                            <img src='{{ asset('frontend/assets/images/portfolio/2.png') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <div class="portfolio-card__content">
+                            <div class="icon"><i class='bx bx-body'></i></div>
+                            <div class="title">MRI scan</div>
+                        </div>
+                        <div class="portfolio-card__img">
+                            <img src='{{ asset('frontend/assets/images/portfolio/3.png') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <div class="portfolio-card__content">
+                            <div class="icon"><i class='bx bx-body'></i></div>
+                            <div class="title">Ultrasound</div>
+                        </div>
+                        <div class="portfolio-card__img">
+                            <img src='{{ asset('frontend/assets/images/portfolio/4.png') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <div class="portfolio-card__content">
+                            <div class="icon"><i class='bx bx-body'></i></div>
+                            <div class="title">Mammogram</div>
+                        </div>
+                        <div class="portfolio-card__img">
+                            <img src='{{ asset('frontend/assets/images/portfolio/5.jpg') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="portfolio-card">
+                        <div class="portfolio-card__content">
+                            <div class="icon"><i class='bx bx-body'></i></div>
+                            <div class="title">PET scan</div>
+                        </div>
+                        <div class="portfolio-card__img">
+                            <img src='{{ asset('frontend/assets/images/portfolio/5.png') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
                         </div>
                     </div>
                 </div>
