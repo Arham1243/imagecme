@@ -587,6 +587,7 @@ body .select2-selection--single.select2-selection--single {
   flex: 1;
 }
 .portfolio-card__img{
+  display: block;
   width: 310px;
   height: 310px;
   margin: auto;

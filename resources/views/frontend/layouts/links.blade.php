@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css"
     integrity="sha512-6lLUdeQ5uheMFbWm3CP271l14RsX1xtx+J5x2yeIDkkiBpeVTNhTqijME7GgRKKi6hCqovwCoBTlRBEC20M8Mg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css"
+    integrity="sha512-nNlU0WK2QfKsuEmdcTwkeh+lhGs6uyOxuUs+n+0oXSYDok5qy0EI0lt01ZynHq6+p/tbgpZ7P+yUb+r71wqdXg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="{{ asset('frontend/assets/css/responsive.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('frontend/assets/css/style.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('toast/css/jquery.toast.css?v=' . time()) }}" rel="stylesheet">
