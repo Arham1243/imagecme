@@ -289,8 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <i class='bx bxs-trash-alt'></i>
                     </div>
                     <a class="mask" href="${e.target.result}" data-fancybox="gallery"><img src="${e.target.result}" class="imgFluid" /></a>
-                     <input type="text" name="gallery_alt_texts[]" value="gallery" class="field" placeholder="Enter alt text" required>
-                     <div class="filename">${file.name}</div>
+                     <input type="text" name="gallery_alt_texts[]" value="" class="field" placeholder="Enter Name" required>
                 `;
 
                     // Append the list item to the image container
@@ -375,7 +374,7 @@ function initializeEditors(form) {
     const editorElements = form.querySelectorAll(".editor");
 
     editorElements.forEach((editorElement) => {
-        ClassicEditor.create(editorElement, {
+        ClassicEditor?.create(editorElement, {
             toolbar: [
                 "undo",
                 "redo",

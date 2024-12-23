@@ -2378,3 +2378,31 @@ button[data-tooltip="tooltip"] {
     padding: 4px !important;
     border-radius: 7px;
 }
+.case-image-box {
+    position: relative;
+    background: #fff;
+    border: 2px solid #cccccc73;
+    padding: 2rem 1.25rem 0.65rem;
+    margin-bottom: 1rem;
+}
+
+.case-image-box .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.close-btn {
+    cursor: pointer;
+    color: #fff;
+    background: red;
+    width: 30px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn i {
+    font-size: 1.35rem;
+}

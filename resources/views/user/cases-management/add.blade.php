@@ -10,7 +10,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('user.cases.store') }}" method="POST" enctype="multipart/form-data" id="validation-form">
+            <form action="{{ route('user.cases.store') }}" method="POST" enctype="multipart/form-data" id="validation-forms">
                 @csrf
                 <div class="row">
                     <div class="col-md-9">
@@ -90,46 +90,7 @@
                                                 <div class="title title--sm">Case Image:</div>
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-6 mb-4">
-                                            @php
-                                                $imageTypes = [
-                                                    'Optical imaging',
-                                                    'X Ray',
-                                                    'Fluoroscopy',
-                                                    'CT Scan',
-                                                    'Ultrasound, Diagnostic',
-                                                    'Ultrasound, Pregnancy',
-                                                    'MRI',
-                                                    'PET Scan',
-                                                    'Retinography',
-                                                    'Mammography',
-                                                    'Arthrogram',
-                                                    'Interventional imaging',
-                                                    'Histopathology',
-                                                    '2D',
-                                                    '3D',
-                                                    '4D',
-                                                ];
-                                            @endphp
-                                            <div class="form-fields">
-                                                <label class="title">Image Type <span class="text-danger">*</span>
-                                                    :</label>
-                                                <select data-required data-error="Image Type" name="image_type"
-                                                    class="field select2-select">
-                                                    <option value="" selected disabled>Select</option>
-                                                    @foreach ($imageTypes as $imageType)
-                                                        <option value="{{ $imageType }}"
-                                                            {{ old('image_type') === $imageType ? 'selected' : '' }}>
-                                                            {{ $imageType }}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('image_type')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mb-4">
+                                        <div class="col-lg-12 mb-4">
                                             @php
                                                 $imageQualities = ['Low', 'Medium', 'High'];
                                             @endphp
@@ -150,6 +111,72 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-12  mb-4" x-data="imageUploadManager()">
+                                            <template x-for="(row, index) in rows" :key="index">
+                                                <div class="case-image-box">
+                                                    <div class="close-btn" @click="removeImageRow(index)">
+                                                        <i class='bx bx-x'></i>
+                                                    </div>
+
+                                                    <div class="form-fields mb-4">
+                                                        <label class="title">Image Type <span
+                                                                class="text-danger">*</span>:</label>
+                                                        <select x-model="row.selectedImageType" class="field">
+                                                            <option value="" selected disabled>Select</option>
+                                                            <template x-for="type in availableImageTypes"
+                                                                :key="type">
+                                                                <option :value="type" x-text="type"
+                                                                    :disabled="isTypeSelected(type, index)"></option>
+                                                            </template>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-fields mb-3">
+                                                        <div class="multiple-upload mt-3">
+                                                            <input :id="'case-images-' + index" type="file"
+                                                                class="gallery-input d-none" multiple accept="image/*"
+                                                                @change="handleFileUpload($event, index)"
+                                                                :name="'case_images[' + row.selectedImageType + '][images][' +
+                                                                    index + '][file]'">
+
+                                                            <label class="multiple-upload__btn themeBtn"
+                                                                :for="'case-images-' + index">
+                                                                <i class='bx bx-upload'></i> Choose images
+                                                            </label>
+                                                            <ul class="multiple-upload__imgs mt-4 pt-2">
+                                                                <template x-for="(image, imgIndex) in row.uploadedImages"
+                                                                    :key="imgIndex">
+                                                                    <li class="single-image">
+                                                                        <div class="delete-btn"
+                                                                            @click="removeImage(index, imgIndex)">
+                                                                            <i class='bx bxs-trash-alt'></i>
+                                                                        </div>
+                                                                        <a class="mask" :href="image.src"
+                                                                            data-fancybox="gallery">
+                                                                            <img :src="image.src"
+                                                                                class="imgFluid" />
+                                                                        </a>
+                                                                        <input
+                                                                            :name="'case_images[' + row.selectedImageType +
+                                                                                '][images][' + imgIndex + '][name]'"
+                                                                            class="field" placeholder="Enter Name"
+                                                                            data-required data-error="Image Name">
+                                                                    </li>
+                                                                </template>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                            <div class="dimensions mt-4">
+                                                <strong>Dimensions:</strong> 603 &times; 641
+                                            </div>
+                                            <button type="button" class="themeBtn ms-auto mt-4" @click="addImageRow"
+                                                x-show="!(rows.length >= availableImageTypes.length)">
+                                                <i class='bx bx-plus'></i> Add Image
+                                            </button>
+                                        </div>
+
 
                                         <div class="col-lg-12 my-3">
                                             <div class="form-fields">
@@ -466,56 +493,6 @@
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
                             </div>
-                            {{-- <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Feature Image</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-
-                                        <div class="upload" data-upload>
-                                            <div class="upload-box-wrapper">
-                                                <div class="upload-box show" data-upload-box>
-                                                    <input type="file" name="featured_image"
-                                                        data-error="Feature Image" id="featured_image"
-                                                        class="upload-box__file d-none" accept="image/*" data-file-input>
-                                                    <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
-                                                    </div>
-                                                    <label for="featured_image" class="upload-box__btn themeBtn">Upload
-                                                        Image</label>
-                                                </div>
-                                                <div class="upload-box__img" data-upload-img>
-                                                    <button type="button" class="delete-btn" data-delete-btn><i
-                                                            class='bx bxs-trash-alt'></i></button>
-                                                    <a href="#" class="mask" data-fancybox="gallery">
-                                                        <img src="{{ asset('admin/assets/images/loading.webp') }}"
-                                                            alt="Uploaded Image" class="imgFluid" data-upload-preview>
-                                                    </a>
-                                                    <input type="text" name="featured_image_alt_text" class="field"
-                                                        placeholder="Enter alt text" value="Alt Text">
-                                                </div>
-                                            </div>
-                                            <div data-error-message class="text-danger mt-2 d-none text-center">Please
-                                                upload a
-                                                valid image file
-                                            </div>
-                                            @error('featured_image_alt_text')
-                                                <div class="text-danger mt-2 text-center">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                            @error('featured_image')
-                                                <div class="text-danger mt-2 text-center">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                        <div class="dimensions text-center mt-3">
-                                            <strong>Dimensions:</strong> 265 &times; 155
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -523,3 +500,55 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        document.addEventListener("alpine:init", () => {
+            Alpine.data('imageUploadManager', () => ({
+                availableImageTypes: [
+                    'Optical imaging', 'X Ray', 'Fluoroscopy', 'CT Scan', 'Ultrasound, Diagnostic',
+                    'Ultrasound, Pregnancy', 'MRI', 'PET Scan', 'Retinography', 'Mammography',
+                    'Arthrogram', 'Interventional imaging', 'Histopathology', '2D', '3D', '4D',
+                ],
+                rows: [{
+                    selectedImageType: '',
+                    uploadedImages: []
+                }],
+
+                isTypeSelected(type, currentIndex) {
+                    return this.rows.some((row, index) => index !== currentIndex && row
+                        .selectedImageType === type);
+                },
+
+                addImageRow() {
+                    this.rows.push({
+                        selectedImageType: '',
+                        uploadedImages: []
+                    });
+                },
+
+                removeImageRow(index) {
+                    this.rows.splice(index, 1);
+                },
+
+                handleFileUpload(event, index) {
+                    const fileList = event.target.files;
+                    const row = this.rows[index];
+
+
+                    Array.from(fileList).forEach(file => {
+
+                        row.uploadedImages.push({
+                            src: URL.createObjectURL(file),
+                            file: file,
+                            name: ''
+                        });
+                    });
+                },
+
+                removeImage(rowIndex, imgIndex) {
+                    this.rows[rowIndex].uploadedImages.splice(imgIndex, 1);
+                }
+            }));
+        });
+    </script>
+@endpush
