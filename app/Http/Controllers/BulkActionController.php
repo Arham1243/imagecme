@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\DiagnosticCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -17,7 +16,7 @@ class BulkActionController extends Controller
             return Redirect::back()->with('notify_error', 'No items selected for the bulk action.');
         }
         switch ($resource) {
-            case 'blogs':
+            case 'cases':
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
                 $redirectRoute = 'user.cases.index';
@@ -33,7 +32,7 @@ class BulkActionController extends Controller
     {
         switch ($action) {
             case 'delete':
-                $modelClass::whereIn($idColumn, $selectedIds)->each(function ($model) use ($modelClass) {
+                $modelClass::whereIn($idColumn, $selectedIds)->each(function ($model) {
                     $model->delete();
                 });
                 break;
@@ -55,7 +54,7 @@ class BulkActionController extends Controller
                 $modelClass::whereIn($idColumn, $selectedIds)->update(['status' => 'inactive']);
                 break;
             case 'permanent_delete':
-                $modelClass::onlyTrashed()->whereIn($idColumn, $selectedIds)->each(function ($model) use ($modelClass) {
+                $modelClass::onlyTrashed()->whereIn($idColumn, $selectedIds)->each(function ($model) {
                     $model->forceDelete();
                 });
                 break;

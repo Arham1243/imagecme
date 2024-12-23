@@ -10,7 +10,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('user.cases.store') }}" method="POST" enctype="multipart/form-data" id="validation-forms">
+            <form action="{{ route('user.cases.store') }}" method="POST" enctype="multipart/form-data" id="validation-form">
                 @csrf
                 <div class="row">
                     <div class="col-md-9">
@@ -131,13 +131,13 @@
                                                             </template>
                                                         </select>
                                                     </div>
-                                                    <div class="form-fields mb-3">
+                                                    <div class="form-fields mb-3" x-show="row.selectedImageType">
                                                         <div class="multiple-upload mt-3">
                                                             <input :id="'case-images-' + index" type="file"
                                                                 class="gallery-input d-none" multiple accept="image/*"
                                                                 @change="handleFileUpload($event, index)"
-                                                                :name="'case_images[' + row.selectedImageType + '][images][' +
-                                                                    index + '][file]'">
+                                                                :name="'case_images[' + row.selectedImageType +
+                                                                    '][images][file][]'">
 
                                                             <label class="multiple-upload__btn themeBtn"
                                                                 :for="'case-images-' + index">
@@ -158,9 +158,10 @@
                                                                         </a>
                                                                         <input
                                                                             :name="'case_images[' + row.selectedImageType +
-                                                                                '][images][' + imgIndex + '][name]'"
+                                                                                '][images][name][]'"
                                                                             class="field" placeholder="Enter Name"
-                                                                            data-required data-error="Image Name">
+                                                                            data-required data-error="Image Name"
+                                                                            x-model="image.name">
                                                                     </li>
                                                                 </template>
                                                             </ul>
@@ -177,7 +178,6 @@
                                             </button>
                                         </div>
 
-
                                         <div class="col-lg-12 my-3">
                                             <div class="form-fields">
                                                 <hr>
@@ -186,8 +186,7 @@
                                         <div class="col-lg-12 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Specific Diagnosis Title <span
-                                                        class="text-danger">*</span>
-                                                    :</label>
+                                                        class="text-danger">*</span>:</label>
                                                 <input type="text" data-required data-error="Specific Diagnosis Title"
                                                     name="diagnosis_title" class="field">
                                                 @error('diagnosis_title')
@@ -195,6 +194,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6 mb-4">
                                             @php
                                                 $specialities = [
@@ -221,15 +221,16 @@
                                                 ];
                                             @endphp
                                             <div class="form-fields">
-                                                <label class="title">Diagnosed Disease <span class="text-danger">*</span>
-                                                    :</label>
+                                                <label class="title">Diagnosed Disease <span
+                                                        class="text-danger">*</span>:</label>
                                                 <select data-required data-error="Diagnosed Disease"
                                                     name="diagnosed_disease" class="field select2-select">
                                                     <option value="" selected disabled>Select</option>
                                                     @foreach ($specialities as $speciality)
                                                         <option value="{{ $speciality }}"
                                                             {{ old('diagnosed_disease') === $speciality ? 'selected' : '' }}>
-                                                            {{ $speciality }}</option>
+                                                            {{ $speciality }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                                 @error('diagnosed_disease')
@@ -237,16 +238,23 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6 mb-4">
+                                            @php
+                                                $easeOfDiagnosisOptions = ['Easy', 'Difficult', 'Very Difficult'];
+                                            @endphp
                                             <div class="form-fields">
                                                 <label class="title">Ease of Diagnosis <span
                                                         class="text-danger">*</span>:</label>
                                                 <select data-required data-error="Ease of Diagnosis"
                                                     name="ease_of_diagnosis" class="field select2-select">
                                                     <option value="" selected disabled>Select</option>
-                                                    <option value="Easy">Easy</option>
-                                                    <option value="Difficult">Difficult</option>
-                                                    <option value="Very Difficult">Very Difficult</option>
+                                                    @foreach ($easeOfDiagnosisOptions as $option)
+                                                        <option value="{{ $option }}"
+                                                            {{ old('ease_of_diagnosis') === $option ? 'selected' : '' }}>
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 @error('ease_of_diagnosis')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -255,15 +263,21 @@
                                         </div>
 
                                         <div class="col-lg-6 mb-4">
+                                            @php
+                                                $certaintyOptions = ['Certainty', 'Almost Certain', 'Uncertain'];
+                                            @endphp
                                             <div class="form-fields">
                                                 <label class="title">Certainty <span
                                                         class="text-danger">*</span>:</label>
                                                 <select data-required data-error="Certainty" name="certainty"
                                                     class="field select2-select">
                                                     <option value="" selected disabled>Select</option>
-                                                    <option value="Certainty">Certainty</option>
-                                                    <option value="Almost Certain">Almost Certain</option>
-                                                    <option value="Uncertain">Uncertain</option>
+                                                    @foreach ($certaintyOptions as $option)
+                                                        <option value="{{ $option }}"
+                                                            {{ old('certainty') === $option ? 'selected' : '' }}>
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 @error('certainty')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -272,22 +286,32 @@
                                         </div>
 
                                         <div class="col-lg-6 mb-4">
+                                            @php
+                                                $ethnicityOptions = [
+                                                    'Black',
+                                                    'African American',
+                                                    'White',
+                                                    'Hispanic',
+                                                    'Latino',
+                                                    'Asian',
+                                                    'American Indian',
+                                                    'Alaska Native',
+                                                    'Caucasian',
+                                                    'Native American',
+                                                ];
+                                            @endphp
                                             <div class="form-fields">
                                                 <label class="title">Ethnicity <span
                                                         class="text-danger">*</span>:</label>
                                                 <select data-required data-error="Ethnicity" name="ethnicity"
                                                     class="field select2-select">
                                                     <option value="" selected disabled>Select</option>
-                                                    <option value="Black">Black</option>
-                                                    <option value="African American">African American</option>
-                                                    <option value="White">White</option>
-                                                    <option value="Hispanic">Hispanic</option>
-                                                    <option value="Latino">Latino</option>
-                                                    <option value="Asian">Asian</option>
-                                                    <option value="American Indian">American Indian</option>
-                                                    <option value="Alaska Native">Alaska Native</option>
-                                                    <option value="Caucasian">Caucasian</option>
-                                                    <option value="Native American">Native American</option>
+                                                    @foreach ($ethnicityOptions as $option)
+                                                        <option value="{{ $option }}"
+                                                            {{ old('ethnicity') === $option ? 'selected' : '' }}>
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 @error('ethnicity')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -296,18 +320,28 @@
                                         </div>
 
                                         <div class="col-lg-6 mb-2">
+                                            @php
+                                                $segmentOptions = [
+                                                    'Elderly Male',
+                                                    'Elderly Female',
+                                                    'Adult Male',
+                                                    'Adult Female',
+                                                    'Adolescent',
+                                                    'Child',
+                                                    'Infant',
+                                                ];
+                                            @endphp
                                             <div class="form-fields">
                                                 <label class="title">Segment <span class="text-danger">*</span>:</label>
                                                 <select data-required data-error="Segment" name="segment"
                                                     class="field select2-select">
                                                     <option value="" selected disabled>Select</option>
-                                                    <option value="Elderly Male">Elderly Male</option>
-                                                    <option value="Elderly Female">Elderly Female</option>
-                                                    <option value="Adult Male">Adult Male</option>
-                                                    <option value="Adult Female">Adult Female</option>
-                                                    <option value="Adolescent">Adolescent</option>
-                                                    <option value="Child">Child</option>
-                                                    <option value="Infant">Infant</option>
+                                                    @foreach ($segmentOptions as $option)
+                                                        <option value="{{ $option }}"
+                                                            {{ old('segment') === $option ? 'selected' : '' }}>
+                                                            {{ $option }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                                 @error('segment')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -326,6 +360,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-lg-12 my-3">
                                             <div class="form-fields">
                                                 <hr>
@@ -530,19 +565,19 @@
                     this.rows.splice(index, 1);
                 },
 
-                handleFileUpload(event, index) {
-                    const fileList = event.target.files;
-                    const row = this.rows[index];
+                handleFileUpload(event, rowIndex) {
+                    const files = event.target.files;
+                    const row = this.rows[rowIndex];
 
-
-                    Array.from(fileList).forEach(file => {
-
-                        row.uploadedImages.push({
-                            src: URL.createObjectURL(file),
-                            file: file,
-                            name: ''
-                        });
-                    });
+                    if (files && files.length > 0) {
+                        for (const file of files) {
+                            row.uploadedImages.push({
+                                src: URL.createObjectURL(file),
+                                file: file,
+                                name: ''
+                            });
+                        }
+                    }
                 },
 
                 removeImage(rowIndex, imgIndex) {

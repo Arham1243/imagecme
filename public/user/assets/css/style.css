@@ -93,16 +93,27 @@ i.bx {
     transition: all 300ms;
     cursor: pointer;
 }
+.themeBtn img {
+    filter: invert(1);
+    width: 16px;
+    aspect-ratio: 1/1;
+}
+
+.themeBtn:has(img) {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
 
 .themeBtn i {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
 }
 
 .themeBtn:has(i) {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.15rem;
+    gap: 0.35rem;
 }
 
 .themeBtn--outline {
@@ -1859,7 +1870,6 @@ body.responsive.fancybox-active.compensate-for-scrollbar {
     font-size: 0.85rem;
     font-weight: 600;
     padding: 1.15rem 1.25rem;
-    color: #0000007a;
 }
 
 [disabled] {

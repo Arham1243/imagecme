@@ -47,19 +47,9 @@ if (! function_exists('formatDate')) {
     }
 }
 
-if (! function_exists('renderCategories')) {
-    function renderCategories($categories, $selectedCategory = null, $parent_id = null, $level = 0)
+if (! function_exists('format_type')) {
+    function format_type($string)
     {
-        foreach ($categories as $category) {
-            if ($category->parent_category_id == $parent_id) {
-                $selected = (old('category_id', $selectedCategory) == $category->id) ? 'selected' : '';
-
-                echo '<option value="'.$category->id.'" '.$selected.'>';
-                echo str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' '.$category->name;
-                echo '</option>';
-
-                renderCategories($categories, $selectedCategory, $category->id, $level + 1);
-            }
-        }
+        return ucwords(str_replace('_', ' ', $string));
     }
 }

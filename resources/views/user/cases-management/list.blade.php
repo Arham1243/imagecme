@@ -3,8 +3,7 @@
     <div class="col-md-12">
         <div class="dashboard-content">
             {{ Breadcrumbs::render('user.cases.index') }}
-            <form id="bulkActionForm" method="POST"
-                action="{{ route('user.bulk-actions', ['resource' => 'cases']) }}">
+            <form id="bulkActionForm" method="POST" action="{{ route('user.bulk-actions', ['resource' => 'cases']) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
@@ -40,6 +39,7 @@
                                             </div>
                                         </th>
                                         <th>Title</th>
+                                        <th>Case Type</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -55,9 +55,11 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('user.cases.edit', $item->id) }}"
-                                                    class="link">{{ $item->title }}</a>
+                                                    class="link">{{ $item->diagnosis_title }}</a>
                                             </td>
-                                            <td style="color: orange"></td>
+                                            <td>
+                                                {{ format_type($item->case_type) }}
+                                            </td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span
@@ -66,8 +68,8 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('user.cases.edit', $item->id) }}"
-                                                    class="themeBtn"><i class='bx bxs-edit'></i>Edit</a>
+                                                <a href="{{ route('user.cases.edit', $item->id) }}" class="themeBtn"><i
+                                                        class='bx bxs-edit'></i>Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
