@@ -17,7 +17,7 @@
                         <div class="form-wrapper">
                             <div class="form-box">
                                 <div class="form-box__header">
-                                    <div class="title">Case Content</div>
+                                    <div class="title">Image Content</div>
                                 </div>
                                 <div class="form-box__body">
                                     <div class="row">

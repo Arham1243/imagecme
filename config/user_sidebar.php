@@ -12,16 +12,16 @@ return [
         'route' => 'user.dashboard',
     ],
     [
-        'title' => 'Cases',
+        'title' => 'Images',
         'icon' => 'bx bx-search-alt',
         'submenu' => [
             [
-                'title' => 'Cases',
+                'title' => 'Images',
                 'icon' => 'bx bx-list-ul',
                 'route' => 'user.cases.index',
             ],
             [
-                'title' => 'Add Case',
+                'title' => 'Add Image',
                 'icon' => 'bx bx-plus',
                 'route' => 'user.cases.create',
             ],

@@ -27,11 +27,11 @@ Breadcrumbs::for('user.recovery.index', function (BreadcrumbTrail $trail, $resou
 
 Breadcrumbs::for('user.cases.index', function (BreadcrumbTrail $trail) {
     $trail->parent('user.dashboard');
-    $trail->push('Cases', route('user.cases.index'));
+    $trail->push('Images', route('user.cases.index'));
 });
 Breadcrumbs::for('user.cases.create', function (BreadcrumbTrail $trail) {
     $trail->parent('user.cases.index');
-    $trail->push('Add Case', route('user.cases.create'));
+    $trail->push('Add Image', route('user.cases.create'));
 });
 
 Breadcrumbs::for('user.cases.edit', function (BreadcrumbTrail $trail, $item) {

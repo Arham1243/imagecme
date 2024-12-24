@@ -10,7 +10,7 @@
                 <div class="custom-sec custom-sec--form">
                     <div class="custom-sec__header">
                         <div class="section-content">
-                            <h3 class="heading">Edit Case: {{ isset($title) ? $title : '' }}</h3>
+                            <h3 class="heading">Edit: {{ isset($title) ? $title : '' }}</h3>
                         </div>
                         <div class="d-flex gap-3">
                             @if ($case->case_type === 'ask_ai_image_diagnosis')
@@ -18,7 +18,7 @@
                                         src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
                                         class='imgFluid' loading='lazy'> Ask AI</a>
                             @endif
-                            <a href="javascript:void(0)" class="themeBtn"><i class='bx bxs-show'></i> View Case</a>
+                            <a href="javascript:void(0)" class="themeBtn"><i class='bx bxs-show'></i> View Image</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                         <div class="form-wrapper">
                             <div class="form-box">
                                 <div class="form-box__header">
-                                    <div class="title">Case Content</div>
+                                    <div class="title">Image Content</div>
                                 </div>
                                 <div class="form-box__body">
                                     <div class="row">
