@@ -733,7 +733,7 @@ body .select2-selection--single.select2-selection--single {
 }
 .back-btn {
     color: #e1dfdf;
-    border: 3px solid #BBBBBB;
+    border: 2px solid #BBBBBB;
     width: 40px;
     aspect-ratio: 1/1;
     position: absolute;
@@ -926,7 +926,7 @@ body .select2-selection--single.select2-selection--single {
   object-fit: contain;
 }
 .editor-content {
-    font-size: 13px;
+    font-size: 15px;
     display: flex;
     flex-direction: column;
     gap: 0.65rem;
