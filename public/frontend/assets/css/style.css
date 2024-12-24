@@ -723,7 +723,7 @@ body .select2-selection--single.select2-selection--single {
 
 /* Cases */
 
-/* gallery- */
+/* gallery */
 .gallery--bg {
   width: 100%;
   height: 100%;
@@ -765,12 +765,18 @@ body .select2-selection--single.select2-selection--single {
 }
 
 .gallery-content {
+  color: #fff;
   height: var(--child-height);
   padding: 0.5rem 1.25rem;
   border: 2px solid transparent;
-  overflow-y: auto;
 }
-
+.gallery-content-info {
+    height: calc(100vh - 4.7rem);
+    overflow-y: auto;
+    padding-right: 1rem;
+    margin-right: 0.5rem;
+    padding-bottom: 3rem;
+}
 .gallery-sidebar__header {
   display: flex;
   align-items: center;
@@ -793,7 +799,7 @@ body .select2-selection--single.select2-selection--single {
 }
 
 .gallery-option i {
-  font-size: 2.49vw;
+  font-size: 2.1vw;
   color: var(--items-color);
   transition: all 150ms;
 }
@@ -804,6 +810,7 @@ body .select2-selection--single.select2-selection--single {
   text-transform: capitalize;
   color: var(--items-color);
   transition: all 150ms;
+  text-align: center;
 }
 
 .gallery-option:hover {
@@ -857,7 +864,7 @@ body .select2-selection--single.select2-selection--single {
   justify-content: center;
 }
 
-.gallery-category__item .cover-image:where(:hover, .actives) {
+.gallery-category__item .cover-image:where(:hover, .active) {
   border-color: #CB4E00;
 }
 
@@ -887,5 +894,54 @@ body .select2-selection--single.select2-selection--single {
   height: 100%;
   object-fit: cover;
 }
+.editor-content {
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
 
-/* gallery- */
+.editor-content :is(p,li,strong) {
+    font-size: 0.99em;
+}
+
+.editor-content ul {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.editor-content li {
+    list-style-type: disc !important;!i;!;
+}
+
+.editor-content :is(p,li) {
+    font-weight: 400;
+    margin: 0;
+}
+
+.editor-content h1 {
+    font-size: 2.75em;
+}
+
+.editor-content h2 {
+    font-size: 1.95em;
+}
+
+.editor-content h3 {
+    font-size: 1.5em;
+}
+
+.editor-content h4 {
+    font-size: 1.25em;
+}
+
+.editor-content h5 {
+    font-size: 1em;
+}
+
+.editor-content h6 {font-size: 0.95em;}
+
+.editor-content :is(h1,h2,h3,h4,h5,h6) {
+    font-weight: 700;
+    margin: 0;
+}
+/* gallery */
