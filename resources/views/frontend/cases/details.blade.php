@@ -85,9 +85,9 @@
                                             <div class="col-md-6">
                                                 <div class="gallery-category__item">
                                                     <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/4.png') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/4.png') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/4.png') }}'
+                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/5.jpg') }}' }"
+                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/5.jpg') }}'">
+                                                        <img src='{{ asset('frontend/assets/images/portfolio/5.jpg') }}'
                                                             alt='image' class='imgFluid' loading='lazy'>
                                                     </div>
                                                     <div class="cover-name">Frontal</div>
