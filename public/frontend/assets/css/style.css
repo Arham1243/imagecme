@@ -910,7 +910,7 @@ body .select2-selection--single.select2-selection--single {
 }
 
 .editor-content li {
-    list-style-type: disc !important;!i;!;
+    list-style-type: disc !important;
 }
 
 .editor-content :is(p,li) {
