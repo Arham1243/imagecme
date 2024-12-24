@@ -124,7 +124,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -153,7 +153,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -182,7 +182,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -211,7 +211,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -240,7 +240,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -272,7 +272,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -302,7 +302,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -331,7 +331,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbgjFSXmRzpMxTXr5td7-matshUVlQDFPhGg&s'
                                         alt='image' class='imgFluid'> </a>
                             </div>
@@ -360,7 +360,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
                                         class='imgFluid'> </a>
                             </div>
@@ -389,7 +389,7 @@
                         </div>
                         <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="javascript:void(0)" class='cases-card__img'> <img
+                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
                                         src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpG0xwjiIHyvGSCIJDOCZ_VEzEntS0LHnhCQ&s'
                                         alt='image' class='imgFluid'> </a>
                             </div>
