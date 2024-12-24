@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="portfolio pb-5">
+    <div class="portfolio">
         <div class="container-fluid">
             <div class="row justify-content-center mb-4">
                 <div class="col-md-10">
