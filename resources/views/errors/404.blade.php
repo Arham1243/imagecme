@@ -221,7 +221,7 @@
         </svg>
 
         <p id="errorText">O-o-oh! Something broke.</p>
-        <a id="errorLink" href="{{ route('index') }}">Go Back</a>
+        <a id="errorLink" href="{{ route('frontend.index') }}">Go Back</a>
     </main>
     </main>
 

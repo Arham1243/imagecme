@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class=" footer-info">
-                    <a class="footer-info__logo" href="{{ route('index') }}">
+                    <a class="footer-info__logo" href="{{ route('frontend.index') }}">
                         <img alt="Logo" class="imgFluid"
                             src="{{ asset($logo->path ?? 'admin/assets/images/placeholder.png') }}">
                     </a>

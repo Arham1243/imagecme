@@ -4,7 +4,7 @@ return [
     [
         'title' => 'Website',
         'icon' => 'bx bx-globe',
-        'route' => 'index',
+        'route' => 'frontend.index',
     ],
     [
         'title' => 'Dashboard',
@@ -36,6 +36,6 @@ return [
         'title' => 'Logout',
         'icon' => 'bx bx-power-off',
         'route' => 'user.logout',
-        'confirm' => 'Are you sure you want to log out'
+        'confirm' => 'Are you sure you want to log out',
     ],
 ];

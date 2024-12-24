@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
     public function signup()
     {
         return view('frontend.auth.signup')->with('title', 'Sign Up');
     }
+
     public function login()
     {
         return view('frontend.auth.login')->with('title', 'Login');
@@ -68,12 +68,10 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput()->with('notify_error', 'Invalid credentials');
     }
 
-
-
     public function logout(Request $request)
     {
         Auth::logout();
 
-        return redirect()->route('index')->with('notify_success', 'Logged Out!');
+        return redirect()->route('frontend.index')->with('notify_success', 'Logged Out!');
     }
 }

@@ -74,10 +74,11 @@ i.bx {
 
 /* ThemeBtn */
 .themeBtn {
+  --btn-color: var(--color-primary);
   width: fit-content;
   display: block;
   color: #fff;
-  background: var(--color-secondary);
+  background: var(--btn-color);
   font-size: 0.99rem;
   outline: none;
   border-radius: 0.25rem;
@@ -86,22 +87,26 @@ i.bx {
   padding: 0.65rem 1.5rem;
   border: 2px solid transparent;
   position: relative;
-  line-height: 1.35;
+  line-height: 1.4;
   z-index: 1;
   text-transform: capitalize;
   transition: all 300ms;
   cursor: pointer;
 }
 
+.themeBtn--secondary {
+  --btn-color: var(--color-secondary);
+}
+
 .themeBtn span {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .themeBtn--outline {
-  color: var(--color-secondary);
+  color: var(--btn-color);
   background: transparent;
-  border-color: var(--color-secondary);
+  border-color: var(--btn-color);
 }
 
 .themeBtn.themeBtn i {
@@ -129,7 +134,7 @@ i.bx {
 }
 
 .themeBtn.themeBtn--outline:hover {
-  background: var(--color-secondary);
+  background: var(--btn-color);
   color: #fff;
 }
 
@@ -220,7 +225,7 @@ i.bx {
 /* Footer */
 .footer {
   color: #ebe0e0;
-  background: #0e1317;
+  background: var(--color-primary);
   padding-top: 5rem;
 }
 
@@ -235,7 +240,7 @@ i.bx {
 }
 
 .footer-info__logo {
-  width: 200px;
+  width: 220px;
   background: #fff;
   border-radius: 0.75rem;
   overflow: hidden;
@@ -264,7 +269,7 @@ i.bx {
 }
 
 .footer__quickLinks>ul>li>a {
-  color: #ababab;
+  color: #ebe0e0;
   font-size: 0.9rem;
   font-weight: 500;
   margin: 0.75rem 0;
@@ -298,7 +303,7 @@ i.bx {
   width: 100%;
   height: 100%;
   min-height: 85vh;
-  padding: 4.5rem 0 12rem;
+  padding: 4rem 0 12rem;
 }
 
 .banner-content__logo {
@@ -317,16 +322,16 @@ i.bx {
 }
 
 .banner-content__heading {
-  font-size: 3rem;
+  font-size: 3.25rem;
   font-weight: 700;
   line-height: 1.35;
-  margin: 1rem 0 1.15rem;
+  margin: 1rem 0 1.35rem;
   text-transform: capitalize;
 }
 
 .banner-content .themeBtn {
-  font-size: 1.15rem;
-  padding: 0.5rem 3.25rem;
+  font-size: 1.3rem;
+  padding: 0.7rem 3.25rem;
 }
 
 .btns-wrapper {
@@ -343,8 +348,8 @@ i.bx {
 
 .video-section__video {
   width: 100%;
-  background: #12151D;
-  height: 550px;
+  background: #000008;
+  height: 590px;
   border-radius: 1rem;
   overflow: hidden;
 }
@@ -586,19 +591,133 @@ body .select2-selection--single.select2-selection--single {
   text-transform: capitalize;
   flex: 1;
 }
-.portfolio-card__img{
+
+.portfolio-card__img {
   display: block;
   width: 310px;
   height: 310px;
   margin: auto;
 }
-.portfolio-card__img > img{
+
+.portfolio-card__img>img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   object-position: bottom;
 }
-.slick-slide{
+
+.slick-slide {
   margin-right: 25px;
 }
+
 /* portfolio */
+/* imaging */
+.imaging-detail__img {
+  width: 100%;
+  height: 450px;
+  background: #000;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.imaging-detail__img>img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.imaging-detail__content {
+  padding: 1rem 0;
+}
+
+/* imaging */
+/* Cases */
+.cases-card {
+    padding: 1.95rem 0 2.5rem;
+    border-bottom: 1px solid #ccc;
+}
+.cases-card__header {
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+}
+
+.cases-card__header .title {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.cases-card__header {
+  margin-bottom: 0.5rem;
+}
+
+.cases-card__header .type-badge {
+  color: #4FBEF8;
+  border: 2px solid #BBBBBB;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+  border-radius: 0.25rem;
+  opacity: 0.7;
+  align-self: self-start;
+  margin-top: 0.25rem;
+}
+
+.cases-card__img {
+  width: 100%;
+  height: 180px;
+  background: #000;
+}
+
+.cases-card__img>img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cases-card__content {
+  padding: 0 1rem;
+}
+
+.cases-card__content .content {
+  font-size: 1.01rem;
+  font-weight: 500;
+  color: #767779;
+  padding: 1px 0;
+}
+
+.cases-card__content .image-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.cases-card__content .image-badge {
+  color: #fff;
+  background: #999999;
+  padding: 1px 0.45rem;
+  border-radius: 0.25rem;
+}
+
+.cases-card__content .certain {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cases-card__content .certain .level {
+  width: 12px;
+  aspect-ratio: 1/1;
+  background: #999999;
+  border-radius: 100%;
+}
+
+.cases-card__content .certain .level.green {
+  background: #8DE331;
+}
+
+.cases-card__content .certain .level.yellow {
+  background: #FED31D;
+}
+
+/* Cases */
