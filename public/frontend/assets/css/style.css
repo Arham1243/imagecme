@@ -926,7 +926,7 @@ body .select2-selection--single.select2-selection--single {
   object-fit: contain;
 }
 .editor-content {
-    font-size: 15px;
+    font-size: 13px;
     display: flex;
     flex-direction: column;
     gap: 0.65rem;
