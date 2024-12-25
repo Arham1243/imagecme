@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\DiagnosticCase;
+use Illuminate\Http\Request;
 
 class DiagnosticCaseController extends Controller
 {
@@ -18,5 +19,10 @@ class DiagnosticCaseController extends Controller
     {
 
         return view('frontend.cases.comments')->with('title', 'Comments');
+    }
+
+    public function commentsStore(Request $request)
+    {
+        dd($request->all());
     }
 }

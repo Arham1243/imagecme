@@ -1197,8 +1197,8 @@ body .select2-selection--single.select2-selection--single {
   padding: 0.41rem 1rem;
   border-radius: 0.35rem;
   display: block;
-  color: #484848;
-  background: #ffffffd6;
+  color: #323232;
+  background: #fffffffa;
   border: none;
   border-radius: 100px;
 }
@@ -1214,7 +1214,18 @@ body .select2-selection--single.select2-selection--single {
   align-items: center;
   justify-content: space-between;
   line-height: 1;
-  margin-top: 1rem;
+  margin-top: 0.72rem;
+}
+
+.emoji-picker-wrapper {
+  position: relative;
+}
+
+div#emoji-picker-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10000000000000;
 }
 
 .comment-card__fields .emoji-picker {
@@ -1222,12 +1233,21 @@ body .select2-selection--single.select2-selection--single {
   background: none;
   outline: none;
   line-height: 1;
+  width: 35px;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comment-card__fields .emoji-picker:hover {
+  background: #333333;
 }
 
 .comment-card__fields .emoji-picker i {
   color: #ffff;
-  font-size: 1.6rem;
-
+  font-size: 1.32rem;
 }
 
 .gallery-category-wrapper {
@@ -1240,6 +1260,10 @@ body.fancybox-active.compensate-for-scrollbar {
   overflow: inherit !important;
   margin: 0 !important;
   padding: 0 !important;
+}
+
+#comment-input {
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'NotoColorEmoji', 'Android Emoji', 'EmojiSymbols';
 }
 
 /* comments */

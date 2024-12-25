@@ -10,6 +10,7 @@ Route::name('frontend.')->group(function () {
     Route::prefix('case')->name('case.')->group(function () {
         Route::get('/details', [DiagnosticCaseController::class, 'details'])->name('details');
         Route::get('/comments', [DiagnosticCaseController::class, 'comments'])->name('comments');
+        Route::post('/comments', [DiagnosticCaseController::class, 'commentsStore'])->name('comments.store');
     });
 });
 

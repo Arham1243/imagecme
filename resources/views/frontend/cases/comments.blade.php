@@ -137,13 +137,24 @@
                                 <img src="https://ui-avatars.com/api/?name=sk&amp;size=80&amp;rounded=true&amp;background=random"
                                     alt="image" class="imgFluid" loading="lazy">
                             </div>
-                            <form x-data="{ comment: '' }" action="javascript:void(0)" class="comment-card__fields">
-                                <input x-model="comment" type="text" placeholder="Add a comment...">
-                                <div class="actions-wrapper">
-                                    <button class="emoji-picker" type="button"><i class='bx bx-smile'></i></button>
-                                    <button :disabled="!comment.trim()" class="comment-btn">Comment</button>
-                                </div>
-                            </form>
+                            <div class="comment-card__fields">
+                                <form action="{{ route('frontend.case.comments.store') }}" method="POST">
+                                    @csrf
+                                    <input id="comment-input" type="text" placeholder="Add a comment..."
+                                        autocomplete="off" required name="comment">
+                                    <div class="actions-wrapper">
+                                        <div class="emoji-picker-wrapper">
+                                            <button type="button" class="emoji-picker" id="emoji-button">
+                                                <i class="bx bx-smile"></i>
+                                            </button>
+                                            <div id="emoji-picker-container" style="display: none;"></div>
+                                        </div>
+                                        <button class="comment-btn" id="comment-btn" disabled>Comment</button>
+                                    </div>
+                                </form>
+                            </div>
+
+
                         </div>
                         <div class="comment-card">
                             <div class="comment-card__avatar">
@@ -208,7 +219,7 @@
                             </div>
                             <div class="comment-card__details">
                                 <div class="wrapper">
-                                    <div class="name">John Doe <div class="author">author</div>
+                                    <div class="name">John Doe <div class="author">Author</div>
                                     </div>
                                     <div class="time">45 minutes ago</div>
                                 </div>
@@ -359,4 +370,60 @@
             border-top-color: #fff !important;
         }
     </style>
+@endpush
+
+@push('js')
+    <script src="https://cdn.jsdelivr.net/npm/emoji-mart@5.6.0/dist/browser.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const commentInput = document.getElementById('comment-input');
+            const emojiButton = document.getElementById('emoji-button');
+            const commentButton = document.getElementById('comment-btn');
+            const emojiPickerContainer = document.getElementById('emoji-picker-container');
+            let picker;
+
+
+            picker = new EmojiMart.Picker({
+                onEmojiSelect: emoji => {
+                    commentInput.value += emoji.native;
+                    toggleCommentButton();
+                },
+                emojiSize: 25,
+                set: 'apple',
+
+                include: (emoji) => {
+
+                    const excludeEmojis = ['🫥'];
+                    return !excludeEmojis.includes(emoji.native);
+                }
+            });
+
+            emojiPickerContainer.appendChild(picker);
+
+            emojiButton.addEventListener('click', function(event) {
+                event.stopPropagation();
+
+                if (emojiPickerContainer.style.display === 'none' || emojiPickerContainer.innerHTML ===
+                    '') {
+                    emojiPickerContainer.style.display = 'block';
+                } else {
+                    emojiPickerContainer.style.display = 'none';
+                }
+            });
+
+            document.addEventListener('click', function(event) {
+                if (!emojiPickerContainer.contains(event.target) && event.target !== emojiButton) {
+                    emojiPickerContainer.style.display = 'none';
+                }
+            });
+
+            commentInput.addEventListener('input', toggleCommentButton);
+
+            function toggleCommentButton() {
+                commentButton.disabled = !commentInput.value.trim();
+            }
+
+            toggleCommentButton();
+        });
+    </script>
 @endpush
