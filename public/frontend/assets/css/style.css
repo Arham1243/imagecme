@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
-
+    
 /* Boxicons */
 @font-face {
   font-family: boxicons;
@@ -854,7 +854,7 @@ body .select2-selection--single.select2-selection--single {
 }
 
 .gallery-option:hover {
-  background: #212121;
+  /* background: #212121; */
 }
 
 .gallery-option.active i {

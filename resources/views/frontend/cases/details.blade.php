@@ -16,12 +16,10 @@
                                         <span>images</span>
                                     </div>
                                     <div class="gallery-option ">
-                                        <i class='bx bx-info-circle'></i>
-                                        <span>Story Questions</span>
+
                                     </div>
                                     <div class="gallery-option ">
-                                        <i class='bx bx-file'></i>
-                                        <span>Fundings</span>
+
                                     </div>
                                 </div>
                                 <div class="gallery-sidebar__body">
