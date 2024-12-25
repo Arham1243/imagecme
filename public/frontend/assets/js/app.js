@@ -42,3 +42,18 @@ $('.portfolio-slider').slick({
     slidesToScroll: 1,
     pauseOnHover: false
 });
+
+// ToolTips
+const showTooltips = () => {
+    document
+        .querySelectorAll('[data-tooltip="tooltip"]')
+        .forEach(function (element) {
+            new bootstrap.Tooltip(element, {
+                html: true,
+            });
+        });
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+    showTooltips();
+});

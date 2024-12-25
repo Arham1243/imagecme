@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
-    <div class='gallery gallery--bg'>
+    <div class='gallery case-details-bg'>
         <a href="{{ route('frontend.index') }}" class="back-btn"><i class='bx bx-chevron-left'></i></a>
         <div class='container-fluid p-0'>
             <div x-data="{
@@ -114,7 +114,8 @@
                                 <div class="row g-0 align-items-center">
                                     <div class="col-md-5">
                                         <div class="gallery-content-info">
-                                            <a href="javascript:void(0)" class="view-btn">View Discussion</a>
+                                            <a href="{{ route('frontend.case.comments') }}" class="view-btn">View
+                                                Discussion</a>
                                             <div class="editor-content">
 
                                                 <h1>COPD</h1>

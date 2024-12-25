@@ -13,4 +13,10 @@ class DiagnosticCaseController extends Controller
 
         return view('frontend.cases.details')->with('title', 'Case Details');
     }
+
+    public function comments()
+    {
+
+        return view('frontend.cases.comments')->with('title', 'Comments');
+    }
 }
