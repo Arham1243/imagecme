@@ -1253,7 +1253,7 @@ div#emoji-picker-container {
 .gallery-category-wrapper {
   position: sticky;
   top: 1rem;
-  padding: 3rem 0 0 1.5rem;
+  padding: 3rem 0 0 1.75rem;
 }
 
 body.fancybox-active.compensate-for-scrollbar {
