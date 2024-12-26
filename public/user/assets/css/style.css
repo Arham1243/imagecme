@@ -1916,7 +1916,7 @@ input[readonly]:not(.date-picker, .date-picker-time) {
 }
 
 .rating:not(:checked)>label:before {
-    content: "★";
+    content: "â˜…";
 }
 
 .rating>input:checked~label {
@@ -2442,7 +2442,7 @@ button[data-tooltip="tooltip"] {
 .chat-box__form {
     background: #2F2F2F;
     border-radius: 1.5rem;
-    padding: 0.75rem 1.1rem 0.7rem;
+    padding: 0.75rem 1.25rem 0.7rem;
 }
 
 .chat-box__form .chat-input {
@@ -2491,7 +2491,7 @@ button[data-tooltip="tooltip"] {
     color: #fff;
     border-radius: 100%;
     position: relative;
-    left: -.45rem;
+    left: -.5rem;
 }
 
 .chat-box__form .circle-btn {
