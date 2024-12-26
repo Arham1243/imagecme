@@ -1,5 +1,10 @@
 @extends('frontend.layouts.main')
 @section('content')
+
+    <div class="loader-mask" id="loader">
+        <div class="loader"></div>
+    </div>
+
     <div class='gallery case-details-bg'>
         <a href="{{ route('frontend.index') }}" class="back-btn"><i class='bx bx-chevron-left'></i></a>
         <div class='container-fluid p-0'>

@@ -1366,3 +1366,39 @@ body.fancybox-active.compensate-for-scrollbar {
 }
 
 /* comments */
+
+
+/* Loader CSS */
+.loader-mask {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000000000000;
+  background: #0E0E0E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e8e8e8;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+
+  100% {
+      transform: rotate(360deg);
+  }
+}
+/* Loader CSS */

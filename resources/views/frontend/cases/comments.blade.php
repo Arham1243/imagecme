@@ -1,13 +1,18 @@
 @extends('frontend.layouts.main')
 @section('content')
+
+    <div class="loader-mask" id="loader">
+        <div class="loader"></div>
+    </div>
+
     <div class="case-details case-details-bg">
         <a href="{{ route('frontend.cases.details', $case->slug) }}" class="back-btn"><i class="bx bx-chevron-left"></i></a>
         <div class="container">
             <div class="row g-0">
                 <div class="col-md-12">
                     <div class="case-details__image">
-                        <img src="{{ asset($case->featured_image ?? 'admin/assets/images/placeholder.png') }}" alt="image"
-                            class="imgFluid" loading="lazy">
+                        <img src="{{ asset($case->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                            alt="image" class="imgFluid" loading="lazy">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -91,8 +96,8 @@
                         </div>
                     </div>
                     @if (!in_array($case->case_type, ['share_image_diagnosis', 'ask_ai_image_diagnosis']))
-                        <div class="case-details__comments">
-                            <div class="heading">{{ count($case->comments) }} Comments</div>
+                        <div class="case-details__comments" id="comments-section">
+                            <div class="heading">{{ count($comments) }} Comments</div>
                             @if (Auth::check())
                                 <div class="comment-card mb-4 pb-2">
                                     <div class="comment-card__avatar">
@@ -130,8 +135,8 @@
                                     write a comment.
                                 </div>
                             @endif
-                            @if ($case->comments->isNotEmpty())
-                                @foreach ($case->comments as $comment)
+                            @if ($comments->isNotEmpty())
+                                @foreach ($comments as $comment)
                                     <div class="comment-card" x-data="{ isEditMode: false, expanded: false, isHeightExceeded: false }" x-init=" const commentElement = $el.querySelector('.comment');
                                      if (commentElement.scrollHeight > 82) { isHeightExceeded = true; }">
 
@@ -167,50 +172,57 @@
                                                 data-less-content="Show Less" data-show-more-btn></button>
                                         </div>
                                         @if (Auth::check() && Auth::user()->id === $comment->user_id)
-                                            <div x-show="isEditMode" class="comment-card__fields">
-                                                <form
-                                                    action="{{ route('frontend.cases.comments.update', ['slug' => $case->slug, 'comment' => $comment->id]) }}"
-                                                    method="POST" class="comment-form">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required
-                                                        name="comment" rows="1">{{ $comment->comment_text }}</textarea>
-                                                    <div class="actions-wrapper">
-                                                        <div class="emoji-picker-wrapper">
-                                                            <button type="button" class="emoji-picker">
-                                                                <i class="bx bx-smile"></i>
-                                                            </button>
-                                                            <div class="emoji-picker-container" style="display: none;">
+                                            @if ($comment->canEdit)
+                                                <div x-show="isEditMode" class="comment-card__fields">
+                                                    <form
+                                                        action="{{ route('frontend.cases.comments.update', ['slug' => $case->slug, 'comment' => $comment->id]) }}"
+                                                        method="POST" class="comment-form">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required
+                                                            name="comment" rows="1">{{ $comment->comment_text }}</textarea>
+                                                        <div class="actions-wrapper">
+                                                            <div class="emoji-picker-wrapper">
+                                                                <button type="button" class="emoji-picker">
+                                                                    <i class="bx bx-smile"></i>
+                                                                </button>
+                                                                <div class="emoji-picker-container"
+                                                                    style="display: none;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="actions-btns">
+                                                                <button @click="isEditMode = false" type="button"
+                                                                    class="action-btn cancel-btn">Cancel</button>
+                                                                <button class="action-btn comment-btn"
+                                                                    disabled>Save</button>
                                                             </div>
                                                         </div>
-                                                        <div class="actions-btns">
-                                                            <button @click="isEditMode = false" type="button"
-                                                                class="action-btn cancel-btn">Cancel</button>
-                                                            <button class="action-btn comment-btn" disabled>Save</button>
-                                                        </div>
-                                                    </div>
-                                                    @error('comment')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </form>
-                                            </div>
+                                                        @error('comment')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </form>
+                                                </div>
+                                            @endif
                                             <div x-show="!isEditMode" class="dropstart bootsrap-dropdown">
                                                 <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown"
                                                     aria-expanded="false">
                                                     <i class='bx bx-dots-vertical-rounded'></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a class="dropdown-item edit-btn" href="javascript:void(0)"
-                                                            @click="isEditMode = true">
-                                                            <i class='bx bx-pencil'></i>
-                                                            Edit
-                                                        </a>
-                                                    </li>
+                                                    @if ($comment->canEdit)
+                                                        <li>
+                                                            <a class="dropdown-item edit-btn" href="javascript:void(0)"
+                                                                @click="isEditMode = true">
+                                                                <i class='bx bx-pencil'></i>
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                    @endif
                                                     <li>
                                                         <a class="dropdown-item"
                                                             href="{{ route('frontend.cases.comments.deleteItem', ['slug' => $case->slug, 'id' => $comment->id]) }}"
-                                                            onclick="return confirm('Are You Sure want to delete?')">
+                                                            onclick="return confirm('Are you sure you want to delete this comment?')">
+
                                                             <i class='bx bx-trash'></i>
                                                             delete
                                                         </a>
