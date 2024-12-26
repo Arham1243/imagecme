@@ -93,6 +93,7 @@ i.bx {
     transition: all 300ms;
     cursor: pointer;
 }
+
 .themeBtn img {
     filter: invert(1);
     width: 16px;
@@ -2388,6 +2389,7 @@ button[data-tooltip="tooltip"] {
     padding: 4px !important;
     border-radius: 7px;
 }
+
 .case-image-box {
     position: relative;
     background: #fff;
@@ -2416,3 +2418,116 @@ button[data-tooltip="tooltip"] {
 .close-btn i {
     font-size: 1.35rem;
 }
+
+/* chat */
+.chat-bg {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+    min-height: 80vh;
+}
+
+.header-icon {
+    width: 135px;
+}
+
+.header-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.chat-box__form {
+    background: #2F2F2F;
+    border-radius: 1.5rem;
+    padding: 0.75rem 1.1rem 0.7rem;
+}
+
+.chat-box__form .chat-input {
+    width: 100%;
+    background: none;
+    border: none;
+    outline: none;
+    color: #ECECEC;
+    font-size: 0.95rem;
+    resize: none;
+    min-height: 30px;
+    overflow-y: auto;
+    padding-right: 2rem;
+}
+
+.chat-box__form .chat-input.scroll {
+    height: 140px !important;
+    min-height: auto;
+    overflow-y: auto;
+}
+.chat-box__form .chat-input::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box__form .chat-input::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat-box__form .chat-input::-webkit-scrollbar-thumb {
+    background: #424242;
+}
+
+
+.chat-box__form .actions-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-box__form .icon-btn {
+    line-height: 1;
+    width: 33px;
+    aspect-ratio: 1/1;
+    border: none;
+    background: none;
+    color: #fff;
+    border-radius: 100%;
+    position: relative;
+    left: -.35rem;
+}
+
+.chat-box__form .circle-btn {
+    background: #fff;
+    border: none;
+    outline: none;
+    line-height: 1;
+    width: 32px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    transition: all 150ms;
+}
+
+.chat-box .heading {
+    color: #ECECEC;
+    font-size: 1.75rem;
+    margin-bottom: 1.15rem;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.chat-box__form .icon-btn:hover {
+    background: #211f1fdb;
+}
+
+.chat-box__form .circle-btn:hover {
+    background: #C1C1C1;
+}
+.chat-box__form .circle-btn[disabled]{
+    opacity: 1;
+    background: #b1b0b0;
+    cursor:initial;
+    color: #000;
+}
+.action-wrapper {
+    margin-top: 0.35rem;
+}
+/* chat */

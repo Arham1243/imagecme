@@ -9,7 +9,8 @@
                     <div class="col-md-5">
                         <div class="input-search">
                             <button class="search-icon"><i class='bx bx-search'></i></button>
-                            <input type="text" autocomplete="off" placeholder="Search" name="search" id="globalSearch">
+                            <input type="text" autocomplete="off" placeholder="Search" name="search"
+                                id="globalSearch">
                             <div class="search-results">
                                 <ul class="search-results__values"></ul>
                             </div>
@@ -28,7 +29,7 @@
                 <div class="user-profile">
                     <div class="name">
                         <div class="name1">{{ Auth::user()->email }}</div>
-                        <div class="role">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name}}</div>
+                        <div class="role">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</div>
                     </div>
                     <div class="user-image-icon">
                         <i class='bx bxs-user-circle'></i>
