@@ -18,7 +18,8 @@
                                         src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
                                         class='imgFluid' loading='lazy'> Ask AI</a>
                             @endif
-                            <a href="javascript:void(0)" class="themeBtn"><i class='bx bxs-show'></i> View Image</a>
+                            <a href="{{ route('frontend.cases.details', $case->slug) }}" class="themeBtn"><i
+                                    class='bx bxs-show'></i> View Image</a>
                         </div>
                     </div>
                 </div>
