@@ -1,5 +1,7 @@
 <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-<script defer src="{{ asset('user/assets/js/alpine.min.js') }}"></script>
+@if (!isset($hideAlpine))
+    <script defer src="{{ asset('user/assets/js/alpine.min.js') }}"></script>
+@endif
 <link href="{{ asset('user/assets/css/dataTables.min.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('user/assets/css/select2.min.css?v=' . time()) }}" rel="stylesheet" />
 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>

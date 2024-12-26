@@ -2455,7 +2455,7 @@ button[data-tooltip="tooltip"] {
     resize: none;
     min-height: 30px;
     overflow-y: auto;
-    padding-right: 2rem;
+    padding-right: 1.75rem;
 }
 
 .chat-box__form .chat-input.scroll {
@@ -2491,7 +2491,7 @@ button[data-tooltip="tooltip"] {
     color: #fff;
     border-radius: 100%;
     position: relative;
-    left: -.35rem;
+    left: -.45rem;
 }
 
 .chat-box__form .circle-btn {
