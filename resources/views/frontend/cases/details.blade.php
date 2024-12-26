@@ -4,7 +4,7 @@
         <a href="{{ route('frontend.index') }}" class="back-btn"><i class='bx bx-chevron-left'></i></a>
         <div class='container-fluid p-0'>
             <div x-data="{
-                activeImage: '{{ asset('frontend/assets/images/portfolio/1.png') }}'
+                activeImage: '{{ asset($case->featured_image ?? 'admin/assets/images/placeholder.png') }}'
             }">
                 <div class="gallery-box">
                     <div class='row g-0'>
@@ -23,87 +23,28 @@
                                     </div>
                                 </div>
                                 <div class="gallery-sidebar__body">
-                                    <div class="gallery-category">
-                                        <div class="gallery-category__title">X-ray</div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="gallery-category__item">
-                                                    <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/1.png') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/1.png') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/1.png') }}'
-                                                            alt='image' class='imgFluid' loading='lazy'>
-                                                    </div>
-                                                    <div class="cover-name">Frontal</div>
+                                    @if ($case->image_types->isNotEmpty())
+                                        @foreach ($case->image_types as $type => $images)
+                                            <div class="gallery-category">
+                                                <div class="gallery-category__title">{{ $type }}</div>
+                                                <div class="row">
+                                                    @foreach ($images as $image)
+                                                        <div class="col-md-6">
+                                                            <div class="gallery-category__item">
+                                                                <div class="cover-image"
+                                                                    :class="{ 'active': activeImage === '{{ asset($image->path) }}' }"
+                                                                    @click="activeImage = '{{ asset($image->path) }}'">
+                                                                    <img src='{{ asset($image->path) }}' alt='image'
+                                                                        class='imgFluid' loading='lazy'>
+                                                                </div>
+                                                                <div class="cover-name">{{ $image->name }}</div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="gallery-category__item">
-                                                    <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/2.png') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/2.png') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/2.png') }}'
-                                                            alt='image' class='imgFluid' loading='lazy'>
-                                                    </div>
-                                                    <div class="cover-name">Frontal</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery-category">
-                                        <div class="gallery-category__title">MRI</div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="gallery-category__item">
-                                                    <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/3.png') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/3.png') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/3.png') }}'
-                                                            alt='image' class='imgFluid' loading='lazy'>
-                                                    </div>
-                                                    <div class="cover-name">Frontal</div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="gallery-category__item">
-                                                    <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/4.png') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/4.png') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/4.png') }}'
-                                                            alt='image' class='imgFluid' loading='lazy'>
-                                                    </div>
-                                                    <div class="cover-name">Frontal</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="gallery-category">
-                                        <div class="gallery-category__title">Ultrasound</div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="gallery-category__item">
-                                                    <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/5.jpg') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/5.jpg') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/5.jpg') }}'
-                                                            alt='image' class='imgFluid' loading='lazy'>
-                                                    </div>
-                                                    <div class="cover-name">Frontal</div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="gallery-category__item">
-                                                    <div class="cover-image"
-                                                        :class="{ 'active': activeImage === '{{ asset('frontend/assets/images/portfolio/5.png') }}' }"
-                                                        @click="activeImage = '{{ asset('frontend/assets/images/portfolio/5.png') }}'">
-                                                        <img src='{{ asset('frontend/assets/images/portfolio/5.png') }}'
-                                                            alt='image' class='imgFluid' loading='lazy'>
-                                                    </div>
-                                                    <div class="cover-name">Frontal</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -112,104 +53,60 @@
                                 <div class="row g-0 align-items-center">
                                     <div class="col-md-5">
                                         <div class="gallery-content-info">
-                                            <a href="{{ route('frontend.case.comments') }}" class="view-btn">View
+                                            <a href="{{ route('frontend.cases.comments.index', $case->slug) }}"
+                                                class="view-btn">View
                                                 Discussion</a>
-                                            <div class="editor-content">
-
-                                                <h1>COPD</h1>
-
-                                                <p>A 60 year old female presents to her GP with fatigue, weight loss and
-                                                    wheeze.
-                                                    There is no significant past medical history. She is a non-smoker. On
-                                                    examination, she has saturations of 99% in air and is afebrile. There is
-                                                    wheeze
-                                                    in the right upper zone. A chest X-ray is requested to assess for
-                                                    malignancy
-                                                    or
-                                                    COPD.</p>
-
-                                                <p><strong>Patient ID:</strong> Anonymous <strong>Projection:</strong> PA
-                                                </p>
-                                                <p><strong>Penetration:</strong> Adequate – vertebral bodies just visible
-                                                    behind
-                                                    heart</p>
-                                                <p><strong>Inspiration:</strong> Adequate – 7 anterior ribs visible</p>
-                                                <p><strong>Rotation:</strong> The patient is slightly rotated to the right
-                                                </p>
-
-                                                <h2>AIRWAY</h2>
-                                                <p>The trachea is central after factoring in patient rotation.</p>
-
-                                                <h2>BREATHING</h2>
-                                                <p>There is a right upper zone mass projected over the anterior aspects of
-                                                    the
-                                                    right
-                                                    1st and 2nd ribs. There are multiple small pulmonary nodules visible
-                                                    within
-                                                    the
-                                                    left hemithorax.</p>
-                                                <p>The lungs are not hyperinflated.</p>
-                                                <p>There is pleural thickening at the right lung apex.</p>
-                                                <p>Normal pulmonary vascularity.</p>
-
-                                                <h2>CIRCULATION</h2>
-                                                <p>The heart is not enlarged. The heart borders are clear. The aorta appears
-                                                    normal.
-                                                </p>
-                                                <p>The mediastinum is central, and not widened. The right upper zone mass
-                                                    appears
-                                                    contiguous with the superior mediastinum.</p>
-                                                <p>The right hilum is abnormally dense. It also appears higher than the
-                                                    left.
-                                                    Normal
-                                                    size, shape and position of the left hilum.</p>
-
-                                                <h2>DIAPHRAGM + DELICATES</h2>
-                                                <p>Normal appearance and position of the hemidiaphragms.</p>
-                                                <p>No pneumoperitoneum.</p>
-                                                <p>The imaged skeleton is intact with no fractures or destructive bony
-                                                    lesions
-                                                    visible.</p>
-                                                <p>The visible soft tissues are unremarkable.</p>
-
-                                                <h2>EXTRAS + REVIEW AREAS</h2>
-                                                <p>No vascular lines, tubes, or surgical clips.</p>
-                                                <ul>
-                                                    <li><strong>Lung Apices:</strong> Right apical pleural thickening</li>
-                                                    <li><strong>Hila:</strong> Dense right hilum, normal left hilum</li>
-                                                    <li><strong>Behind Heart:</strong> Normal</li>
-                                                    <li><strong>Costophrenic Angles:</strong> Normal</li>
-                                                    <li><strong>Below the Diaphragm:</strong> Normal</li>
+                                            <div class="my-4">
+                                                <ul class="case-details-list">
+                                                    <li><strong>Diagnosis Title:</strong> {{ $case->diagnosis_title }}</li>
+                                                    <li><strong>Diagnosed Disease:</strong> {{ $case->diagnosed_disease }}
+                                                    </li>
+                                                    <li><strong>Ease of Diagnosis:</strong> {{ $case->ease_of_diagnosis }}
+                                                    </li>
+                                                    <li><strong>Certainty:</strong> {{ $case->certainty }}</li>
+                                                    <li><strong>Ethnicity:</strong> {{ $case->ethnicity }}</li>
+                                                    <li><strong>Segment:</strong> {{ $case->segment }}</li>
+                                                    <li><strong>Image Quality:</strong> {{ $case->image_quality }}</li>
+                                                    <li><strong>Clinical Examination:</strong>
+                                                        {{ $case->clinical_examination }}</li>
+                                                    <li><strong>Patient Age:</strong> {{ $case->patient_age }}</li>
+                                                    <li><strong>Patient Gender:</strong> {{ $case->patient_gender }}</li>
+                                                    <li><strong>Patient Socio-Economic Status:</strong>
+                                                        {{ $case->patient_socio_economic }}</li>
+                                                    <li><strong>Patient Concomitant:</strong>
+                                                        {{ $case->patient_concomitant }}
+                                                    </li>
+                                                    <li><strong>Patient Others:</strong> {{ $case->patient_others }}</li>
+                                                    @if (!empty(json_decode($case->authors)))
+                                                        <li class="d-block"><strong>Authors:</strong>
+                                                            <ul>
+                                                                @foreach (json_decode($case->authors) as $author)
+                                                                    <li class="d-block">
+                                                                        @if ($author->name)
+                                                                            <strong>Name:</strong> {{ $author->name }}<br>
+                                                                        @endif
+                                                                        @if ($author->doi)
+                                                                            <strong>DOI:</strong> {{ $author->doi }}<br>
+                                                                        @endif
+                                                                        @if ($author->article_link)
+                                                                            <strong>Article Link:</strong> <a class="link"
+                                                                                href="{{ $author->article_link }}"
+                                                                                title="{{ $author->article_link }}"
+                                                                                data-tooltip="tooltip" target="_blank">Open
+                                                                                in
+                                                                                new
+                                                                                tab</a>
+                                                                        @endif
+                                                                    </li>
+                                                                    <hr>
+                                                                @endforeach
+                                                            </ul>
+                                                        </li>
+                                                    @endif
                                                 </ul>
-
-                                                <h2>SUMMARY, INVESTIGATIONS & MANAGEMENT</h2>
-                                                <p>This X-ray demonstrates a large, rounded right upper lobe lung lesion
-                                                    associated
-                                                    with multiple smaller nodules. This is highly suspicious of a right
-                                                    upper
-                                                    lobe
-                                                    primary lung cancer with lung metastases. The dense right hilum is
-                                                    suspicious
-                                                    for hilar nodal disease. The significance of the right apical pleural
-                                                    thickening
-                                                    is not clear.</p>
-
-                                                <p>Initial blood tests may include FBC, U/Es, CRP, LFTs, & bone profile.</p>
-
-                                                <p>The patient should be referred to respiratory/oncology services for
-                                                    further
-                                                    management, which may include biopsy and MDT discussion. Treatment,
-                                                    which
-                                                    may
-                                                    include surgery, radiotherapy, chemotherapy, or palliative treatment,
-                                                    will
-                                                    depend on the outcome of the MDT discussion, investigations, and the
-                                                    patient’s
-                                                    wishes.</p>
-
-                                                <p>Initial blood tests may include FBC, U/Es, CRP, LFTs, & bone profile.</p>
-
-                                                <p>A staging CT chest, and abdomen with IV contrast should be performed.</p>
+                                            </div>
+                                            <div class="editor-content">
+                                                {!! $case->content !!}
                                             </div>
                                         </div>
                                     </div>
@@ -235,6 +132,15 @@
         header,
         footer {
             display: none;
+        }
+
+        .tooltip-inner {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .tooltip-arrow::before {
+            border-top-color: #fff !important;
         }
     </style>
 @endpush

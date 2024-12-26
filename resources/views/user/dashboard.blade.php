@@ -15,8 +15,8 @@
                         <a href="{{ route('user.cases.index') }}" class="revenue-card">
                             <div class="revenue-card__icon"><i class='bx bx-lg bxs-report'></i></div>
                             <div class="revenue-card__content">
-                                <div class="title">Cases Management</div>
-                                <div class="num">Cases </div>
+                                <div class="title">Images Management</div>
+                                <div class="num">Images </div>
                             </div>
                         </a>
                     </div>

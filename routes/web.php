@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CommentController;
 use App\Http\Controllers\Frontend\DiagnosticCaseController;
 use App\Http\Controllers\Frontend\IndexController;
 use Illuminate\Support\Facades\Route;
@@ -7,10 +8,10 @@ use Illuminate\Support\Facades\Route;
 Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::get('/imaging/{slug}', [IndexController::class, 'imagingDetail'])->name('imagingDetail');
-    Route::prefix('case')->name('case.')->group(function () {
-        Route::get('/details', [DiagnosticCaseController::class, 'details'])->name('details');
-        Route::get('/comments', [DiagnosticCaseController::class, 'comments'])->name('comments');
-        Route::post('/comments', [DiagnosticCaseController::class, 'commentsStore'])->name('comments.store');
+    Route::prefix('cases')->name('cases.')->group(function () {
+        Route::get('/{slug}', [DiagnosticCaseController::class, 'details'])->name('details');
+        Route::resource('/{slug}/comments', CommentController::class);
+        Route::get('/{slug}/comments/delete-item/{id}', [CommentController::class, 'deleteItem'])->name('comments.deleteItem');
     });
 });
 

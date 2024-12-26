@@ -33,6 +33,7 @@ class DiagnosticCaseController extends Controller
         $diagnosticCase = DiagnosticCase::create([
             'slug' => $this->createSlug($request['diagnosis_title'], 'cases'),
             'case_type' => $request['case_type'],
+            'user_id' => Auth::user()->id,
             'content' => $request['content'] ?? null,
             'image_quality' => $request['image_quality'],
             'diagnosis_title' => $request['diagnosis_title'],
@@ -96,8 +97,9 @@ class DiagnosticCaseController extends Controller
         $diagnosticCase = DiagnosticCase::findOrFail($id);
 
         $diagnosticCase->update([
-            'slug' => $this->createSlug($request['diagnosis_title'], 'cases'),
+            'slug' => $this->createSlug($request['diagnosis_title'], 'cases', $diagnosticCase->slug),
             'case_type' => $request['case_type'],
+            'user_id' => Auth::user()->id,
             'content' => $request['content'] ?? null,
             'image_quality' => $request['image_quality'],
             'diagnosis_title' => $request['diagnosis_title'],

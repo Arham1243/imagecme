@@ -113,306 +113,50 @@
         </div>
     </div>
 
-    <div class='cases section-padding'>
-        <div class='container'>
-            <div class='row'>
-                <div class='col-md-6'>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level green"></div>
-                                        Diagnois almost certain
+    @if ($cases->isNotEmpty())
+        <div class='cases section-padding'>
+            <div class='container'>
+                <div class='row'>
+                    @foreach ($cases as $case)
+                        <div class='col-md-6'>
+                            <div class='cases-card'>
+                                <div class="cases-card__header">
+                                    <div class="title">{{ $case->diagnosis_title }}</div>
+                                    <div class="type-badge">{{ $case->case_name }}</div>
+                                </div>
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-md-4">
+                                        <a href="{{ route('frontend.cases.details', $case->slug) }}"
+                                            class='cases-card__img'>
+                                            <img src='{{ asset($case->featured_image) }}' alt='image' class='imgFluid'>
+                                        </a>
                                     </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
+                                    <div class="col-md-8">
+                                        <div class='cases-card__content'>
+                                            <div class="content certain">
+                                                <div
+                                                    class="level {{ $case->certainty === 'Uncertain' ? 'yellow' : 'green' }}">
+                                                </div>
+                                                Diagnois {{ $case->certainty }}
+                                            </div>
+                                            <div class="content">{{ $case->user->full_name ?? 'Anonymous' }}</div>
+                                            <div class="content">Published {{ formatDate($case->created_at) }}</div>
+                                            <div class="content"> {{ $case->diagnosed_disease ?? 'N/A' }}</div>
+                                            @if ($case->image_types->isNotEmpty())
+                                                <ul class="image-badges">
+                                                    @foreach ($case->image_types as $type => $images)
+                                                        <li class="image-badge">{{ $type }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level yellow"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level green"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level yellow"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level green"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class='col-md-6'>
-
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level green"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level green"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbgjFSXmRzpMxTXr5td7-matshUVlQDFPhGg&s'
-                                        alt='image' class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level green"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://www.e7health.com/files/blogs/chest-x-ray-29.jpg' alt='image'
-                                        class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level yellow"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class='cases-card'>
-                        <div class="cases-card__header">
-                            <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
-                            <div class="type-badge">Case</div>
-                        </div>
-                        <div class="row g-0 align-items-center">
-                            <div class="col-md-4">
-                                <a href="{{ route('frontend.case.details') }}" class='cases-card__img'> <img
-                                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpG0xwjiIHyvGSCIJDOCZ_VEzEntS0LHnhCQ&s'
-                                        alt='image' class='imgFluid'> </a>
-                            </div>
-                            <div class="col-md-8">
-                                <div class='cases-card__content'>
-                                    <div class="content certain">
-                                        <div class="level yellow"></div>
-                                        Diagnois almost certain
-                                    </div>
-                                    <div class="content">David Horvath</div>
-                                    <div class="content">Published 11 March 2023</div>
-                                    <div class="content">82% complete</div>
-                                    <ul class="image-badges">
-                                        <li class="image-badge">X-ray</li>
-                                        <li class="image-badge">CT</li>
-                                        <li class="image-badge">Ultrasound</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection

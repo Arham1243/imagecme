@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\DiagnosticCase;
 
 class IndexController extends Controller
 {
     public function index()
     {
-        return view('frontend.index')->with('title', 'Home');
+        $cases = DiagnosticCase::where('status', 'active')->latest()->get();
+        $data = compact('cases');
+
+        return view('frontend.index')->with(['title' => 'Home', 'cases' => $cases]);
     }
 
     public function imagingDetail($slug)

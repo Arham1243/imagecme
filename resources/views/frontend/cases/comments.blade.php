@@ -1,352 +1,256 @@
 @extends('frontend.layouts.main')
 @section('content')
     <div class="case-details case-details-bg">
-        <a href="http://127.0.0.1:8000/case/details" class="back-btn"><i class="bx bx-chevron-left"></i></a>
+        <a href="{{ route('frontend.cases.details', $case->slug) }}" class="back-btn"><i class="bx bx-chevron-left"></i></a>
         <div class="container">
             <div class="row g-0">
                 <div class="col-md-12">
                     <div class="case-details__image">
-                        <img src="http://127.0.0.1:8000/frontend/assets/images/portfolio/5.jpg" alt="image"
+                        <img src="{{ asset($case->featured_image ?? 'admin/assets/images/placeholder.png') }}" alt="image"
                             class="imgFluid" loading="lazy">
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="case-details__content">
-                        <div class="title">Chronic obstructive pulmonary disease (COPD)</div>
+                        <div class="title">{{ $case->diagnosed_disease }}</div>
                         <div class="user-profile">
                             <div class="user-profile___avatar">
-                                <img src="https://ui-avatars.com/api/?name=jd&amp;size=80&amp;rounded=true&amp;background=random"
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode($case->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
                                     alt="image" class="imgFluid" loading="lazy">
                             </div>
                             <div class="user-profile__info">
-                                <div title="John Doe" class="name" data-tooltip="tooltip">John Doe <i
-                                        class='bx bxs-check-circle'></i></div>
-                                <div class="level">Senior Student</div>
+                                <div title="{{ $case->user->full_name ?? 'Anonymous' }}" class="name"
+                                    data-tooltip="tooltip">{{ $case->user->full_name ?? 'Anonymous' }}
+                                    @if ($case->user)
+                                        <i class='bx bxs-check-circle'></i>
+                                    @endif
+                                </div>
+                                <div class="level">{{ $case->user->role ?? '' }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="case-details__details">
-                        <div class="date">Aug 11, 2020</div>
-                        <div x-data="{ expanded: false }" :class="{ 'd-block': expanded }" class="editor-content"
+                        <div class="date">{{ formatDate($case->created_at) }}</div>
+
+
+                        <div x-data="{ expanded: false }" :class="{ 'd-block': expanded }" class="case-details-list"
                             data-show-more-container>
                             <button x-on:click="expanded = !expanded"
                                 x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
                                 type="button" data-more-content="..more" data-less-content="Show Less"
                                 data-show-more-btn></button>
+                            <li><strong>Diagnosis Title:</strong> {{ $case->diagnosis_title }}</li>
+                            <li><strong>Diagnosed Disease:</strong> {{ $case->diagnosed_disease }}
+                            </li>
+                            <li><strong>Ease of Diagnosis:</strong> {{ $case->ease_of_diagnosis }}
+                            </li>
+                            <li><strong>Certainty:</strong> {{ $case->certainty }}</li>
+                            <li><strong>Ethnicity:</strong> {{ $case->ethnicity }}</li>
+                            <li><strong>Segment:</strong> {{ $case->segment }}</li>
+                            <li><strong>Image Quality:</strong> {{ $case->image_quality }}</li>
+                            <li><strong>Clinical Examination:</strong>
+                                {{ $case->clinical_examination }}</li>
+                            <li><strong>Patient Age:</strong> {{ $case->patient_age }}</li>
+                            <li><strong>Patient Gender:</strong> {{ $case->patient_gender }}</li>
+                            <li><strong>Patient Socio-Economic Status:</strong>
+                                {{ $case->patient_socio_economic }}</li>
+                            <li><strong>Patient Concomitant:</strong>
+                                {{ $case->patient_concomitant }}
+                            </li>
+                            <li><strong>Patient Others:</strong> {{ $case->patient_others }}</li>
+                            @if (!empty(json_decode($case->authors)))
+                                <li class="d-block"><strong>Authors:</strong>
+                                    <ul class="ms-0">
+                                        @foreach (json_decode($case->authors) as $author)
+                                            <li class="d-block">
+                                                @if ($author->name)
+                                                    <strong>Name:</strong> {{ $author->name }}<br>
+                                                @endif
+                                                @if ($author->doi)
+                                                    <strong>DOI:</strong> {{ $author->doi }}<br>
+                                                @endif
+                                                @if ($author->article_link)
+                                                    <strong>Article Link:</strong> <a class="link"
+                                                        href="{{ $author->article_link }}"
+                                                        title="{{ $author->article_link }}" data-tooltip="tooltip"
+                                                        target="_blank">Open
+                                                        in
+                                                        new
+                                                        tab</a>
+                                                @endif
+                                            </li>
+                                            <hr>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @endif
+                            <div class="editor-content">
+                                {!! $case->content !!}
+                            </div>
 
-                            <h1>COPD</h1>
-
-                            <p>A 60 year old female presents to her GP with fatigue, weight loss and
-                                wheeze.
-                                There is no significant past medical history. She is a non-smoker. On
-                                examination, she has saturations of 99% in air and is afebrile. There is
-                                wheeze
-                                in the right upper zone. A chest X-ray is requested to assess for
-                                malignancy
-                                or
-                                COPD.</p>
-
-                            <p><strong>Patient ID:</strong> Anonymous <strong>Projection:</strong> PA
-                            </p>
-                            <p><strong>Penetration:</strong> Adequate – vertebral bodies just visible
-                                behind
-                                heart</p>
-                            <p><strong>Inspiration:</strong> Adequate – 7 anterior ribs visible</p>
-                            <p><strong>Rotation:</strong> The patient is slightly rotated to the right
-                            </p>
-
-                            <h2>AIRWAY</h2>
-                            <p>The trachea is central after factoring in patient rotation.</p>
-
-                            <h2>BREATHING</h2>
-                            <p>There is a right upper zone mass projected over the anterior aspects of
-                                the
-                                right
-                                1st and 2nd ribs. There are multiple small pulmonary nodules visible
-                                within
-                                the
-                                left hemithorax.</p>
-                            <p>The lungs are not hyperinflated.</p>
-                            <p>There is pleural thickening at the right lung apex.</p>
-                            <p>Normal pulmonary vascularity.</p>
-
-                            <h2>CIRCULATION</h2>
-                            <p>The heart is not enlarged. The heart borders are clear. The aorta appears
-                                normal.
-                            </p>
-                            <p>The mediastinum is central, and not widened. The right upper zone mass
-                                appears
-                                contiguous with the superior mediastinum.</p>
-                            <p>The right hilum is abnormally dense. It also appears higher than the
-                                left.
-                                Normal
-                                size, shape and position of the left hilum.</p>
-
-                            <h2>DIAPHRAGM + DELICATES</h2>
-                            <p>Normal appearance and position of the hemidiaphragms.</p>
-                            <p>No pneumoperitoneum.</p>
-                            <p>The imaged skeleton is intact with no fractures or destructive bony
-                                lesions
-                                visible.</p>
-                            <p>The visible soft tissues are unremarkable.</p>
-
-                            <h2>EXTRAS + REVIEW AREAS</h2>
-                            <p>No vascular lines, tubes, or surgical clips.</p>
-                            <ul>
-                                <li><strong>Lung Apices:</strong> Right apical pleural thickening</li>
-                                <li><strong>Hila:</strong> Dense right hilum, normal left hilum</li>
-                                <li><strong>Behind Heart:</strong> Normal</li>
-                                <li><strong>Costophrenic Angles:</strong> Normal</li>
-                                <li><strong>Below the Diaphragm:</strong> Normal</li>
-                            </ul>
-
-                            <h2>SUMMARY, INVESTIGATIONS &amp; MANAGEMENT</h2>
-                            <p>This X-ray demonstrates a large, rounded right upper lobe lung lesion
-                                associated
-                                with multiple smaller nodules. This is highly suspicious of a right
-                                upper
-                                lobe
-                                primary lung cancer with lung metastases. The dense right hilum is
-                                suspicious
-                                for hilar nodal disease. The significance of the right apical pleural
-                                thickening
-                                is not clear.</p>
-
-                            <p>Initial blood tests may include FBC, U/Es, CRP, LFTs, &amp; bone profile.</p>
-
-                            <p>The patient should be referred to respiratory/oncology services for
-                                further
-                                management, which may include biopsy and MDT discussion. Treatment,
-                                which
-                                may
-                                include surgery, radiotherapy, chemotherapy, or palliative treatment,
-                                will
-                                depend on the outcome of the MDT discussion, investigations, and the
-                                patient’s
-                                wishes.</p>
-
-                            <p>Initial blood tests may include FBC, U/Es, CRP, LFTs, &amp; bone profile.</p>
-
-                            <p>A staging CT chest, and abdomen with IV contrast should be performed.</p>
                         </div>
                     </div>
-                    <div class="case-details__comments">
-                        <div class="heading">5 Comments</div>
-                        <div class="comment-card mb-4 pb-2">
-                            <div class="comment-card__avatar">
-                                <img src="https://ui-avatars.com/api/?name=sk&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="comment-card__fields">
-                                <form action="{{ route('frontend.case.comments.store') }}" method="POST">
-                                    @csrf
-                                    <input id="comment-input" type="text" placeholder="Add a comment..."
-                                        autocomplete="off" required name="comment">
-                                    <div class="actions-wrapper">
-                                        <div class="emoji-picker-wrapper">
-                                            <button type="button" class="emoji-picker" id="emoji-button">
-                                                <i class="bx bx-smile"></i>
-                                            </button>
-                                            <div id="emoji-picker-container" style="display: none;"></div>
+                    @if (!in_array($case->case_type, ['share_image_diagnosis', 'ask_ai_image_diagnosis']))
+                        <div class="case-details__comments">
+                            <div class="heading">{{ count($case->comments) }} Comments</div>
+                            @if (Auth::check())
+                                <div class="comment-card mb-4 pb-2">
+                                    <div class="comment-card__avatar">
+                                        <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                                            alt="image" class="imgFluid" loading="lazy">
+                                    </div>
+                                    <div class="comment-card__fields">
+                                        <form action="{{ route('frontend.cases.comments.store', $case->slug) }}"
+                                            method="POST" class="comment-form">
+                                            @csrf
+                                            <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required name="comment"
+                                                rows="1"></textarea>
+                                            <div class="actions-wrapper">
+                                                <div class="emoji-picker-wrapper">
+                                                    <button type="button" class="emoji-picker">
+                                                        <i class="bx bx-smile"></i>
+                                                    </button>
+                                                    <div class="emoji-picker-container" style="display: none;"></div>
+                                                </div>
+                                                <div class="actions-btns">
+                                                    <button class="action-btn  comment-btn" disabled>Comment</button>
+                                                </div>
+                                            </div>
+                                            @error('comment')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            @else
+                                <div class="subHeading mb-4 pb-2">
+                                    Please <a href="{{ route('auth.login') }}" class="link">Login</a> to your account to
+                                    write a comment.
+                                </div>
+                            @endif
+                            @if ($case->comments->isNotEmpty())
+                                @foreach ($case->comments as $comment)
+                                    <div class="comment-card" x-data="{ isEditMode: false, expanded: false, isHeightExceeded: false }" x-init=" const commentElement = $el.querySelector('.comment');
+                                     if (commentElement.scrollHeight > 82) { isHeightExceeded = true; }">
+
+                                        <div class="comment-card__avatar">
+                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                                                alt="image" class="imgFluid" loading="lazy">
                                         </div>
-                                        <button class="comment-btn" id="comment-btn" disabled>Comment</button>
+                                        <div x-show="!isEditMode" class="comment-card__details">
+                                            <div class="wrapper">
+                                                <div class="name">
+                                                    {{ $comment->user ? $comment->user->full_name : 'Anonymous' }}
+                                                    @if ($comment->user && $comment->user->id === $case->user_id)
+                                                        <div class="author">Author</div>
+                                                    @endif
+                                                </div>
+                                                <div class="time">{{ $comment->created_at->diffForHumans() }}</div>
+                                                @if ($comment->edited_at)
+                                                    <div class="time">(edited)</div>
+                                                @endif
+                                            </div>
+                                            <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
+                                                {!! nl2br(e($comment->comment_text)) !!}
+                                            </div>
+
+                                            @php
+                                                $isLongComment = strlen($comment->comment_text) > 463;
+                                            @endphp
+
+                                            <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
+                                                x-on:click="expanded = !expanded"
+                                                x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
+                                                style="background: #0E0E0E" type="button" data-more-content="Read more"
+                                                data-less-content="Show Less" data-show-more-btn></button>
+                                        </div>
+                                        @if (Auth::check() && Auth::user()->id === $comment->user_id)
+                                            <div x-show="isEditMode" class="comment-card__fields">
+                                                <form
+                                                    action="{{ route('frontend.cases.comments.update', ['slug' => $case->slug, 'comment' => $comment->id]) }}"
+                                                    method="POST" class="comment-form">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required
+                                                        name="comment" rows="1">{{ $comment->comment_text }}</textarea>
+                                                    <div class="actions-wrapper">
+                                                        <div class="emoji-picker-wrapper">
+                                                            <button type="button" class="emoji-picker">
+                                                                <i class="bx bx-smile"></i>
+                                                            </button>
+                                                            <div class="emoji-picker-container" style="display: none;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="actions-btns">
+                                                            <button @click="isEditMode = false" type="button"
+                                                                class="action-btn cancel-btn">Cancel</button>
+                                                            <button class="action-btn comment-btn" disabled>Save</button>
+                                                        </div>
+                                                    </div>
+                                                    @error('comment')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </form>
+                                            </div>
+                                            <div x-show="!isEditMode" class="dropstart bootsrap-dropdown">
+                                                <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <i class='bx bx-dots-vertical-rounded'></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item edit-btn" href="javascript:void(0)"
+                                                            @click="isEditMode = true">
+                                                            <i class='bx bx-pencil'></i>
+                                                            Edit
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('frontend.cases.comments.deleteItem', ['slug' => $case->slug, 'id' => $comment->id]) }}"
+                                                            onclick="return confirm('Are You Sure want to delete?')">
+                                                            <i class='bx bx-trash'></i>
+                                                            delete
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        @endif
                                     </div>
-                                </form>
-                            </div>
-
+                                @endforeach
+                            @endif
 
                         </div>
-                        <div class="comment-card">
-                            <div class="comment-card__avatar">
-                                <img src="https://ui-avatars.com/api/?name=JW&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="comment-card__details">
-                                <div class="wrapper">
-                                    <div class="name">John Wilson</div>
-                                    <div class="time">2 hours ago</div>
-                                </div>
-                                <div class="comment">
-                                    It seems like the patient's symptoms could be indicative of something serious. The
-                                    presence of wheeze and weight loss is concerning, especially with the findings on the
-                                    chest X-ray.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-card">
-                            <div class="comment-card__avatar">
-                                <img src="https://ui-avatars.com/api/?name=AL&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="comment-card__details">
-                                <div class="wrapper">
-                                    <div class="name">Amanda Lee</div>
-                                    <div class="time">1 hour ago</div>
-                                </div>
-                                <div x-data="{ expanded: false }">
-                                    <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
-                                        Agreed. The right upper lobe mass and the nodules in the left lung are highly
-                                        suggestive of malignancy. However, considering the patient's age and lack of
-                                        significant smoking history, we should also keep a broader differential in mind.
-                                        Infectious causes, such as tuberculosis, cannot be completely ruled out, especially
-                                        if there’s a history of travel to endemic regions or exposure to someone with an
-                                        active infection. At the same time, autoimmune conditions like sarcoidosis might
-                                        present similarly.
-
-                                        It’s also intriguing that there’s no significant fever or systemic signs of
-                                        infection, which makes neoplastic causes more likely. We should definitely proceed
-                                        with a high-resolution CT scan to better characterize these findings. Furthermore,
-                                        it would be helpful to obtain a detailed history regarding occupational exposures,
-                                        family history of malignancies, and any recent weight loss trends or appetite
-                                        changes. While the imaging findings are worrisome, I think a tissue diagnosis is
-                                        critical before jumping to conclusions. Bronchoscopy or CT-guided biopsy could
-                                        provide clarity. Let’s also consider engaging the multidisciplinary team early to
-                                        streamline the investigation process and involve oncology if needed.
-                                    </div>
-                                    <button class="position-static px-0 pt-2" x-on:click="expanded = !expanded"
-                                        x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
-                                        style="background: #0E0E0E" type="button" data-more-content="Read more"
-                                        data-less-content="Show Less" data-show-more-btn></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-card">
-                            <div class="comment-card__avatar">
-                                <img src="https://ui-avatars.com/api/?name=jd&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="comment-card__details">
-                                <div class="wrapper">
-                                    <div class="name">John Doe <div class="author">Author</div>
-                                    </div>
-                                    <div class="time">45 minutes ago</div>
-                                </div>
-                                <div class="comment">
-                                    The findings are quite alarming. The dense right hilum could indicate nodal involvement,
-                                    and the multiple nodules in the left lung point towards metastases.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-card">
-                            <div class="comment-card__avatar">
-                                <img src="https://ui-avatars.com/api/?name=JW&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="comment-card__details">
-                                <div class="wrapper">
-                                    <div class="name">John Wilson</div>
-                                    <div class="time">30 minutes ago</div>
-                                </div>
-                                <div class="comment">
-                                    That’s a good point about the apical thickening, John. It might even be a sign of
-                                    previous inflammation or scarring. I hope the staging CT provides a clearer picture of
-                                    what we’re dealing with here.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comment-card">
-                            <div class="comment-card__avatar">
-                                <img src="https://ui-avatars.com/api/?name=AL&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="comment-card__details">
-                                <div class="wrapper">
-                                    <div class="name">Amanda Lee</div>
-                                    <div class="time">10 minutes ago</div>
-                                </div>
-                                <div class="comment">
-                                    Absolutely. It’s a complex case, but I’m hopeful the referral team can devise a
-                                    comprehensive plan for diagnosis and management.
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
+                    @endif
                 </div>
-                <div class="col-md-4">
-                    <div class="gallery-category-wrapper">
-                        <div class="gallery-category">
-                            <div class="gallery-category__title">X-ray</div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="gallery-category__item">
-                                        <a href="{{ asset('frontend/assets/images/portfolio/1.png') }}"
-                                            data-fancybox="gallery" class="cover-image">
-                                            <img src='{{ asset('frontend/assets/images/portfolio/1.png') }}'
-                                                alt='image' class='imgFluid' loading='lazy'>
-                                        </a>
-                                        <div class="cover-name">Frontal</div>
+                @if ($case->image_types->isNotEmpty())
+                    <div class="col-md-4">
+                        <div class="gallery-category-wrapper">
+                            @foreach ($case->image_types as $type => $images)
+                                <div class="gallery-category">
+                                    <div class="gallery-category__title">{{ $type }}</div>
+                                    <div class="row">
+                                        @foreach ($images as $image)
+                                            <div class="col-md-6">
+                                                <div class="gallery-category__item">
+                                                    <a href="{{ asset($image->path) }}" data-fancybox="gallery"
+                                                        class="cover-image">
+                                                        <img src='{{ asset($image->path) }}'
+                                                            alt='{{ $image->name ?? 'image' }}' class='imgFluid'
+                                                            loading='lazy'>
+                                                    </a>
+                                                    <div class="cover-name">{{ $image->name }}</div>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="gallery-category__item">
-                                        <a href="{{ asset('frontend/assets/images/portfolio/2.png') }}"
-                                            data-fancybox="gallery" class="cover-image">
-                                            <img src='{{ asset('frontend/assets/images/portfolio/2.png') }}'
-                                                alt='image' class='imgFluid' loading='lazy'>
-                                        </a>
-                                        <div class="cover-name">Frontal</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallery-category">
-                            <div class="gallery-category__title">MRI</div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="gallery-category__item">
-                                        <a href="{{ asset('frontend/assets/images/portfolio/3.png') }}"
-                                            data-fancybox="gallery" class="cover-image">
-                                            <img src='{{ asset('frontend/assets/images/portfolio/3.png') }}'
-                                                alt='image' class='imgFluid' loading='lazy'>
-                                        </a>
-                                        <div class="cover-name">Frontal</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="gallery-category__item">
-                                        <a href="{{ asset('frontend/assets/images/portfolio/4.png') }}"
-                                            data-fancybox="gallery" class="cover-image">
-                                            <img src='{{ asset('frontend/assets/images/portfolio/4.png') }}'
-                                                alt='image' class='imgFluid' loading='lazy'>
-                                        </a>
-                                        <div class="cover-name">Frontal</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallery-category">
-                            <div class="gallery-category__title">Ultrasound</div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="gallery-category__item">
-                                        <a href="{{ asset('frontend/assets/images/portfolio/5.jpg') }}"
-                                            data-fancybox="gallery" class="cover-image">
-                                            <img src='{{ asset('frontend/assets/images/portfolio/5.jpg') }}'
-                                                alt='image' class='imgFluid' loading='lazy'>
-                                        </a>
-                                        <div class="cover-name">Frontal</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="gallery-category__item">
-                                        <a href="{{ asset('frontend/assets/images/portfolio/5.png') }}"
-                                            data-fancybox="gallery" class="cover-image">
-                                            <img src='{{ asset('frontend/assets/images/portfolio/5.png') }}'
-                                                alt='image' class='imgFluid' loading='lazy'>
-                                        </a>
-                                        <div class="cover-name">Frontal</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -376,54 +280,64 @@
     <script src="https://cdn.jsdelivr.net/npm/emoji-mart@5.6.0/dist/browser.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const commentInput = document.getElementById('comment-input');
-            const emojiButton = document.getElementById('emoji-button');
-            const commentButton = document.getElementById('comment-btn');
-            const emojiPickerContainer = document.getElementById('emoji-picker-container');
-            let picker;
+            const forms = document.querySelectorAll('.comment-form');
 
+            forms.forEach((form) => {
+                const commentInput = form.querySelector('.comment-input');
+                const emojiButton = form.querySelector('.emoji-picker');
+                const commentButton = form.querySelector('.comment-btn');
+                const emojiPickerContainer = form.querySelector('.emoji-picker-container');
+                let picker;
 
-            picker = new EmojiMart.Picker({
-                onEmojiSelect: emoji => {
-                    commentInput.value += emoji.native;
-                    toggleCommentButton();
-                },
-                emojiSize: 25,
-                set: 'apple',
+                picker = new EmojiMart.Picker({
+                    onEmojiSelect: emoji => {
+                        commentInput.value += emoji.native;
+                        toggleCommentButton();
+                    },
+                    emojiSize: 25,
+                    set: 'apple',
+                    include: (emoji) => {
+                        const excludeEmojis = ['🫥'];
+                        return !excludeEmojis.includes(emoji.native);
+                    }
+                });
 
-                include: (emoji) => {
+                emojiPickerContainer.appendChild(picker);
 
-                    const excludeEmojis = ['🫥'];
-                    return !excludeEmojis.includes(emoji.native);
+                emojiButton.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                    if (emojiPickerContainer.style.display === 'none' || emojiPickerContainer
+                        .innerHTML === '') {
+                        emojiPickerContainer.style.display = 'block';
+                    } else {
+                        emojiPickerContainer.style.display = 'none';
+                    }
+                });
+
+                document.addEventListener('click', function(event) {
+                    if (!emojiPickerContainer.contains(event.target) && event.target !==
+                        emojiButton) {
+                        emojiPickerContainer.style.display = 'none';
+                    }
+                });
+
+                commentInput.addEventListener('input', toggleCommentButton);
+
+                function toggleCommentButton() {
+                    commentButton.disabled = !commentInput.value.trim();
                 }
+
+                commentInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+                commentInput.addEventListener('focus', function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+
+                toggleCommentButton();
             });
-
-            emojiPickerContainer.appendChild(picker);
-
-            emojiButton.addEventListener('click', function(event) {
-                event.stopPropagation();
-
-                if (emojiPickerContainer.style.display === 'none' || emojiPickerContainer.innerHTML ===
-                    '') {
-                    emojiPickerContainer.style.display = 'block';
-                } else {
-                    emojiPickerContainer.style.display = 'none';
-                }
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!emojiPickerContainer.contains(event.target) && event.target !== emojiButton) {
-                    emojiPickerContainer.style.display = 'none';
-                }
-            });
-
-            commentInput.addEventListener('input', toggleCommentButton);
-
-            function toggleCommentButton() {
-                commentButton.disabled = !commentInput.value.trim();
-            }
-
-            toggleCommentButton();
         });
     </script>
 @endpush
