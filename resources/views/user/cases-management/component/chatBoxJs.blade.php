@@ -15,6 +15,7 @@
             const chatInput = ref(null);
             const errorMessage = ref({});
             const isTyping = ref(false);
+            const isError = ref(false);
 
             const handleFileInput = (event) => {
                 const files = event.target.files;
@@ -135,6 +136,7 @@
                 if (!message.value.trim() || loading.value) return;
 
                 loading.value = true;
+                isError.value = false;
 
                 try {
                     const formattedUserMessage = message.value.replace(/\n/g, '<br>');
@@ -144,47 +146,55 @@
                         url
                     }));
 
+                    const userMessage = {
+                        message: formattedUserMessage,
+                        isUserMessage: true,
+                        isError: false // Add isError flag to track individual messages
+                    };
+
                     if (uploadedImageUrls.length > 0) {
-                        conversations.value.push({
-                            images: uploadedImageUrls,
-                            message: formattedUserMessage,
-                            isUserMessage: true
-                        });
-                    } else {
-                        conversations.value.push({
-                            message: formattedUserMessage,
-                            isUserMessage: true
-                        });
+                        userMessage.images = uploadedImageUrls;
                     }
 
+                    conversations.value.push(userMessage); // Push user message
 
                     conversations.value.push({
                         message: '',
                         isUserMessage: false,
                         isTyping: true,
-                        displayReply: ''
+                        displayReply: '',
+                        isError: false // Add isError flag for assistant's message
                     });
 
                     const index = conversations.value.length - 1;
 
-                    resetValues()
+                    resetValues();
 
                     const apiResponse = await getApiResponse(formattedUserMessage);
 
                     if (apiResponse.status === 'error') {
                         errorMessage.value = apiResponse;
+                        conversations.value[index].isError = true; // Set error for the last message
+                    } else {
+                        conversations.value[index].isError = false;
                     }
 
                     conversations.value[index].message = apiResponse.message;
-
                     simulateTyping(index, apiResponse.message);
 
                 } catch (error) {
                     console.error("Error fetching API response:", error);
+                    errorMessage.value = {
+                        message: error.message
+                    };
+
+                    // Set error for the last message in the conversation
+                    conversations.value[conversations.value.length - 1].isError = true;
                 } finally {
                     loading.value = false;
                 }
             };
+
 
             const cancelChat = () => {
                 if (this.controller) {
@@ -197,6 +207,7 @@
                 message,
                 loading,
                 isTyping,
+                isError,
                 chatInput,
                 errorMessage,
                 handleKeydown,

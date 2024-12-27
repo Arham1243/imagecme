@@ -20,11 +20,11 @@
                                     class="imgFluid" loading="lazy">
                             </div>
                             <div :class="`chat-reply__message ${errorMessage.status === 'error' ? 'pt-5' : ''}`">
-                                <div v-if="errorMessage.status !== 'error'">
+                                <div v-if="!conversation.isError">
                                     <span class="message-text">@{{ conversation.displayReply }}</span>
                                     <span class="cursor" v-if="conversation.isTyping"></span>
                                 </div>
-                                <div v-else class="custom-alert">
+                                <div v-else v-if="index === conversations.length - 1" class="custom-alert">
                                     <div class="icon"><i class='bx bx-info-circle'></i></div>
                                     <div class="content">@{{ errorMessage.message }}</div>
                                 </div>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="errorMessage.status !== 'error'" class="chat-box">
+                <div v-if="!conversations[conversations.length - 1]?.isError" class="chat-box">
                     <form @submit.prevent="submitChat" class="chat-box__form">
                         <div class="uploaded-images-wrapper" v-if="showUploadedImages.length> 0">
                             <div v-for="(image, index) in showUploadedImages" :key="index"
@@ -82,7 +82,8 @@
                     </form>
                     <div class="message">© <?= date('Y') ?> - {{ env('APP_NAME') }} . All Rights Reserved</div>
                 </div>
-                <div v-else class="error-sceen">
+                <div v-if="conversations.length && conversations[conversations.length - 1].isError"
+                    class="error-sceen">
                     There was an error generating a response
                     <a href="" class="chat-btn"><svg width="18" height="18" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-sm">

@@ -2625,7 +2625,8 @@ button[data-tooltip="tooltip"] {
     justify-content: center;
     gap: 0.45rem;
     font-size: 0.75rem;
-    margin-top: 0.75rem;
+    margin]=: 0.75rem;
+    margin: 0.75rem 0 2rem;
 }
 
 .chat-btn {
