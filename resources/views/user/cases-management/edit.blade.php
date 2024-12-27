@@ -15,8 +15,8 @@
                         <div class="d-flex gap-3">
                             @if ($case->case_type === 'ask_ai_image_diagnosis')
                                 <a href="{{ route('user.cases.chat', $case->id) }}" class="themeBtn"> <img
-                                        src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
-                                        class='imgFluid' loading='lazy'> Ask AI</a>
+                                        src='{{ asset('user/assets/images/gpt.svg') }}' alt='image' class='imgFluid'
+                                        loading='lazy'> Ask AI</a>
                             @endif
                             <a href="{{ route('frontend.cases.details', $case->slug) }}" class="themeBtn"><i
                                     class='bx bxs-show'></i> View Image</a>

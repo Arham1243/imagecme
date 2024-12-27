@@ -3,104 +3,29 @@
         <div class="row justify-content-center">
             <div class="col-md-9">
                 <div class="chat-conversations">
-                    <div class="user-message">
-                        It looks like you want to create a setTimeout within a Promise that resolves with some data
-                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                        Here's how you can structure it:
-                    </div>
-                    <div class="chat-reply">
-                        <div class="chat-reply__icon">
-                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image' class='imgFluid'
-                                loading='lazy'>
+                    <div v-for="(conversation, index) in conversations" :key="index">
+                        <div v-if="conversation.isUserMessage" class="user-message">
+                            <span v-html="conversation.message"></span>
                         </div>
-                        <div class="chat-reply__message">
-                            It looks like you want to create a setTimeout within a Promise that resolves with some data
-                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                            Here's how you can structure it:
-                        </div>
-                    </div>
-                    <div class="user-message">
-                        It looks like you want to create a setTimeout within a Promise that resolves with some data
-                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                        Here's how you can structure it:
-                    </div>
-                    <div class="chat-reply">
-                        <div class="chat-reply__icon">
-                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
-                                class='imgFluid' loading='lazy'>
-                        </div>
-                        <div class="chat-reply__message">
-                            It looks like you want to create a setTimeout within a Promise that resolves with some data
-                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                            Here's how you can structure it:
-                        </div>
-                    </div>
-                    <div class="user-message">
-                        It looks like you want to create a setTimeout within a Promise that resolves with some data
-                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                        Here's how you can structure it:
-                    </div>
-                    <div class="chat-reply">
-                        <div class="chat-reply__icon">
-                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
-                                class='imgFluid' loading='lazy'>
-                        </div>
-                        <div class="chat-reply__message">
-                            It looks like you want to create a setTimeout within a Promise that resolves with some data
-                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                            Here's how you can structure it:
-                        </div>
-                    </div>
-                    <div class="user-message">
-                        It looks like you want to create a setTimeout within a Promise that resolves with some data
-                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                        Here's how you can structure it:
-                    </div>
-                    <div class="chat-reply">
-                        <div class="chat-reply__icon">
-                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
-                                class='imgFluid' loading='lazy'>
-                        </div>
-                        <div class="chat-reply__message">
-                            It looks like you want to create a setTimeout within a Promise that resolves with some data
-                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                            Here's how you can structure it:
-                        </div>
-                    </div>
-                    <div class="user-message">
-                        It looks like you want to create a setTimeout within a Promise that resolves with some data
-                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                        Here's how you can structure it:
-                    </div>
-                    <div class="chat-reply">
-                        <div class="chat-reply__icon">
-                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
-                                class='imgFluid' loading='lazy'>
-                        </div>
-                        <div class="chat-reply__message">
-                            It looks like you want to create a setTimeout within a Promise that resolves with some data
-                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                            Here's how you can structure it:
-                        </div>
-                    </div>
-                    <div class="user-message">
-                        It looks like you want to create a setTimeout within a Promise that resolves with some data
-                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                        Here's how you can structure it:
-                    </div>
-                    <div class="chat-reply">
-                        <div class="chat-reply__icon">
-                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
-                                class='imgFluid' loading='lazy'>
-                        </div>
-                        <div class="chat-reply__message">
-                            It looks like you want to create a setTimeout within a Promise that resolves with some data
-                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
-                            Here's how you can structure it:
+                        <div v-else class="chat-reply">
+                            <div class="chat-reply__icon">
+                                <img src="https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg" alt="image"
+                                    class="imgFluid" loading="lazy">
+                            </div>
+                            <div :class="`chat-reply__message ${errorMessage.status === 'error' ? 'pt-5' : ''}`">
+                                <div v-if="errorMessage.status !== 'error'">
+                                    <span class="message-text">@{{ conversation.displayReply }}</span>
+                                    <span class="cursor" v-if="conversation.isTyping"></span>
+                                </div>
+                                <div v-else class="custom-alert">
+                                    <div class="icon"><i class='bx bx-info-circle'></i></div>
+                                    <div class="content">@{{ errorMessage.message }}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="chat-box">
+                <div v-if="errorMessage.status !== 'error'" class="chat-box">
                     <form @submit.prevent="submitChat" class="chat-box__form">
                         <textarea rows="1" ref="chatInput" class="chat-input" v-model="message" @input="resizeTextarea"> </textarea>
                         <div class="action-wrapper">
@@ -113,14 +38,14 @@
                                             fill="currentColor"></path>
                                     </svg>
                                 </button>
-                                <button v-if="loading" class="circle-btn" :disabled="!message.trim()">
+                                <button v-if="isTyping" class="circle-btn" :disabled="!message.trim()">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-lg">
                                         <rect x="7" y="7" width="10" height="10" rx="1.25"
                                             fill="currentColor"></rect>
                                     </svg>
                                 </button>
-                                <button v-else="loading" @click="cancelChat" class="circle-btn"
+                                <button v-else="isTyping" @click="cancelChat" class="circle-btn"
                                     :disabled="!message.trim()">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-2xl">
@@ -133,6 +58,15 @@
                         </div>
                     </form>
                     <div class="message">© <?= date('Y') ?> - {{ env('APP_NAME') }} . All Rights Reserved</div>
+                </div>
+                <div v-else class="error-sceen">
+                    There was an error generating a response
+                    <a href="" class="chat-btn"><svg width="18" height="18" viewBox="0 0 24 24"
+                            fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-sm">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M4.47189 2.5C5.02418 2.5 5.47189 2.94772 5.47189 3.5V5.07196C7.17062 3.47759 9.45672 2.5 11.9719 2.5C17.2186 2.5 21.4719 6.75329 21.4719 12C21.4719 17.2467 17.2186 21.5 11.9719 21.5C7.10259 21.5 3.09017 17.8375 2.53689 13.1164C2.47261 12.5679 2.86517 12.0711 3.4137 12.0068C3.96223 11.9425 4.45901 12.3351 4.5233 12.8836C4.95988 16.6089 8.12898 19.5 11.9719 19.5C16.114 19.5 19.4719 16.1421 19.4719 12C19.4719 7.85786 16.114 4.5 11.9719 4.5C9.7515 4.5 7.75549 5.46469 6.38143 7H9C9.55228 7 10 7.44772 10 8C10 8.55228 9.55228 9 9 9H4.47189C3.93253 9 3.4929 8.57299 3.47262 8.03859C3.47172 8.01771 3.47147 7.99677 3.47189 7.9758V3.5C3.47189 2.94772 3.91961 2.5 4.47189 2.5Z"
+                                fill="currentColor"></path>
+                        </svg>Try Again</a>
                 </div>
             </div>
         </div>
