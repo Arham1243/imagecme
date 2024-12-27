@@ -96,3 +96,6 @@
         </div>
     </div>
 </div>
+<div v-if="loadingChats" class="loader-mask">
+    <div class="loader"></div>
+</div>

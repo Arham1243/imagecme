@@ -2714,7 +2714,4 @@ button[data-tooltip="tooltip"] {
 .back-btn i {
     font-size: 1.75rem;
 }
-.form-switch .form-check-input:checked {
-    filter: invert(1);
-}
 /* chat */

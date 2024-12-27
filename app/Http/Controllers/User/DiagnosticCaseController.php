@@ -150,6 +150,50 @@ class DiagnosticCaseController extends Controller
         return view('user.cases-management.chat')->with('title', ucfirst(strtolower($case->diagnosis_title)))->with(compact('case'));
     }
 
+    public function saveChat(Request $request, $id)
+    {
+        $diagnosticCase = DiagnosticCase::findOrFail($id);
+
+        $diagnosticCase->update([
+            'ai_conversation' => json_encode($request['conversation']),
+        ]);
+
+        return response()->json([
+            'message' => 'Chat saved successfully.',
+        ], 200);
+    }
+
+    public function allChats($id)
+    {
+        $diagnosticCase = DiagnosticCase::findOrFail($id);
+
+        if ($diagnosticCase->ai_conversation) {
+            $aiConversation = json_decode($diagnosticCase->ai_conversation, true);
+        } else {
+            $aiConversation = [];
+        }
+
+        return response()->json([
+            'data' => $aiConversation,
+        ], 200);
+    }
+
+    public function publishConversation(Request $request, $id)
+    {
+        $diagnosticCase = DiagnosticCase::findOrFail($id);
+
+        $validated = $request->validate([
+            'publish_conversation' => 'nullable|boolean',
+        ]);
+
+        $diagnosticCase->update([
+            'publish_ai_conversation' => $validated['publish_conversation'] ?? 0,
+        ]);
+
+        return redirect()->back()
+            ->with('notify_success', 'Published Conversation successfully.');
+    }
+
     public function deleteImage($id)
     {
         $image = CaseImage::find($id);

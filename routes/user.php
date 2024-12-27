@@ -23,4 +23,7 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::resource('cases', DiagnosticCaseController::class);
     Route::get('cases/delete-image/{id}', [DiagnosticCaseController::class, 'deleteImage'])->name('cases.deleteImage');
     Route::get('cases/{id}/chat', [DiagnosticCaseController::class, 'chat'])->name('cases.chat');
+    Route::post('cases/{id}/chat-publish', [DiagnosticCaseController::class, 'publishConversation'])->name('cases.chat.publish');
+    Route::get('/api/cases/{id}/chats', [DiagnosticCaseController::class, 'allChats'])->name('cases.chat.show');
+    Route::post('/api/cases/{id}/save-chat', [DiagnosticCaseController::class, 'saveChat'])->name('cases.chat.save');
 });

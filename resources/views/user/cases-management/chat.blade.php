@@ -17,14 +17,16 @@
             </div>
             <div class="d-flex gap-3">
                 <h2 class="mb-0">{{ $case->diagnosis_title }}</h2>
-
-                <div class="form-check form-switch" data-enabled-text="Publish Conversation"
-                    data-disabled-text="Publish Conversation">
-                    <input class="form-check-input" data-toggle-switch=""
-                        {{ isset($sectionContent->publish_conversation) ? 'checked' : '' }} type="checkbox"
-                        id="publish_conversation" value="1" name="content[publish_conversation]">
-                    <label class="form-check-label" for="publish_conversation"></label>
-                </div>
+                <form id="publishForm" action="{{ route('user.cases.chat.publish', $case->id) }}" method="POST">
+                    <div class="form-check form-switch" data-enabled-text="Publish Conversation"
+                        data-disabled-text="Publish Conversation">
+                        @csrf
+                        <input id="publishSwitch" class="form-check-input" data-toggle-switch=""
+                            {{ $case->publish_ai_conversation === 1 ? 'checked' : '' }} type="checkbox" value="1"
+                            name="publish_conversation">
+                        <label class="form-check-label" for="publishSwitch"></label>
+                    </div>
+                </form>
             </div>
             <div class="d-flex justify-content-end pe-2"
                 style=" padding-left: 0 !important;  padding-right: 0.5rem !important; padding-bottom: 0 !important;">
@@ -114,4 +116,16 @@
 @endpush
 @push('js')
     @include('user.cases-management.component.chatBoxJs')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const publishSwitch = document.getElementById('publishSwitch');
+            const publishForm = document.getElementById('publishForm');
+
+            if (publishSwitch && publishForm) {
+                publishSwitch.addEventListener('change', function() {
+                    publishForm.submit();
+                });
+            }
+        });
+    </script>
 @endpush

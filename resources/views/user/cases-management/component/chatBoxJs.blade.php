@@ -1,6 +1,7 @@
 <script>
     const {
-        ref
+        ref,
+        onMounted
     } = Vue;
 
     const ChatComponent = {
@@ -9,6 +10,7 @@
             const TYPING_DELAY = 5;
             const message = ref('');
             const loading = ref(false);
+            const loadingChats = ref(false);
             const conversations = ref([]);
             const uploadedImages = ref([]);
             const showUploadedImages = ref([]);
@@ -16,6 +18,10 @@
             const errorMessage = ref({});
             const isTyping = ref(false);
             const isError = ref(false);
+
+            onMounted(() => {
+                getAllChats();
+            });
 
             const handleFileInput = (event) => {
                 const files = event.target.files;
@@ -53,9 +59,31 @@
                         clearInterval(interval);
                         isTyping.value = false;
                         conversations.value[index].isTyping = false;
+                        saveChat(conversations.value);
                     }
                 }, TYPING_DELAY);
             };
+
+            const getAllChats = async () => {
+                try {
+                    loadingChats.value = true
+                    const response = await axios.get('{{ route('user.cases.chat.show', $case->id) }}');
+                    conversations.value = response.data.data;
+                } catch (error) {
+                    console.log(error.message)
+                } finally {
+                    loadingChats.value = false
+                }
+            }
+            const saveChat = async (conversationHistory) => {
+                try {
+                    const response = await axios.post('{{ route('user.cases.chat.save', $case->id) }}', {
+                        conversation: conversationHistory
+                    });
+                } catch (error) {
+                    console.log(error.message)
+                }
+            }
 
             const getApiResponse = async (userMessage) => {
                 try {
@@ -172,6 +200,7 @@
 
                     const apiResponse = await getApiResponse(formattedUserMessage);
 
+
                     if (apiResponse.status === 'error') {
                         errorMessage.value = apiResponse;
                         conversations.value[index].isError = true;
@@ -181,6 +210,7 @@
 
                     conversations.value[index].message = apiResponse.message;
                     simulateTyping(index, apiResponse.message);
+
 
                 } catch (error) {
                     errorMessage.value = {
@@ -193,7 +223,6 @@
                 }
             };
 
-
             const cancelChat = () => {
                 if (this.controller) {
                     this.controller.abort();
@@ -204,6 +233,7 @@
             return {
                 message,
                 loading,
+                loadingChats,
                 isTyping,
                 isError,
                 chatInput,
