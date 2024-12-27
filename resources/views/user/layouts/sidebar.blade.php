@@ -1,7 +1,7 @@
 <div class="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="sidebar-header">
         <div class="sidebar-header__icon">
-            <img src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}" alt="Logo"
+            <img src="{{ asset($logo->path ?? 'user/assets/images/placeholder-logo.png') }}" alt="Logo"
                 class="imgFluid">
         </div>
     </a>
@@ -22,9 +22,8 @@
                 $isOpen = $isItemActive || $hasActiveSubmenu;
             @endphp
             <li class="{{ isset($item['submenu']) ? ($isOpen ? 'custom-dropdown open' : 'custom-dropdown') : '' }}">
-                <a @if (isset($item['confirm']))
-                    onclick="return confirm('{{ $item['confirm'] }}')"
-                @endif href="{{ $item['route'] ?? 'javascript:void(0)' }}"
+                <a @if (isset($item['confirm'])) onclick="return confirm('{{ $item['confirm'] }}')" @endif
+                    href="{{ $item['route'] ?? 'javascript:void(0)' }}"
                     class="{{ isset($item['submenu']) ? 'custom-dropdown__active' : '' }} {{ $isItemActive ? 'active' : '' }}">
                     <div class="info">
                         <i class="{{ $item['icon'] }}"></i>
