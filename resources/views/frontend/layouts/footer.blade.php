@@ -5,7 +5,7 @@
                 <div class=" footer-info">
                     <a class="footer-info__logo" href="{{ route('frontend.index') }}">
                         <img alt="Logo" class="imgFluid"
-                            src="{{ asset($logo->path ?? 'admin/assets/images/placeholder.png') }}">
+                            src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}">
                     </a>
                     <p>medical imaging
                         innovation in detection & diagnostic education

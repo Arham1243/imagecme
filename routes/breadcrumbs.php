@@ -3,22 +3,26 @@
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-// --------------- user Dashboard---------------
+// --------------- Admin Dashboard---------------
+Breadcrumbs::for('admin.dashboard', function (BreadcrumbTrail $trail) {
+    $trail->push('Dashboard', route('admin.dashboard'));
+});
+
+Breadcrumbs::for('admin.logo.show', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Logo Management', route('admin.logo.show'));
+});
+Breadcrumbs::for('admin.contact.show', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Contact/Social Info', route('admin.contact.show'));
+});
+// --------------- Admin Dashboard---------------
+
+// --------------- Usdr Dashboard---------------
+
 Breadcrumbs::for('user.dashboard', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('user.dashboard'));
 });
-
-Breadcrumbs::for('user.logo.show', function (BreadcrumbTrail $trail) {
-    $trail->parent('user.dashboard');
-    $trail->push('Logo Management', route('user.logo.show'));
-});
-Breadcrumbs::for('user.contact.show', function (BreadcrumbTrail $trail) {
-    $trail->parent('user.dashboard');
-    $trail->push('Contact/Social Info', route('user.contact.show'));
-});
-// --------------- user Dashboard---------------
-
-// --------------- Usdr Dashboard---------------
 
 Breadcrumbs::for('user.recovery.index', function (BreadcrumbTrail $trail, $resource) {
     $trail->parent("user.$resource.index");
