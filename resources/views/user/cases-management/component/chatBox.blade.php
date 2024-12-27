@@ -51,7 +51,7 @@
                         <div class="action-wrapper">
                             <div class="actions-btn">
                                 <input type="file" multiple name="files[]" id="attachFiles" class="d-none"
-                                    @change="handleFileInput" />
+                                    @change="handleFileInput" accept="image/*" />
                                 <label for="attachFiles" data-tooltip="tooltip" title="Attach Files" type="submit"
                                     class="icon-btn">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
