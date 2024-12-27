@@ -12,8 +12,19 @@
                         class="imgFluid">
                 </a>
                 <h2 class="mb-0">Ask AI</h2>
+
             </div>
-            <h2 class="mb-0">{{ $case->diagnosis_title }}</h2>
+            <div class="d-flex gap-3">
+                <h2 class="mb-0">{{ $case->diagnosis_title }}</h2>
+
+                <div class="form-check form-switch" data-enabled-text="Publish Conversation"
+                    data-disabled-text="Publish Conversation">
+                    <input class="form-check-input" data-toggle-switch=""
+                        {{ isset($sectionContent->publish_conversation) ? 'checked' : '' }} type="checkbox"
+                        id="publish_conversation" value="1" name="content[publish_conversation]">
+                    <label class="form-check-label" for="publish_conversation"></label>
+                </div>
+            </div>
             <div class="d-flex justify-content-end pe-2"
                 style=" padding-left: 0 !important;  padding-right: 0.5rem !important; padding-bottom: 0 !important;">
                 <div class="user-profile">
@@ -87,6 +98,12 @@
             left: 0;
             top: 0;
             z-index: 100000;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .form-check-input:checked {
+            background-color: #000000;
         }
     </style>
 @endpush

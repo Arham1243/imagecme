@@ -4,6 +4,13 @@
             <div class="col-md-9">
                 <div class="chat-conversations">
                     <div v-for="(conversation, index) in conversations" :key="index">
+                        <div v-if="conversation.images && conversation.isUserMessage" class="user-images">
+                            <a :href="image.url" data-fancybox="gallery"
+                                v-for="(image, imgIndex) in conversation.images" :key="imgIndex"
+                                class="user-images__mask">
+                                <img :src="image.url" alt="Uploaded image" class="uploaded-image" />
+                            </a>
+                        </div>
                         <div v-if="conversation.isUserMessage" class="user-message">
                             <span v-html="conversation.message"></span>
                         </div>
@@ -27,18 +34,33 @@
                 </div>
                 <div v-if="errorMessage.status !== 'error'" class="chat-box">
                     <form @submit.prevent="submitChat" class="chat-box__form">
-                        <textarea rows="1" ref="chatInput" class="chat-input" v-model="message" @input="resizeTextarea"
-                            @keydown="handleKeydown"> </textarea>
+                        <div class="uploaded-images-wrapper" v-if="showUploadedImages.length> 0">
+                            <div v-for="(image, index) in showUploadedImages" :key="index"
+                                class="uploaded-image">
+                                <button class="remove-file" data-tooltip="tooltip" title="Remove file"
+                                    @click="removeImage(index)">
+                                    <i class="bx bx-x"></i>
+                                </button>
+                                <a :href="image" data-fancybox="gallery" class="image-mask">
+                                    <img :src="image" alt="Uploaded preview" />
+                                </a>
+                            </div>
+                        </div>
+                        <textarea placeholder="Message" rows="1" ref="chatInput" class="chat-input" v-model="message"
+                            @input="resizeTextarea" @keydown="handleKeydown"> </textarea>
                         <div class="action-wrapper">
                             <div class="actions-btn">
-                                <button data-tooltip="tooltip" title="Attach Files" type="submit" class="icon-btn">
+                                <input type="file" multiple name="files[]" id="attachFiles" class="d-none"
+                                    @change="handleFileInput" />
+                                <label for="attachFiles" data-tooltip="tooltip" title="Attach Files" type="submit"
+                                    class="icon-btn">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M9 7C9 4.23858 11.2386 2 14 2C16.7614 2 19 4.23858 19 7V15C19 18.866 15.866 22 12 22C8.13401 22 5 18.866 5 15V9C5 8.44772 5.44772 8 6 8C6.55228 8 7 8.44772 7 9V15C7 17.7614 9.23858 20 12 20C14.7614 20 17 17.7614 17 15V7C17 5.34315 15.6569 4 14 4C12.3431 4 11 5.34315 11 7V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V9C13 8.44772 13.4477 8 14 8C14.5523 8 15 8.44772 15 9V15C15 16.6569 13.6569 18 12 18C10.3431 18 9 16.6569 9 15V7Z"
                                             fill="currentColor"></path>
                                     </svg>
-                                </button>
+                                </label>
                                 <button v-if="isTyping" class="circle-btn" :disabled="!message.trim() || loading">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-lg">

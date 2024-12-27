@@ -10,9 +10,28 @@
             const message = ref('');
             const loading = ref(false);
             const conversations = ref([]);
+            const uploadedImages = ref([]);
+            const showUploadedImages = ref([]);
             const chatInput = ref(null);
             const errorMessage = ref({});
             const isTyping = ref(false);
+
+            const handleFileInput = (event) => {
+                const files = event.target.files;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedImages.value.push(e.target.result);
+                        showUploadedImages.value.push(e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            const removeImage = (index) => {
+                uploadedImages.value.splice(index, 1);
+            }
 
             const resizeTextarea = () => {
                 const textarea = chatInput.value;
@@ -38,20 +57,39 @@
 
             const getApiResponse = async (userMessage) => {
                 try {
+                    console.log(conversations.value)
                     const conversationHistory = conversations.value.map(conv => ({
                         role: conv.isUserMessage ? 'user' : 'assistant',
-                        content: conv.message,
+                        content: [{
+                            type: 'text',
+                            text: conv.message
+                        }]
                     }));
 
+                    const userContent = [{
+                        type: 'text',
+                        text: userMessage
+                    }];
+
+                    if (uploadedImages.value.length > 0) {
+                        const imageContents = uploadedImages.value.map(url => ({
+                            type: 'image_url',
+                            image_url: {
+                                url
+                            }
+                        }));
+                        userContent.push(...imageContents);
+                    }
 
                     conversationHistory.push({
                         role: 'user',
-                        content: userMessage
+                        content: userContent
                     });
+
 
                     const response = await axios.post(
                         'https://api.openai.com/v1/chat/completions', {
-                            model: 'gpt-4',
+                            model: 'gpt-4o',
                             messages: conversationHistory,
                         }, {
                             headers: {
@@ -87,6 +125,12 @@
                 }
             };
 
+            const resetValues = () => {
+                message.value = '';
+                showUploadedImages.value = []
+                chatInput.value.style.height = 'auto';
+            }
+
             const submitChat = async () => {
                 if (!message.value.trim() || loading.value) return;
 
@@ -95,11 +139,23 @@
                 try {
                     const formattedUserMessage = message.value.replace(/\n/g, '<br>');
 
+                    const uploadedImageUrls = uploadedImages.value.map(url => ({
+                        type: 'image_url',
+                        url
+                    }));
 
-                    conversations.value.push({
-                        message: formattedUserMessage,
-                        isUserMessage: true
-                    });
+                    if (uploadedImageUrls.length > 0) {
+                        conversations.value.push({
+                            images: uploadedImageUrls,
+                            message: formattedUserMessage,
+                            isUserMessage: true
+                        });
+                    } else {
+                        conversations.value.push({
+                            message: formattedUserMessage,
+                            isUserMessage: true
+                        });
+                    }
 
 
                     conversations.value.push({
@@ -109,18 +165,15 @@
                         displayReply: ''
                     });
 
-                    message.value = '';
-                    chatInput.value.style.height = 'auto';
-
                     const index = conversations.value.length - 1;
 
+                    resetValues()
 
                     const apiResponse = await getApiResponse(formattedUserMessage);
 
                     if (apiResponse.status === 'error') {
                         errorMessage.value = apiResponse;
                     }
-
 
                     conversations.value[index].message = apiResponse.message;
 
@@ -151,6 +204,10 @@
                 resizeTextarea,
                 submitChat,
                 cancelChat,
+                handleFileInput,
+                removeImage,
+                uploadedImages,
+                showUploadedImages
             };
         },
     };

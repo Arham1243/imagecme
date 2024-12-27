@@ -9,7 +9,7 @@
         <a href="{{ route('frontend.index') }}" class="back-btn"><i class='bx bx-chevron-left'></i></a>
         <div class='container-fluid p-0'>
             <div x-data="{
-                activeImage: '{{ asset($case->featured_image ?? 'admin/assets/images/placeholder.png') }}'
+                activeImage: '{{ asset($case->featured_image ?? 'user/assets/images/placeholder.png') }}'
             }">
                 <div class="gallery-box">
                     <div class='row g-0'>
