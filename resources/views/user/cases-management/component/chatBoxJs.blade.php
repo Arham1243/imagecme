@@ -24,7 +24,6 @@
 
             const simulateTyping = (index, fullMessage) => {
                 conversations.value[index].displayReply = '';
-
                 let i = 0;
                 const interval = setInterval(() => {
                     conversations.value[index].displayReply += fullMessage[i];
@@ -39,14 +38,21 @@
 
             const getApiResponse = async (userMessage) => {
                 try {
+                    const conversationHistory = conversations.value.map(conv => ({
+                        role: conv.isUserMessage ? 'user' : 'assistant',
+                        content: conv.message,
+                    }));
+
+
+                    conversationHistory.push({
+                        role: 'user',
+                        content: userMessage
+                    });
 
                     const response = await axios.post(
                         'https://api.openai.com/v1/chat/completions', {
                             model: 'gpt-4',
-                            messages: [{
-                                role: 'user',
-                                content: userMessage,
-                            }, ],
+                            messages: conversationHistory,
                         }, {
                             headers: {
                                 'Authorization': `Bearer ${API_KEY}`,
@@ -89,10 +95,12 @@
                 try {
                     const formattedUserMessage = message.value.replace(/\n/g, '<br>');
 
+
                     conversations.value.push({
                         message: formattedUserMessage,
                         isUserMessage: true
                     });
+
 
                     conversations.value.push({
                         message: '',
@@ -106,16 +114,17 @@
 
                     const index = conversations.value.length - 1;
 
+
                     const apiResponse = await getApiResponse(formattedUserMessage);
 
                     if (apiResponse.status === 'error') {
                         errorMessage.value = apiResponse;
                     }
 
+
                     conversations.value[index].message = apiResponse.message;
 
-                    simulateTyping(index, apiResponse
-                        .message);
+                    simulateTyping(index, apiResponse.message);
 
                 } catch (error) {
                     console.error("Error fetching API response:", error);
