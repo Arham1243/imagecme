@@ -58,7 +58,6 @@
 
             const getApiResponse = async (userMessage) => {
                 try {
-                    console.log(conversations.value)
                     const conversationHistory = conversations.value.map(conv => ({
                         role: conv.isUserMessage ? 'user' : 'assistant',
                         content: [{
@@ -110,7 +109,7 @@
                 } catch (error) {
                     return {
                         status: 'error',
-                        message: error.message
+                        message: error.response.data.error.message
                     };
                 }
             };
@@ -149,21 +148,21 @@
                     const userMessage = {
                         message: formattedUserMessage,
                         isUserMessage: true,
-                        isError: false // Add isError flag to track individual messages
+                        isError: false
                     };
 
                     if (uploadedImageUrls.length > 0) {
                         userMessage.images = uploadedImageUrls;
                     }
 
-                    conversations.value.push(userMessage); // Push user message
+                    conversations.value.push(userMessage);
 
                     conversations.value.push({
                         message: '',
                         isUserMessage: false,
                         isTyping: true,
                         displayReply: '',
-                        isError: false // Add isError flag for assistant's message
+                        isError: false
                     });
 
                     const index = conversations.value.length - 1;
@@ -174,7 +173,7 @@
 
                     if (apiResponse.status === 'error') {
                         errorMessage.value = apiResponse;
-                        conversations.value[index].isError = true; // Set error for the last message
+                        conversations.value[index].isError = true;
                     } else {
                         conversations.value[index].isError = false;
                     }
@@ -183,12 +182,10 @@
                     simulateTyping(index, apiResponse.message);
 
                 } catch (error) {
-                    console.error("Error fetching API response:", error);
                     errorMessage.value = {
                         message: error.message
                     };
 
-                    // Set error for the last message in the conversation
                     conversations.value[conversations.value.length - 1].isError = true;
                 } finally {
                     loading.value = false;
