@@ -5,33 +5,24 @@
         $hideAlpine = true;
     @endphp
     <div class="dashboard-header-wrapper">
-        <div class="row g-0">
-            <div class="col-md-9">
-                <div class="dashboard-header">
-                    <div class="row justify-content-between">
-                        <div class="col-md-4">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="header-icon">
-                                    <img src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}"
-                                        alt="Logo" class="imgFluid">
-                                </div>
-                                <h2 class="mb-0">Ask AI</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="dashboard-header">
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ route('admin.dashboard') }}" class="header-icon">
+                    <img src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}" alt="Logo"
+                        class="imgFluid">
+                </a>
+                <h2 class="mb-0">Ask AI</h2>
             </div>
-            <div class="col-md-3">
-                <div class="dashboard-header  d-flex justify-content-end pe-2"
-                    style=" padding-left: 0 !important;  padding-right: 0.5rem !important; padding-bottom: 0 !important;">
-                    <div class="user-profile">
-                        <div class="name">
-                            <div class="name1">{{ Auth::user()->email }}</div>
-                            <div class="role">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</div>
-                        </div>
-                        <div class="user-image-icon">
-                            <i class='bx bxs-user-circle'></i>
-                        </div>
+            <h2 class="mb-0">{{ $case->diagnosis_title }}</h2>
+            <div class="d-flex justify-content-end pe-2"
+                style=" padding-left: 0 !important;  padding-right: 0.5rem !important; padding-bottom: 0 !important;">
+                <div class="user-profile">
+                    <div class="name">
+                        <div class="name1">{{ Auth::user()->email }}</div>
+                        <div class="role">{{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}</div>
+                    </div>
+                    <div class="user-image-icon">
+                        <i class='bx bxs-user-circle'></i>
                     </div>
                 </div>
             </div>
@@ -43,6 +34,7 @@
 @endsection
 @push('css')
     <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         body {
             color: #ECECEC;
@@ -71,18 +63,33 @@
             border-bottom-color: transparent;
         }
 
-        .dashboard-header h2,
         .user-image-icon i,
         .user-profile .name1,
         .user-profile .role {
             color: #ECECEC;
             opacity: 1;
         }
+
+        .dashboard-header h2 {
+            color: #b4b4b4;
+            font-size: 1.35rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.25rem 1rem;
+            background: #212121;
+            margin-bottom: 1.5rem;
+            position: fixed;
+            width: 100%;
+            left: 0;
+            top: 0;
+            z-index: 100000;
+        }
     </style>
 @endpush
 @push('js')
-    <script>
-        const app = createApp(ChatComponent);
-        app.mount('#app');
-    </script>
+    @include('user.cases-management.component.chatBoxJs')
 @endpush

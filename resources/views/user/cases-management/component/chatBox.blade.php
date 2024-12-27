@@ -2,9 +2,106 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-9">
+                <div class="chat-conversations">
+                    <div class="user-message">
+                        It looks like you want to create a setTimeout within a Promise that resolves with some data
+                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                        Here's how you can structure it:
+                    </div>
+                    <div class="chat-reply">
+                        <div class="chat-reply__icon">
+                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image' class='imgFluid'
+                                loading='lazy'>
+                        </div>
+                        <div class="chat-reply__message">
+                            It looks like you want to create a setTimeout within a Promise that resolves with some data
+                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                            Here's how you can structure it:
+                        </div>
+                    </div>
+                    <div class="user-message">
+                        It looks like you want to create a setTimeout within a Promise that resolves with some data
+                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                        Here's how you can structure it:
+                    </div>
+                    <div class="chat-reply">
+                        <div class="chat-reply__icon">
+                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </div>
+                        <div class="chat-reply__message">
+                            It looks like you want to create a setTimeout within a Promise that resolves with some data
+                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                            Here's how you can structure it:
+                        </div>
+                    </div>
+                    <div class="user-message">
+                        It looks like you want to create a setTimeout within a Promise that resolves with some data
+                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                        Here's how you can structure it:
+                    </div>
+                    <div class="chat-reply">
+                        <div class="chat-reply__icon">
+                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </div>
+                        <div class="chat-reply__message">
+                            It looks like you want to create a setTimeout within a Promise that resolves with some data
+                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                            Here's how you can structure it:
+                        </div>
+                    </div>
+                    <div class="user-message">
+                        It looks like you want to create a setTimeout within a Promise that resolves with some data
+                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                        Here's how you can structure it:
+                    </div>
+                    <div class="chat-reply">
+                        <div class="chat-reply__icon">
+                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </div>
+                        <div class="chat-reply__message">
+                            It looks like you want to create a setTimeout within a Promise that resolves with some data
+                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                            Here's how you can structure it:
+                        </div>
+                    </div>
+                    <div class="user-message">
+                        It looks like you want to create a setTimeout within a Promise that resolves with some data
+                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                        Here's how you can structure it:
+                    </div>
+                    <div class="chat-reply">
+                        <div class="chat-reply__icon">
+                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </div>
+                        <div class="chat-reply__message">
+                            It looks like you want to create a setTimeout within a Promise that resolves with some data
+                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                            Here's how you can structure it:
+                        </div>
+                    </div>
+                    <div class="user-message">
+                        It looks like you want to create a setTimeout within a Promise that resolves with some data
+                        after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                        Here's how you can structure it:
+                    </div>
+                    <div class="chat-reply">
+                        <div class="chat-reply__icon">
+                            <img src='https://cdn.worldvectorlogo.com/logos/chatgpt-6.svg' alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </div>
+                        <div class="chat-reply__message">
+                            It looks like you want to create a setTimeout within a Promise that resolves with some data
+                            after 50 seconds. However, your code has some syntax issues and is not properly structured.
+                            Here's how you can structure it:
+                        </div>
+                    </div>
+                </div>
                 <div class="chat-box">
-                    <div class="heading">{{ $case->diagnosis_title }}</div>
-                    <div class="chat-box__form">
+                    <form @submit.prevent="submitChat" class="chat-box__form">
                         <textarea rows="1" ref="chatInput" class="chat-input" v-model="message" @input="resizeTextarea"> </textarea>
                         <div class="action-wrapper">
                             <div class="actions-btn">
@@ -16,7 +113,15 @@
                                             fill="currentColor"></path>
                                     </svg>
                                 </button>
-                                <button class="circle-btn submitButton" :disabled="!message.trim()">
+                                <button v-if="loading" class="circle-btn" :disabled="!message.trim()">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg" class="icon-lg">
+                                        <rect x="7" y="7" width="10" height="10" rx="1.25"
+                                            fill="currentColor"></rect>
+                                    </svg>
+                                </button>
+                                <button v-else="loading" @click="cancelChat" class="circle-btn"
+                                    :disabled="!message.trim()">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-2xl">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -26,44 +131,10 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
+                    <div class="message">© <?= date('Y') ?> - {{ env('APP_NAME') }} . All Rights Reserved</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    const {
-        createApp,
-        ref
-    } = Vue;
-
-    const ChatComponent = {
-        template: document.getElementById('app').innerHTML,
-        setup() {
-
-            const message = ref('');
-            const chatInput = ref('');
-            const resizeTextarea = () => {
-                const textarea = chatInput.value;
-                textarea.style.height = 'auto';
-                if (textarea.scrollHeight < 140) {
-                    textarea.style.height = `${textarea.scrollHeight}px`;
-                }
-                if (textarea.scrollHeight > 140) {
-                    textarea.classList.add('scroll');
-                } else {
-                    textarea.classList.remove('scroll');
-                }
-            };
-
-
-            return {
-                chatInput,
-                message,
-                resizeTextarea
-            };
-        }
-    };
-</script>
