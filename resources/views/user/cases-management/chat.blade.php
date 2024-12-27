@@ -7,6 +7,7 @@
     <div class="dashboard-header-wrapper">
         <div class="dashboard-header">
             <div class="d-flex align-items-center gap-3">
+                <a href="{{ route('user.cases.edit', $case->id) }}" class="back-btn"><i class="bx bx-chevron-left"></i></a>
                 <a href="{{ route('admin.dashboard') }}" class="header-icon">
                     <img src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}" alt="Logo"
                         class="imgFluid">
@@ -104,6 +105,10 @@
 
         .form-check-input:checked {
             background-color: #000000;
+        }
+
+        .form-switch .form-check-input:checked {
+            filter: invert(1);
         }
     </style>
 @endpush

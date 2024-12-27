@@ -2625,7 +2625,6 @@ button[data-tooltip="tooltip"] {
     justify-content: center;
     gap: 0.45rem;
     font-size: 0.75rem;
-    margin]=: 0.75rem;
     margin: 0.75rem 0 2rem;
 }
 
@@ -2676,14 +2675,14 @@ button[data-tooltip="tooltip"] {
     height: 100%;
     object-fit: contain;
     border-radius: 0.85rem;
-    background: #9B9B9B;
+    background: #9b9b9b;
 }
 .user-images__mask {
     width: 8rem;
     aspect-ratio: 1/1;
     border-radius: 1rem;
     overflow: hidden;
-    background: #9B9B9B;
+    background: #9b9b9b;
 }
 
 .user-images__mask > img {
@@ -2699,5 +2698,23 @@ button[data-tooltip="tooltip"] {
     gap: 0.75rem;
     margin-bottom: 1rem;
     flex-wrap: wrap;
+}
+
+.back-btn {
+    color: #e1dfdf !important;
+    border: 2px solid #bbbbbb;
+    width: 35px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.35rem;
+}
+
+.back-btn i {
+    font-size: 1.75rem;
+}
+.form-switch .form-check-input:checked {
+    filter: invert(1);
 }
 /* chat */
