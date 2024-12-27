@@ -5,7 +5,8 @@
 
     const ChatComponent = {
         setup() {
-            const TYPING_DELAY = 10;
+            const API_KEY = '{{ env('OPENAI_API_KEY') }}';
+            const TYPING_DELAY = 5;
             const message = ref('');
             const loading = ref(false);
             const conversations = ref([]);
@@ -22,7 +23,6 @@
             };
 
             const simulateTyping = (index, fullMessage) => {
-                isTyping.value = true;
                 conversations.value[index].displayReply = '';
 
                 let i = 0;
@@ -38,9 +38,8 @@
             };
 
             const getApiResponse = async (userMessage) => {
-                const apiKey = 'YOUR_OPENAI_API_KEY';
-
                 try {
+
                     const response = await axios.post(
                         'https://api.openai.com/v1/chat/completions', {
                             model: 'gpt-4',
@@ -48,22 +47,22 @@
                                 role: 'user',
                                 content: userMessage,
                             }, ],
-                            max_tokens: 150,
                         }, {
                             headers: {
-                                'Authorization': `Bearer ${apiKey}`,
+                                'Authorization': `Bearer ${API_KEY}`,
                                 'Content-Type': 'application/json',
                             },
                         }
                     );
 
+                    const aiMessage = response.data.choices[0].message.content;
+
                     return {
                         status: 'success',
-                        message: response.data.choices[0].message.content
+                        message: aiMessage
                     };
 
                 } catch (error) {
-                    console.error('Error fetching the reply from OpenAI:', error);
                     return {
                         status: 'error',
                         message: error.message
@@ -71,36 +70,58 @@
                 }
             };
 
-            const submitChat = async () => {
-                if (!message.value.trim()) return;
-                const formattedUserMessage = message.value.replace(/\n/g, '<br>');
-
-                conversations.value.push({
-                    message: formattedUserMessage,
-                    isUserMessage: true
-                });
-
-                message.value = '';
-
-                await displayChat();
+            const handleKeydown = (event) => {
+                if (event.key === 'Enter' && !loading.value) {
+                    if (event.shiftKey) {
+                        return;
+                    } else {
+                        submitChat();
+                        event.preventDefault();
+                    }
+                }
             };
 
-            const displayChat = async () => {
-                const index = conversations.value.length;
-                conversations.value.push({
-                    message: '',
-                    isUserMessage: false,
-                    isTyping: true,
-                    displayReply: ''
-                });
+            const submitChat = async () => {
+                if (!message.value.trim() || loading.value) return;
 
+                loading.value = true;
 
-                const apiResponse = await getApiResponse(conversations.value[index - 1].message);
-                if (apiResponse.status === 'error') {
-                    errorMessage.value = apiResponse
+                try {
+                    const formattedUserMessage = message.value.replace(/\n/g, '<br>');
+
+                    conversations.value.push({
+                        message: formattedUserMessage,
+                        isUserMessage: true
+                    });
+
+                    conversations.value.push({
+                        message: '',
+                        isUserMessage: false,
+                        isTyping: true,
+                        displayReply: ''
+                    });
+
+                    message.value = '';
+                    chatInput.value.style.height = 'auto';
+
+                    const index = conversations.value.length - 1;
+
+                    const apiResponse = await getApiResponse(formattedUserMessage);
+
+                    if (apiResponse.status === 'error') {
+                        errorMessage.value = apiResponse;
+                    }
+
+                    conversations.value[index].message = apiResponse.message;
+
+                    simulateTyping(index, apiResponse
+                        .message);
+
+                } catch (error) {
+                    console.error("Error fetching API response:", error);
+                } finally {
+                    loading.value = false;
                 }
-
-                simulateTyping(index, apiResponse);
             };
 
             const cancelChat = () => {
@@ -116,6 +137,7 @@
                 isTyping,
                 chatInput,
                 errorMessage,
+                handleKeydown,
                 conversations,
                 resizeTextarea,
                 submitChat,

@@ -27,7 +27,8 @@
                 </div>
                 <div v-if="errorMessage.status !== 'error'" class="chat-box">
                     <form @submit.prevent="submitChat" class="chat-box__form">
-                        <textarea rows="1" ref="chatInput" class="chat-input" v-model="message" @input="resizeTextarea"> </textarea>
+                        <textarea rows="1" ref="chatInput" class="chat-input" v-model="message" @input="resizeTextarea"
+                            @keydown="handleKeydown"> </textarea>
                         <div class="action-wrapper">
                             <div class="actions-btn">
                                 <button data-tooltip="tooltip" title="Attach Files" type="submit" class="icon-btn">
@@ -38,7 +39,7 @@
                                             fill="currentColor"></path>
                                     </svg>
                                 </button>
-                                <button v-if="isTyping" class="circle-btn" :disabled="!message.trim()">
+                                <button v-if="isTyping" class="circle-btn" :disabled="!message.trim() || loading">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-lg">
                                         <rect x="7" y="7" width="10" height="10" rx="1.25"
@@ -46,7 +47,7 @@
                                     </svg>
                                 </button>
                                 <button v-else="isTyping" @click="cancelChat" class="circle-btn"
-                                    :disabled="!message.trim()">
+                                    :disabled="!message.trim() || loading">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-2xl">
                                         <path fill-rule="evenodd" clip-rule="evenodd"

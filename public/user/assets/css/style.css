@@ -2521,7 +2521,7 @@ button[data-tooltip="tooltip"] {
     background: #c1c1c1;
 }
 .chat-box__form .circle-btn[disabled] {
-    opacity: 1;
+    opacity: 0.75;
     background: #b1b0b0;
     cursor: initial;
     color: #000;
@@ -2564,7 +2564,7 @@ button[data-tooltip="tooltip"] {
     display: flex;
     flex-direction: column;
     gap: 40px 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 1.75;
 }
 .chat-reply__message .cursor {
