@@ -32,6 +32,7 @@
 
             const removeImage = (index) => {
                 uploadedImages.value.splice(index, 1);
+                showUploadedImages.value.splice(index, 1);
             }
 
             const resizeTextarea = () => {
