@@ -37,7 +37,7 @@
                         <div class="uploaded-images-wrapper" v-if="showUploadedImages.length> 0">
                             <div v-for="(image, index) in showUploadedImages" :key="index"
                                 class="uploaded-image">
-                                <button class="remove-file" data-tooltip="tooltip" title="Remove file"
+                                <button type="button" class="remove-file" data-tooltip="tooltip" title="Remove file"
                                     @click="removeImage(index)">
                                     <i class="bx bx-x"></i>
                                 </button>
