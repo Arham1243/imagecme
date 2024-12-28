@@ -2719,4 +2719,23 @@ button[data-tooltip="tooltip"] {
 .back-btn i {
     font-size: 1.75rem;
 }
+.toggle-password {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 27px;
+    aspect-ratio: 1 / 1;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.toggle-password i {
+    font-size: 1.25rem;
+  }
+  
 /* chat */

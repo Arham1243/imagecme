@@ -47,4 +47,15 @@ Breadcrumbs::for('user.cases.chat', function (BreadcrumbTrail $trail, $item) {
     $trail->parent('user.cases.edit', $item);
     $trail->push('Ask AI', route('user.cases.chat', $item->id));
 });
+
+Breadcrumbs::for('user.profile.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('user.dashboard');
+    $trail->push('Personal Information', route('user.profile.index'));
+});
+
+Breadcrumbs::for('user.profile.changePassword', function (BreadcrumbTrail $trail) {
+    $trail->parent('user.dashboard');
+    $trail->push('Change Password', route('user.profile.changePassword'));
+});
+
 // --------------- Usdr Dashboard---------------
