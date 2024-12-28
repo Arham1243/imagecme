@@ -223,13 +223,6 @@
                 }
             };
 
-            const cancelChat = () => {
-                if (this.controller) {
-                    this.controller.abort();
-                    loading.value = false;
-                }
-            };
-
             return {
                 message,
                 loading,
@@ -242,7 +235,6 @@
                 conversations,
                 resizeTextarea,
                 submitChat,
-                cancelChat,
                 handleFileInput,
                 removeImage,
                 uploadedImages,

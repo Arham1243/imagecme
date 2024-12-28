@@ -1,6 +1,9 @@
 <div class="chat chat-bg">
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-12" v-if="loadingChats">
+                <div class="loader loader--sm mx-auto d-block"></div>
+            </div>
             <div class="col-md-9">
                 <div class="chat-conversations">
                     <div v-for="(conversation, index) in conversations" :key="index">
@@ -68,8 +71,7 @@
                                             fill="currentColor"></rect>
                                     </svg>
                                 </button>
-                                <button v-else="isTyping" @click="cancelChat" class="circle-btn"
-                                    :disabled="!message.trim() || loading">
+                                <button v-else="isTyping" class="circle-btn" :disabled="!message.trim() || loading">
                                     <svg width="32" height="32" viewBox="0 0 32 32" fill="none"
                                         xmlns="http://www.w3.org/2000/svg" class="icon-2xl">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -95,7 +97,4 @@
             </div>
         </div>
     </div>
-</div>
-<div v-if="loadingChats" class="loader-mask">
-    <div class="loader"></div>
 </div>
