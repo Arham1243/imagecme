@@ -32,7 +32,7 @@
                     text: '{{ session('notify_success') ?? $_GET['notify_success'] }}',
                     loaderBg: '#ff6849',
                     icon: 'success',
-                    hideAfter: 2000,
+                    hideAfter: 4000,
                     stack: 6
                 });
             @elseif (session('notify_error') || isset($_GET['notify_error']))

@@ -13,45 +13,46 @@
                     <div class="col-md-7">
                         <div class="inquiry-box__form">
                             <div class="section-content mb-4">
-                                <div class="heading">Login</div>
-                                <p>Join our community to learn and share insights in medical imaging and diagnostics.</p>
+                                <div class="heading">Reset Your Password</div>
+                                <p>You will receive a password reset link at the email address you provide.</p>
                             </div>
-                            <form action="{{ route('auth.login.perform') }}" method="POST">
+                            <form action="{{ route('password.update') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="token" value="{{ $token }}">
+                                <input type="hidden" name="email" value="{{ $_GET['email'] }}">
+
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-fields">
-                                            <label class="title">Email<span class="text-danger">*</span> :</label>
-                                            <input type="email" name="email" class="field" value="{{ old('email') }}"
-                                                required="">
-                                            @error('email')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-fields">
                                             <label class="title">Password<span class="text-danger">*</span> :</label>
                                             <div class="position-relative">
                                                 <input type="password" name="password" id="password" class="field"
                                                     required="">
-                                                <span class="toggle-password" onclick="togglePassword()"><i
-                                                        class='bx bxs-show'></i></span>
+                                                <span data-target="password" class="toggle-password"
+                                                    onclick="togglePassword(event)"><i class='bx bxs-show'></i></span>
                                             </div>
                                             @error('password')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-12 mt-3">
-                                        <button type="submit" class="themeBtn themeBtn--full">Login</button>
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title">Confirm Password<span class="text-danger">*</span>
+                                                :</label>
+                                            <div class="position-relative">
+                                                <input type="password" name="password_confirmation"
+                                                    id="password_confirmation" class="field" required="">
+                                                <span data-target="password_confirmation" class="toggle-password"
+                                                    onclick="togglePassword(event)"><i class='bx bxs-show'></i></span>
+                                            </div>
+                                            @error('password_confirmation')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                     <div class="col-md-12 mt-3">
-                                        <div class="bottom-content text-center">
-                                            <p>Don't have an account? <a href="{{ route('auth.signup') }}">Sign up here</a>
-                                            </p>
-                                            <p><a href="{{ route('password.request') }}">Forgot your password?</a></p>
-                                        </div>
+                                        <button type="submit" class="themeBtn themeBtn--full">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -64,9 +65,11 @@
 @endsection
 @push('js')
     <script>
-        function togglePassword() {
-            var passwordField = document.getElementById("password");
-            var passwordIcon = document.querySelector(".toggle-password i");
+        function togglePassword(event) {
+            const toggleButton = event.currentTarget;
+            const passwordFieldId = toggleButton.getAttribute("data-target");
+            const passwordField = document.getElementById(passwordFieldId);
+            const passwordIcon = toggleButton.querySelector("i");
 
             if (passwordField.type === "password") {
                 passwordField.type = "text";
