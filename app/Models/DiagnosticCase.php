@@ -42,7 +42,7 @@ class DiagnosticCase extends Model
 
     public function getFeaturedImageAttribute()
     {
-        return $this->images[0]->path;
+        return $this->images[0]->path ?? 'admin/assets/images/placeholder.png';
     }
 
     public function getImageTypesAttribute()
