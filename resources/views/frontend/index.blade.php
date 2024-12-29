@@ -122,7 +122,7 @@
                             <div class='cases-card'>
                                 <div class="cases-card__header">
                                     <div class="title">{{ $case->diagnosis_title }}</div>
-                                    <div class="type-badge">{{ $case->case_name }}</div>
+                                    <div class="type-badge">{{ getRelativeType($case->case_type) }}</div>
                                 </div>
                                 <div class="row g-0 align-items-center">
                                     <div class="col-md-4">

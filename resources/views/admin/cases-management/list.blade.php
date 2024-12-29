@@ -52,7 +52,7 @@
                                                         class="bulk-item" name="bulk_select[]" value="{{ $item->id }}">
                                                 </div>
                                             </td>
-                                            <td>{{ $item->case_name }}</td>
+                                            <td>{{ getRelativeType($item->case_type) }}</td>
                                             <td>{{ $item->diagnosis_title }}</td>
                                             <td>
                                                 @if ($item->user)

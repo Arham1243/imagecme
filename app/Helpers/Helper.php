@@ -53,3 +53,16 @@ if (! function_exists('format_type')) {
         return ucwords(str_replace('_', ' ', $string));
     }
 }
+if (! function_exists('getRelativeType')) {
+    function getRelativeType(string $type): string
+    {
+        $typeMapping = [
+            'share_image_diagnosis' => 'Share Case',
+            'challenge_image_diagnosis' => 'Challenge Case',
+            'ask_image_diagnosis' => 'Help Case',
+            'ask_ai_image_diagnosis' => 'AI Case',
+        ];
+
+        return $typeMapping[$type] ?? 'Unknown Type';
+    }
+}

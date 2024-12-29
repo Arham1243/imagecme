@@ -9,7 +9,7 @@ return [
     [
         'title' => 'Analytics',
         'icon' => 'bx bx-bar-chart-alt',
-        'route' => 'admin.analytics.index',
+        'route' => 'admin.analytics.cases',
     ],
     [
         'title' => 'Users',

@@ -25,4 +25,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function cases()
+    {
+        return $this->hasMany(DiagnosticCase::class);
+    }
 }

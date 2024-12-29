@@ -31,5 +31,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::resource('cases', DiagnosticCaseController::class);
-    Route::resource('analytics', AnalyticsController::class);
+    Route::get('analytics/cases', [AnalyticsController::class, 'cases'])->name('analytics.cases');
+    Route::get('analytics/users', [AnalyticsController::class, 'users'])->name('analytics.users');
+
+    Route::get('/admin/analytics/users-specific', [AnalyticsController::class, 'usersSpecific'])->name('analytics.users-specific');
+    Route::get('/admin/analytics/user/{userId}', [AnalyticsController::class, 'userSpecificCharts'])->name('analytics.user-specific');
 });

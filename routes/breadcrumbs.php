@@ -22,7 +22,7 @@ Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('admin.analytics.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
-    $trail->push('Analytics', route('admin.analytics.index'));
+    $trail->push('Analytics', route('admin.analytics.cases'));
 });
 Breadcrumbs::for('admin.cases.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');

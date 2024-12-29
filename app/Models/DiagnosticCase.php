@@ -29,17 +29,6 @@ class DiagnosticCase extends Model
         return $this->hasMany(Comment::class, 'case_id');
     }
 
-    public function getCaseNameAttribute()
-    {
-        return match ($this->case_type) {
-            'share_image_diagnosis' => 'Case',
-            'challenge_image_diagnosis' => 'Challenge Case',
-            'ask_image_diagnosis' => 'Help Case',
-            'ask_ai_image_diagnosis' => 'AI Case',
-            default => 'Unknown Type',
-        };
-    }
-
     public function getFeaturedImageAttribute()
     {
         return $this->images[0]->path ?? 'admin/assets/images/placeholder.png';
