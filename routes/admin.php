@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\Admin\AdminDashController;
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\BulkActionController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SiteSettingsController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\BulkActionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admins', function () {
@@ -25,4 +26,6 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
     Route::post('bulk-actions/{resource}', [BulkActionController::class, 'handle'])->name('bulk-actions');
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
+
+    Route::resource('users', UserController::class);
 });

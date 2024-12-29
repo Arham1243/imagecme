@@ -54,13 +54,22 @@ class AuthController extends Controller
 
     public function performLogin(Request $request)
     {
-
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            $user = Auth::user();
+
+            if ($user->status === 'inactive') {
+                Auth::logout();
+
+                return redirect()->route('auth.login')
+                    ->withErrors(['email' => 'Your account is suspended. Please contact the admin.'])
+                    ->with('notify_error', 'Your account is suspended. Please contact the admin.');
+            }
+
             return redirect()->intended(route('user.dashboard'))
                 ->with('notify_success', 'Login Successful');
         }

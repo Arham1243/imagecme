@@ -16,6 +16,15 @@ Breadcrumbs::for('admin.contact.show', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Contact/Social Info', route('admin.contact.show'));
 });
+Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Users', route('admin.users.index'));
+});
+Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.users.index');
+    $trail->push($item->full_name, route('admin.users.show', $item->id));
+});
+
 // --------------- Admin Dashboard---------------
 
 // --------------- Usdr Dashboard---------------

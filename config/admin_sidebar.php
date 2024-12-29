@@ -23,9 +23,14 @@ return [
         ],
     ],
     [
+        'title' => 'Users Management',
+        'icon' => 'bx bxs-group',
+        'route' => 'admin.users.index',
+    ],
+    [
         'title' => 'Logout',
         'icon' => 'bx bx-power-off',
         'route' => 'admin.logout',
-        'confirm' => 'Are you sure you want to log out'
+        'confirm' => 'Are you sure you want to log out',
     ],
 ];

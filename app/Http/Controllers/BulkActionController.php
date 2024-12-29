@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DiagnosticCase;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -20,6 +21,11 @@ class BulkActionController extends Controller
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
                 $redirectRoute = 'user.cases.index';
+                break;
+            case 'users':
+                $modelClass = User::class;
+                $column = 'id';
+                $redirectRoute = 'admin.users.index';
                 break;
             default:
                 return Redirect::back()->with('notify_error', 'Resource not found.');

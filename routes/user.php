@@ -22,7 +22,7 @@ Route::get('password/notify', [PasswordResetController::class, 'notify'])->name(
 Route::get('password/reset/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.update');
 
-Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
+Route::middleware(['auth', 'check_user_status'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [UserDashController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 

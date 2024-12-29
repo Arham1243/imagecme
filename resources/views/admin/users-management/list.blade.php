@@ -2,9 +2,8 @@
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.testimonials.index') }}
-            <form id="bulkActionForm" method="POST"
-                action="{{ route('admin.bulk-actions', ['resource' => 'testimonials']) }}">
+            {{ Breadcrumbs::render('admin.users.index') }}
+            <form id="bulkActionForm" method="POST" action="{{ route('admin.bulk-actions', ['resource' => 'users']) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
@@ -12,7 +11,6 @@
                             <div class="section-content">
                                 <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                             </div>
-                            <a href="{{ route('admin.testimonials.create') }}" class="themeBtn">Add Testimonial</a>
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-5">
@@ -39,26 +37,28 @@
                                                     id="select-all">
                                             </div>
                                         </th>
-                                        <th>Title</th>
-                                        <th>Rating</th>
-                                        <th>Date</th>
+                                        <th>Role</th>
+                                        <th>Full Name</th>
+                                        <th>Email</th>
+                                        <th>Registration Date</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($testimonials as $item)
+                                    @foreach ($users as $item)
                                         <tr>
                                             <td>
                                                 <div class="selection item-select-container"><input type="checkbox"
                                                         class="bulk-item" name="bulk_select[]" value="{{ $item->id }}">
                                                 </div>
                                             </td>
+                                            <td>{{ $item->role }}</td>
                                             <td>
-                                                <a href="{{ route('admin.testimonials.edit', $item->id) }}"
-                                                    class="link">{{ $item->title }}</a>
+                                                <a href="{{ route('admin.users.show', $item->id) }}"
+                                                    class="link">{{ $item->full_name }}</a>
                                             </td>
-                                            <td style="color: orange"><x-star-rating :rating="$item->rating" /></td>
+                                            <td>{{ $item->email }}</td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span
@@ -67,8 +67,8 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.testimonials.edit', $item->id) }}"
-                                                    class="themeBtn"><i class='bx bxs-edit'></i>Edit</a>
+                                                <a href="{{ route('admin.users.show', $item->id) }}" class="themeBtn"><i
+                                                        class='bx bxs-edit'></i>View Details</a>
                                             </td>
                                         </tr>
                                     @endforeach
