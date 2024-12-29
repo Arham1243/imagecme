@@ -7,6 +7,21 @@ return [
         'route' => 'admin.dashboard',
     ],
     [
+        'title' => 'Analytics',
+        'icon' => 'bx bx-bar-chart-alt',
+        'route' => 'admin.analytics.index',
+    ],
+    [
+        'title' => 'Users',
+        'icon' => 'bx bxs-group',
+        'route' => 'admin.users.index',
+    ],
+    [
+        'title' => 'Cases Management',
+        'icon' => 'bx bx-search-alt',
+        'route' => 'admin.cases.index',
+    ],
+    [
         'title' => 'Site Setting',
         'icon' => 'bx bxs-cog',
         'submenu' => [
@@ -21,16 +36,6 @@ return [
                 'route' => 'admin.contact.show',
             ],
         ],
-    ],
-    [
-        'title' => 'Users Management',
-        'icon' => 'bx bxs-group',
-        'route' => 'admin.users.index',
-    ],
-    [
-        'title' => 'Cases Management',
-        'icon' => 'bx bx-search-alt',
-        'route' => 'admin.cases.index',
     ],
     [
         'title' => 'Logout',

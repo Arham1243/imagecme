@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashController;
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\DiagnosticCaseController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SiteSettingsController;
@@ -30,4 +31,5 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::resource('cases', DiagnosticCaseController::class);
+    Route::resource('analytics', AnalyticsController::class);
 });

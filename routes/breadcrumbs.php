@@ -20,6 +20,10 @@ Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Users', route('admin.users.index'));
 });
+Breadcrumbs::for('admin.analytics.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Analytics', route('admin.analytics.index'));
+});
 Breadcrumbs::for('admin.cases.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('cases', route('admin.cases.index'));
