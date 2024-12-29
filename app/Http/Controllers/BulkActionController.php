@@ -17,10 +17,10 @@ class BulkActionController extends Controller
             return Redirect::back()->with('notify_error', 'No items selected for the bulk action.');
         }
         switch ($resource) {
-            case 'cases':
+            case 'user-cases':
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
-                $redirectRoute = 'user.cases.index';
+                $redirectRoute = 'user.dashboard';
             case 'admin-cases':
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
@@ -35,10 +35,10 @@ class BulkActionController extends Controller
                 return Redirect::back()->with('notify_error', 'Resource not found.');
         }
 
-        return $this->handleBulkActions($modelClass, $column, $action, $selectedIds, $redirectRoute);
+        return $this->handleBulkActions($modelClass, $column, $action, $selectedIds, $redirectRoute, $resource);
     }
 
-    protected function handleBulkActions($modelClass, $idColumn, $action, $selectedIds, $redirectRoute)
+    protected function handleBulkActions($modelClass, $idColumn, $action, $selectedIds, $redirectRoute, $resource)
     {
         switch ($action) {
             case 'delete':
@@ -70,6 +70,9 @@ class BulkActionController extends Controller
                 break;
             default:
                 break;
+        }
+        if ($resource === 'user-cases') {
+            $redirectRoute = 'user.cases.index';
         }
 
         return redirect()->route($redirectRoute)->with('notify_success', 'Bulk action performed successfully!');

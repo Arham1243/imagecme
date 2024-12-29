@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <div class="dashboard-content">
             {{ Breadcrumbs::render('user.cases.index') }}
-            <form id="bulkActionForm" method="POST" action="{{ route('user.bulk-actions', ['resource' => 'cases']) }}">
+            <form id="bulkActionForm" method="POST" action="{{ route('user.bulk-actions', ['resource' => 'user-cases']) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
