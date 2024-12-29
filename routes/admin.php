@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminDashController;
 use App\Http\Controllers\Admin\AdminLoginController;
+use App\Http\Controllers\Admin\DiagnosticCaseController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\UserController;
@@ -28,4 +29,5 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
 
     Route::resource('users', UserController::class);
+    Route::resource('cases', DiagnosticCaseController::class);
 });

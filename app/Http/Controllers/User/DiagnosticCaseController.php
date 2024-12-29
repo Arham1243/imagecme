@@ -17,7 +17,7 @@ class DiagnosticCaseController extends Controller
 
     public function index()
     {
-        $cases = DiagnosticCase::latest()->get();
+        $cases = DiagnosticCase::where('user_id', Auth::user()->id)->latest()->get();
 
         return view('user.cases-management.list')->with('title', 'Images')->with(compact('cases'));
     }

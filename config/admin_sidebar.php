@@ -28,6 +28,11 @@ return [
         'route' => 'admin.users.index',
     ],
     [
+        'title' => 'Cases Management',
+        'icon' => 'bx bx-search-alt',
+        'route' => 'admin.cases.index',
+    ],
+    [
         'title' => 'Logout',
         'icon' => 'bx bx-power-off',
         'route' => 'admin.logout',

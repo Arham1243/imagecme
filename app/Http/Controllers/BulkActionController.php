@@ -21,6 +21,10 @@ class BulkActionController extends Controller
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
                 $redirectRoute = 'user.cases.index';
+            case 'admin-cases':
+                $modelClass = DiagnosticCase::class;
+                $column = 'id';
+                $redirectRoute = 'admin.cases.index';
                 break;
             case 'users':
                 $modelClass = User::class;
