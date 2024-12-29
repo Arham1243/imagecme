@@ -24,7 +24,8 @@
                             </div>
                             <div :class="`chat-reply__message ${errorMessage.status === 'error' ? 'pt-5' : ''}`">
                                 <div v-if="!conversation.isError">
-                                    <span class="message-text">@{{ conversation.displayReply }}</span>
+                                    <span class="message-text"
+                                        v-html="conversation.displayReply.replace(/\n/g, '<br>')"></span>
                                     <span class="cursor" v-if="conversation.isTyping"></span>
                                 </div>
                                 <div v-else v-if="index === conversations.length - 1" class="custom-alert">
