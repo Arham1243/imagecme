@@ -12,21 +12,21 @@
                         value="{{ $year }}">
                 </div>
             </form>
-            <div class="chart">
+            <div class="chart mb-5">
                 <div class="chart-title">Total Users per Month</div>
                 <div class="chart-item">
                     <div id="overallUsersChart"></div>
                 </div>
             </div>
 
-            <div class="chart py-5">
+            <div class="chart mb-5">
                 <div class="chart-title">Users by Specialty</div>
                 <div class="chart-item">
                     <div id="specialtyChart"></div>
                 </div>
             </div>
 
-            <div class="chart py-5">
+            <div class="chart mb-5">
                 <div class="chart-title">Users by Role</div>
                 <div class="chart-item">
                     <div id="caseTypeChart"></div>
@@ -58,7 +58,6 @@
             });
         });
 
-
         google.charts.load('current', {
             packages: ['corechart', 'bar']
         });
@@ -86,33 +85,38 @@
                 @endforeach
             ]);
 
-            var options = {
-                width: 800,
-                height: 500,
-                isStacked: true,
-                hAxis: {
-                    title: 'Month',
-                    slantedText: true,
-                    slantedTextAngle: 45,
-                },
-                vAxis: {
-                    title: 'Total Users',
-                    minValue: 0,
-                },
-                legend: {
-                    position: 'top',
-                    alignment: 'center',
-                },
-                chartArea: {
-                    left: 50,
-                    top: 50,
-                    width: '80%',
-                    height: '70%',
-                },
-            };
+            // Check if there's any data
+            if (data.getNumberOfRows() === 0 || data.getNumberOfColumns() === 1) {
+                $('#specialtyChart').html('<div class="no-data-message">No data available to display.</div>');
+            } else {
+                var options = {
+                    width: 800,
+                    height: 500,
+                    isStacked: true,
+                    hAxis: {
+                        title: 'Month',
+                        slantedText: true,
+                        slantedTextAngle: 45,
+                    },
+                    vAxis: {
+                        title: 'Total Users',
+                        minValue: 0,
+                    },
+                    legend: {
+                        position: 'top',
+                        alignment: 'center',
+                    },
+                    chartArea: {
+                        left: 50,
+                        top: 50,
+                        width: '80%',
+                        height: '70%',
+                    },
+                };
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('specialtyChart'));
-            chart.draw(data, options);
+                var chart = new google.visualization.ColumnChart(document.getElementById('specialtyChart'));
+                chart.draw(data, options);
+            }
         }
 
         function drawCaseTypeChart() {
@@ -131,35 +135,39 @@
                 @endforeach
             ]);
 
-            var options = {
-                width: 800,
-                height: 500,
-                isStacked: true,
-                hAxis: {
-                    title: 'Month',
-                    slantedText: true,
-                    slantedTextAngle: 45,
-                },
-                vAxis: {
-                    title: 'Total Users',
-                    minValue: 0,
-                },
-                legend: {
-                    position: 'top',
-                    alignment: 'center',
-                },
-                chartArea: {
-                    left: 50,
-                    top: 50,
-                    width: '80%',
-                    height: '70%',
-                },
-            };
+            // Check if there's any data
+            if (data.getNumberOfRows() === 0 || data.getNumberOfColumns() === 1) {
+                $('#caseTypeChart').html('<div class="no-data-message">No data available to display.</div>');
+            } else {
+                var options = {
+                    width: 800,
+                    height: 500,
+                    isStacked: true,
+                    hAxis: {
+                        title: 'Month',
+                        slantedText: true,
+                        slantedTextAngle: 45,
+                    },
+                    vAxis: {
+                        title: 'Total Users',
+                        minValue: 0,
+                    },
+                    legend: {
+                        position: 'top',
+                        alignment: 'center',
+                    },
+                    chartArea: {
+                        left: 50,
+                        top: 50,
+                        width: '80%',
+                        height: '70%',
+                    },
+                };
 
-            var chart = new google.visualization.ColumnChart(document.getElementById('caseTypeChart'));
-            chart.draw(data, options);
+                var chart = new google.visualization.ColumnChart(document.getElementById('caseTypeChart'));
+                chart.draw(data, options);
+            }
         }
-
 
         function drawOverallUsersChart() {
             var data = google.visualization.arrayToDataTable([
@@ -169,6 +177,12 @@
                 @endforeach
             ]);
 
+            let allZero = Object.values(@json($usersData)).every(value => value === 0);
+
+            if (allZero) {
+                $('#overallUsersChart').html('<p>No data available to display.</p>');
+                return;
+            }
             var options = {
                 width: 800,
                 height: 500,

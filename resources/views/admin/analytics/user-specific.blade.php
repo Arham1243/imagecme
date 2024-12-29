@@ -12,21 +12,21 @@
                         value="{{ $year }}">
                 </div>
             </form>
-            <div class="chart">
+            <div class="chart mb-5">
                 <div class="chart-title">Total Cases per Month</div>
                 <div class="chart-item">
                     <div id="overallCasesChart"></div>
                 </div>
             </div>
 
-            <div class="chart py-5">
+            <div class="chart mb-5">
                 <div class="chart-title">Cases by Specialty</div>
                 <div class="chart-item">
                     <div id="specialtyChart"></div>
                 </div>
             </div>
 
-            <div class="chart py-5">
+            <div class="chart mb-5">
                 <div class="chart-title">Cases by Type</div>
                 <div class="chart-item">
                     <div id="caseTypeChart"></div>
@@ -58,7 +58,6 @@
             });
         });
 
-
         google.charts.load('current', {
             packages: ['corechart', 'bar']
         });
@@ -70,7 +69,28 @@
             drawCaseTypeChart();
         }
 
+
+        function isAllDataEmpty(data) {
+            console.log("Checking if data is empty:", data);
+            for (var month in data) {
+
+                if (Object.values(data[month]).some(value => value > 0)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         function drawSpecialtyChart() {
+            var specialtyData = @json($specialtyData->toArray());
+            console.log("Specialty Data:", specialtyData);
+
+            if (isAllDataEmpty(specialtyData)) {
+                $('#specialtyChart').html('<p>No data available to display.</p>');
+                return;
+            }
+
             var data = google.visualization.arrayToDataTable([
                 ['Month',
                     @foreach ($specialtyData->first() as $specialty => $count)
@@ -116,6 +136,14 @@
         }
 
         function drawCaseTypeChart() {
+            var caseTypeData = @json($caseTypeData->toArray());
+            console.log("Case Type Data:", caseTypeData);
+
+            if (isAllDataEmpty(caseTypeData)) {
+                $('#caseTypeChart').html('<p>No data available to display.</p>');
+                return;
+            }
+
             var data = google.visualization.arrayToDataTable([
                 ['Month',
                     @foreach ($caseTypeData->first() as $type => $count)
@@ -160,8 +188,17 @@
             chart.draw(data, options);
         }
 
-
         function drawOverallCasesChart() {
+            var casesData = @json($casesData->toArray());
+            console.log("Overall Cases Data:", casesData);
+
+            let allZero = Object.values(casesData).every(value => value === 0);
+
+            if (allZero) {
+                $('#overallCasesChart').html('<p>No data available to display.</p>');
+                return;
+            }
+
             var data = google.visualization.arrayToDataTable([
                 ['Month', 'Total Cases'],
                 @foreach ($casesData as $month => $total)
