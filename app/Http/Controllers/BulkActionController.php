@@ -20,7 +20,8 @@ class BulkActionController extends Controller
             case 'user-cases':
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
-                $redirectRoute = 'user.dashboard';
+                $redirectRoute = 'user.cases.index';
+                break;
             case 'admin-cases':
                 $modelClass = DiagnosticCase::class;
                 $column = 'id';
@@ -70,9 +71,6 @@ class BulkActionController extends Controller
                 break;
             default:
                 break;
-        }
-        if ($resource === 'user-cases') {
-            $redirectRoute = 'user.cases.index';
         }
 
         return redirect()->route($redirectRoute)->with('notify_success', 'Bulk action performed successfully!');
