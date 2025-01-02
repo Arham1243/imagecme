@@ -77,6 +77,94 @@
                                                             @enderror
                                                         </div>
                                                     </div>
+
+
+                                                    <div class="pt-4" x-show="case_type === 'challenge_image_diagnosis'">
+
+
+                                                        <div x-data="mcqManager()" class="form-fields">
+                                                            <label
+                                                                class="d-flex align-items-center mb-3 justify-content-between">
+                                                                <span class="title title--sm mb-0">Question Others to
+                                                                    diagnosis:</span>
+                                                            </label>
+                                                            <div class="repeater-table">
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">MCQs</th>
+                                                                            <th class="text-end" scope="col">Remove</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <template x-for="(mcq, index) in mcqs"
+                                                                            :key="index">
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <div class="form-fields">
+                                                                                        <label
+                                                                                            class="title">Question</label>
+                                                                                        <input type="text"
+                                                                                            x-model="mcq.question"
+                                                                                            placeholder="" class="field"
+                                                                                            :name="'mcqs[' + index +
+                                                                                                '][question]'" />
+                                                                                    </div>
+                                                                                    <template
+                                                                                        x-for="(answer, answerIndex) in mcq.answers"
+                                                                                        :key="answerIndex">
+                                                                                        <div class="form-fields mt-4 py-2">
+                                                                                            <label
+                                                                                                class="title">Answer</label>
+                                                                                            <div
+                                                                                                class="d-flex align-items-center gap-3">
+                                                                                                <input type="text"
+                                                                                                    x-model="mcq.answers[answerIndex]"
+                                                                                                    placeholder=""
+                                                                                                    class="field"
+                                                                                                    :name="'mcqs[' + index +
+                                                                                                        '][answers][' +
+                                                                                                        answerIndex +
+                                                                                                        ']'" />
+                                                                                                <button type="button"
+                                                                                                    @click="removeAnswer(index, answerIndex)"
+                                                                                                    class="delete-btn ms-auto delete-btn--static"
+                                                                                                    :disabled="mcq.answers
+                                                                                                        .length <= 1">
+                                                                                                    <i
+                                                                                                        class="bx bxs-trash-alt"></i>
+                                                                                                </button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
+
+                                                                                    <button type="button"
+                                                                                        @click="addAnswer(index)"
+                                                                                        class="themeBtn ms-auto mt-3">
+                                                                                        Add Answer <i
+                                                                                            class="bx bx-plus"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="button"
+                                                                                        @click="removeMCQ(index)"
+                                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                                        :disabled="mcqs.length <= 1">
+                                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </template>
+                                                                    </tbody>
+                                                                </table>
+                                                                <button type="button" @click="addMCQ"
+                                                                    class="themeBtn ms-auto">
+                                                                    Add MCQ <i class="bx bx-plus"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
 
                                             </div>
@@ -115,70 +203,65 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12  mb-4" x-data="imageUploadManager()">
-                                            <template x-for="(row, index) in rows" :key="index">
-                                                <div class="case-image-box">
-                                                    <div class="close-btn" @click="removeImageRow(index)">
-                                                        <i class='bx bx-x'></i>
-                                                    </div>
-
-                                                    <div class="form-fields mb-4">
-                                                        <label class="title">Image Type <span
-                                                                class="text-danger">*</span>:</label>
-                                                        <select x-model="row.selectedImageType" class="field">
-                                                            <option value="" selected disabled>Select</option>
-                                                            <template x-for="type in availableImageTypes"
-                                                                :key="type">
-                                                                <option :value="type" x-text="type"
-                                                                    :disabled="isTypeSelected(type, index)"></option>
-                                                            </template>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-fields mb-3" x-show="row.selectedImageType">
-                                                        <div class="multiple-upload mt-3">
-                                                            <input :id="'case-images-' + index" type="file"
-                                                                class="gallery-input d-none" multiple accept="image/*"
-                                                                @change="handleFileUpload($event, index)"
-                                                                :name="'case_images[' + row.selectedImageType +
-                                                                    '][images][file][]'">
-
-                                                            <label class="multiple-upload__btn themeBtn"
-                                                                :for="'case-images-' + index">
-                                                                <i class='bx bx-upload'></i> Choose images
-                                                            </label>
-                                                            <ul class="multiple-upload__imgs mt-4 pt-2">
-                                                                <template x-for="(image, imgIndex) in row.uploadedImages"
-                                                                    :key="imgIndex">
-                                                                    <li class="single-image">
-                                                                        <div class="delete-btn"
-                                                                            @click="removeImage(index, imgIndex)">
-                                                                            <i class='bx bxs-trash-alt'></i>
-                                                                        </div>
-                                                                        <a class="mask" :href="image.src"
-                                                                            data-fancybox="gallery">
-                                                                            <img :src="image.src"
-                                                                                class="imgFluid" />
-                                                                        </a>
-                                                                        <input
-                                                                            :name="'case_images[' + row.selectedImageType +
-                                                                                '][images][name][]'"
-                                                                            class="field" placeholder="Enter Name"
-                                                                            data-required data-error="Image Name"
-                                                                            x-model="image.name">
-                                                                    </li>
-                                                                </template>
-                                                            </ul>
+                                        <div x-data="imageTypeManager()">
+                                            <div class="col-lg-12 mb-4">
+                                                <div class="form-fields mb-4">
+                                                    <label class="title">Image Type <span
+                                                            class="text-danger">*</span>:</label>
+                                                    <select x-model="selectedType" @change="addTypeRow()" class="field">
+                                                        <option value="" selected disabled>Select</option>
+                                                        <template x-for="type in types" :key="type">
+                                                            <option :value="type"
+                                                                :disabled="selectedTypes.includes(type)" x-text="type">
+                                                            </option>
+                                                        </template>
+                                                    </select>
+                                                </div>
+                                                <template x-for="(type, index) in selectedTypes" :key="index">
+                                                    <div class="case-image-box mt-4">
+                                                        <div class="close-btn" @click="removeTypeRow(index)">
+                                                            <i class='bx bx-x'></i>
+                                                        </div>
+                                                        <div class="form-fields mb-3">
+                                                            <div class="title title--sm" x-text="type"></div>
+                                                            <input type="hidden"
+                                                                :name="'image_types[' + index + '][type]'"
+                                                                :value="type">
+                                                            <div class="multiple-upload mt-3">
+                                                                <input type="file" :id="'gallery-input-' + index"
+                                                                    class="gallery-input d-none" multiple accept="image/*"
+                                                                    @change="previewFiles($event, index)"
+                                                                    :name="'image_types[' + index + '][files][]'">
+                                                                <label :for="'gallery-input-' + index"
+                                                                    class="multiple-upload__btn themeBtn">
+                                                                    <i class='bx bx-upload'></i> Choose images
+                                                                </label>
+                                                                <ul class="multiple-upload__imgs mt-4 pt-2">
+                                                                    <template
+                                                                        x-for="(file, fileIndex) in uploadedFiles[index]"
+                                                                        :key="fileIndex">
+                                                                        <li class="single-image">
+                                                                            <div class="delete-btn"
+                                                                                @click="removeFile(index, fileIndex)">
+                                                                                <i class='bx bxs-trash-alt'></i>
+                                                                            </div>
+                                                                            <a class="mask" :href="file.preview"
+                                                                                data-fancybox="gallery">
+                                                                                <img :src="file.preview"
+                                                                                    class="imgFluid" />
+                                                                            </a>
+                                                                            <input class="field" placeholder="Enter Name"
+                                                                                :name="'image_types[' + index + '][names][]'"
+                                                                                data-required data-error="Image Name">
+                                                                        </li>
+                                                                    </template>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </template>
-                                            <div class="dimensions mt-4">
-                                                <strong>Dimensions:</strong> 603 &times; 641
+                                                </template>
+
                                             </div>
-                                            <button type="button" class="themeBtn ms-auto mt-4" @click="addImageRow"
-                                                x-show="!(rows.length >= availableImageTypes.length)">
-                                                <i class='bx bx-plus'></i> Add Image
-                                            </button>
                                         </div>
 
                                         <div class="col-lg-12 mb-2">
@@ -586,55 +669,80 @@
         </div>
     </div>
 @endsection
+@php
+    $mcqs = json_decode($case->mcq_data, true);
+@endphp
 @push('js')
     <script>
-        document.addEventListener("alpine:init", () => {
-            Alpine.data('imageUploadManager', () => ({
-                availableImageTypes: [
-                    'Optical imaging', 'X Ray', 'Fluoroscopy', 'CT Scan', 'Ultrasound, Diagnostic',
-                    'Ultrasound, Pregnancy', 'MRI', 'PET Scan', 'Retinography', 'Mammography',
-                    'Arthrogram', 'Interventional imaging', 'Histopathology', '2D', '3D', '4D',
+        function imageTypeManager() {
+            return {
+                types: [
+                    "Optical imaging", "X Ray", "Fluoroscopy", "CT Scan", "Ultrasound, Diagnostic",
+                    "Ultrasound, Pregnancy", "MRI", "PET Scan", "Retinography", "Mammography", "Arthrogram",
+                    "Interventional imaging", "Histopathology", "2D", "3D", "4D"
                 ],
-                rows: [{
-                    selectedImageType: '',
-                    uploadedImages: []
-                }],
+                selectedType: '',
+                selectedTypes: [],
+                uploadedFiles: {},
 
-                isTypeSelected(type, currentIndex) {
-                    return this.rows.some((row, index) => index !== currentIndex && row
-                        .selectedImageType === type);
-                },
-
-                addImageRow() {
-                    this.rows.push({
-                        selectedImageType: '',
-                        uploadedImages: []
-                    });
-                },
-
-                removeImageRow(index) {
-                    this.rows.splice(index, 1);
-                },
-
-                handleFileUpload(event, rowIndex) {
-                    const files = event.target.files;
-                    const row = this.rows[rowIndex];
-
-                    if (files && files.length > 0) {
-                        for (const file of files) {
-                            row.uploadedImages.push({
-                                src: URL.createObjectURL(file),
-                                file: file,
-                                name: ''
-                            });
-                        }
+                addTypeRow() {
+                    if (this.selectedType && !this.selectedTypes.includes(this.selectedType)) {
+                        this.selectedTypes.push(this.selectedType);
+                        this.uploadedFiles[this.selectedTypes.length - 1] = [];
+                        this.selectedType = '';
                     }
                 },
 
-                removeImage(rowIndex, imgIndex) {
-                    this.rows[rowIndex].uploadedImages.splice(imgIndex, 1);
+                removeTypeRow(index) {
+                    this.selectedTypes.splice(index, 1);
+                    delete this.uploadedFiles[index];
+                },
+
+                previewFiles(event, index) {
+                    const files = Array.from(event.target.files);
+                    if (!this.uploadedFiles[index]) {
+                        this.uploadedFiles[index] = [];
+                    }
+                    files.forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                            this.uploadedFiles[index].push({
+                                name: file.name,
+                                preview: reader.result
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                },
+
+                removeFile(typeIndex, fileIndex) {
+                    this.uploadedFiles[typeIndex].splice(fileIndex, 1);
                 }
-            }));
-        });
+            };
+        }
+
+        function mcqManager() {
+            return {
+                mcqs: @json($mcqs) || [{
+                    question: '',
+                    answers: ['']
+                }],
+                addMCQ() {
+                    this.mcqs.push({
+                        question: '',
+                        answers: ['']
+                    });
+                },
+                removeMCQ(index) {
+                    this.mcqs.splice(index, 1);
+                },
+                addAnswer(index) {
+                    this.mcqs[index].answers.push('');
+                },
+                removeAnswer(index, answerIndex) {
+                    this.mcqs[index].answers.splice(answerIndex, 1);
+                }
+            }
+        }
     </script>
 @endpush

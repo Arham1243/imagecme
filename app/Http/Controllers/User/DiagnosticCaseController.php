@@ -34,7 +34,7 @@ class DiagnosticCaseController extends Controller
             'slug' => $this->createSlug($request['diagnosis_title'], 'cases'),
             'case_type' => $request['case_type'],
             'user_id' => Auth::user()->id,
-            'content' => $request['content'] ?? null,
+            'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
             'image_quality' => $request['image_quality'],
             'diagnosis_title' => $request['diagnosis_title'],
             'diagnosed_disease' => $request['diagnosed_disease'],
@@ -50,24 +50,31 @@ class DiagnosticCaseController extends Controller
             'patient_others' => $request['patient_others'] ?? null,
             'status' => $request['status'],
             'authors' => json_encode($request['authors']),
+            'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
         ]);
 
-        if (isset($request['case_images']) && ! empty($request['case_images'])) {
-            foreach ($request['case_images'] as $imageType => $imageData) {
-                if (isset($imageData['images'])) {
-                    foreach ($imageData['images']['file'] as $index => $imageFile) {
-                        $imageName = $imageData['images']['name'][$index] ?? null;
+        if ($request->has('image_types')) {
+            foreach ($request->input('image_types') as $key => $imageTypeData) {
+                // Regular input data
+                $type = $imageTypeData['type'];
+                $names = $imageTypeData['names'] ?? [];
+                $files = $request->file("image_types.{$key}.files") ?? [];
 
-                        if ($imageFile) {
-                            $filePath = $this->simpleUploadImg($imageFile, 'User/'.Auth::user()->id."/Case/{$diagnosticCase->id}/images/");
+                foreach ($files as $index => $file) {
+                    $fileName = $names[$index] ?? null;
 
-                            CaseImage::create([
-                                'case_id' => $diagnosticCase->id,
-                                'type' => $imageType,
-                                'name' => $imageName,
-                                'path' => $filePath,
-                            ]);
-                        }
+                    if ($file) {
+                        $filePath = $this->simpleUploadImg(
+                            $file,
+                            'User/'.Auth::user()->id."/Case/{$diagnosticCase->id}/images/"
+                        );
+
+                        CaseImage::create([
+                            'case_id' => $diagnosticCase->id,
+                            'type' => $type,
+                            'name' => $fileName,
+                            'path' => $filePath,
+                        ]);
                     }
                 }
             }
@@ -100,7 +107,7 @@ class DiagnosticCaseController extends Controller
             'slug' => $this->createSlug($request['diagnosis_title'], 'cases', $diagnosticCase->slug),
             'case_type' => $request['case_type'],
             'user_id' => Auth::user()->id,
-            'content' => $request['content'] ?? null,
+            'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
             'image_quality' => $request['image_quality'],
             'diagnosis_title' => $request['diagnosis_title'],
             'diagnosed_disease' => $request['diagnosed_disease'],
@@ -116,24 +123,31 @@ class DiagnosticCaseController extends Controller
             'patient_others' => $request['patient_others'] ?? null,
             'status' => $request['status'],
             'authors' => json_encode($request['authors']),
+            'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
         ]);
 
-        if (isset($request['case_images']) && ! empty($request['case_images'])) {
-            foreach ($request['case_images'] as $imageType => $imageData) {
-                if (isset($imageData['images'])) {
-                    foreach ($imageData['images']['file'] as $index => $imageFile) {
-                        $imageName = $imageData['images']['name'][$index] ?? null;
+        if ($request->has('image_types')) {
+            foreach ($request->input('image_types') as $key => $imageTypeData) {
+                // Regular input data
+                $type = $imageTypeData['type'];
+                $names = $imageTypeData['names'] ?? [];
+                $files = $request->file("image_types.{$key}.files") ?? [];
 
-                        if ($imageFile) {
-                            $filePath = $this->simpleUploadImg($imageFile, 'User/'.Auth::user()->id."/Case/{$diagnosticCase->id}/images/");
+                foreach ($files as $index => $file) {
+                    $fileName = $names[$index] ?? null;
 
-                            CaseImage::create([
-                                'case_id' => $diagnosticCase->id,
-                                'type' => $imageType,
-                                'name' => $imageName,
-                                'path' => $filePath,
-                            ]);
-                        }
+                    if ($file) {
+                        $filePath = $this->simpleUploadImg(
+                            $file,
+                            'User/'.Auth::user()->id."/Case/{$diagnosticCase->id}/images/"
+                        );
+
+                        CaseImage::create([
+                            'case_id' => $diagnosticCase->id,
+                            'type' => $type,
+                            'name' => $fileName,
+                            'path' => $filePath,
+                        ]);
                     }
                 }
             }

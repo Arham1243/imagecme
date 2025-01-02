@@ -2397,7 +2397,7 @@ button[data-tooltip="tooltip"] {
     position: relative;
     background: #fff;
     border: 2px solid #cccccc73;
-    padding: 2rem 1.25rem 0.65rem;
+    padding: 1rem 1.25rem;
     margin-bottom: 1rem;
 }
 
