@@ -93,7 +93,6 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th scope="col">MCQs</th>
-                                                                            <th class="text-end" scope="col">Remove</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -114,8 +113,8 @@
                                                                                         x-for="(answer, answerIndex) in mcq.answers"
                                                                                         :key="answerIndex">
                                                                                         <div class="form-fields mt-4 py-2">
-                                                                                            <label
-                                                                                                class="title">Answer</label>
+                                                                                            <label class="title"
+                                                                                                x-text="`Option ${answerIndex + 1}`"></label>
                                                                                             <div
                                                                                                 class="d-flex align-items-center gap-3">
                                                                                                 <input type="text"
@@ -145,22 +144,10 @@
                                                                                             class="bx bx-plus"></i>
                                                                                     </button>
                                                                                 </td>
-                                                                                <td>
-                                                                                    <button type="button"
-                                                                                        @click="removeMCQ(index)"
-                                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                                        :disabled="mcqs.length <= 1">
-                                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                                    </button>
-                                                                                </td>
                                                                             </tr>
                                                                         </template>
                                                                     </tbody>
                                                                 </table>
-                                                                <button type="button" @click="addMCQ"
-                                                                    class="themeBtn ms-auto">
-                                                                    Add MCQ <i class="bx bx-plus"></i>
-                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -727,15 +714,6 @@
                     question: '',
                     answers: ['']
                 }],
-                addMCQ() {
-                    this.mcqs.push({
-                        question: '',
-                        answers: ['']
-                    });
-                },
-                removeMCQ(index) {
-                    this.mcqs.splice(index, 1);
-                },
                 addAnswer(index) {
                     this.mcqs[index].answers.push('');
                 },

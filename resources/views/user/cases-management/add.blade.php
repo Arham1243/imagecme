@@ -76,21 +76,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="pt-4" x-show="case_type === 'challenge_image_diagnosis'">
-                                                        <div x-data="{
-                                                            mcqs: [{ question: '', answers: [''] }],
-                                                            addMCQ() {
-                                                                this.mcqs.push({ question: '', answers: [''] });
-                                                            },
-                                                            removeMCQ(index) {
-                                                                this.mcqs.splice(index, 1);
-                                                            },
-                                                            addAnswer(index) {
-                                                                this.mcqs[index].answers.push('');
-                                                            },
-                                                            removeAnswer(index, answerIndex) {
-                                                                this.mcqs[index].answers.splice(answerIndex, 1);
-                                                            }
-                                                        }" class="form-fields">
+                                                        <div x-data="mcqManager()" class="form-fields">
                                                             <label
                                                                 class="d-flex align-items-center mb-3 justify-content-between">
                                                                 <span class="title title--sm mb-0">Question Others to
@@ -101,7 +87,6 @@
                                                                     <thead>
                                                                         <tr>
                                                                             <th scope="col">MCQs</th>
-                                                                            <th class="text-end" scope="col">Remove</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
@@ -122,10 +107,10 @@
                                                                                         x-for="(answer, answerIndex) in mcq.answers"
                                                                                         :key="answerIndex">
                                                                                         <div class="form-fields mt-4 py-2">
-                                                                                            <label
-                                                                                                class="title">Answer</label>
+                                                                                            <label class="title"
+                                                                                                x-text="`Option ${answerIndex + 1}`"></label>
                                                                                             <div
-                                                                                                class="d-flex align-items-center gap-3 ">
+                                                                                                class="d-flex align-items-center gap-3">
                                                                                                 <input type="text"
                                                                                                     x-model="mcq.answers[answerIndex]"
                                                                                                     placeholder=""
@@ -153,22 +138,10 @@
                                                                                             class="bx bx-plus"></i>
                                                                                     </button>
                                                                                 </td>
-                                                                                <td>
-                                                                                    <button type="button"
-                                                                                        @click="removeMCQ(index)"
-                                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                                        :disabled="mcqs.length <= 1">
-                                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                                    </button>
-                                                                                </td>
                                                                             </tr>
                                                                         </template>
                                                                     </tbody>
                                                                 </table>
-                                                                <button type="button" @click="addMCQ"
-                                                                    class="themeBtn ms-auto">
-                                                                    Add MCQ <i class="bx bx-plus"></i>
-                                                                </button>
                                                             </div>
                                                         </div>
 
@@ -675,6 +648,21 @@
                     this.uploadedFiles[typeIndex].splice(fileIndex, 1);
                 }
             };
+        }
+
+        function mcqManager() {
+            return {
+                mcqs: [{
+                    question: '',
+                    answers: ['']
+                }],
+                addAnswer(index) {
+                    this.mcqs[index].answers.push('');
+                },
+                removeAnswer(index, answerIndex) {
+                    this.mcqs[index].answers.splice(answerIndex, 1);
+                }
+            }
         }
     </script>
 @endpush
