@@ -70,8 +70,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Content <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <textarea class="editor" name="content" :data-required="case_type === 'share_image_diagnosis' ? true : false"
-                                                                        data-placeholder="content" data-error="Content">  {{ old('content') }} </textarea>
+                                                                    <textarea class="editor" name="content" data-placeholder="content" data-error="Content">  {{ old('content') }} </textarea>
                                                                     @error('content')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror
@@ -97,8 +96,8 @@
                                                                     <label class="title">Image Quality <span
                                                                             class="text-danger">*</span>
                                                                         :</label>
-                                                                    <select data-required data-error="Image Quality"
-                                                                        name="image_quality" class="field select2-select">
+                                                                    <select data-error="Image Quality" name="image_quality"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($imageQualities as $imageQuality)
@@ -179,7 +178,6 @@
                                                                                                     placeholder="Enter Name"
                                                                                                     :name="'image_types[' +
                                                                                                     index + '][names][]'"
-                                                                                                    data-required
                                                                                                     data-error="Image Name">
                                                                                             </li>
                                                                                         </template>
@@ -201,7 +199,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Specific Diagnosis Title <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
+                                                                    <input type="text"
                                                                         data-error="Specific Diagnosis Title"
                                                                         name="diagnosis_title" class="field">
                                                                     @error('diagnosis_title')
@@ -238,7 +236,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Diagnosed Disease <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Diagnosed Disease"
+                                                                    <select data-error="Diagnosed Disease"
                                                                         name="diagnosed_disease"
                                                                         class="field select2-select">
                                                                         <option value="" selected disabled>Select
@@ -267,7 +265,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Ease of Diagnosis <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Ease of Diagnosis"
+                                                                    <select data-error="Ease of Diagnosis"
                                                                         name="ease_of_diagnosis"
                                                                         class="field select2-select">
                                                                         <option value="" selected disabled>Select
@@ -296,8 +294,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Certainty <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Certainty"
-                                                                        name="certainty" class="field select2-select">
+                                                                    <select data-error="Certainty" name="certainty"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($certaintyOptions as $option)
@@ -331,8 +329,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Ethnicity <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Ethnicity"
-                                                                        name="ethnicity" class="field select2-select">
+                                                                    <select data-error="Ethnicity" name="ethnicity"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($ethnicityOptions as $option)
@@ -363,8 +361,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Segment <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Segment"
-                                                                        name="segment" class="field select2-select">
+                                                                    <select data-error="Segment" name="segment"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($segmentOptions as $option)
@@ -384,7 +382,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Clinical Examination <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
+                                                                    <input type="text"
                                                                         data-error="Clinical Examination"
                                                                         name="clinical_examination" class="field">
                                                                     @error('clinical_examination')
@@ -494,7 +492,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Age <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required data-error="Age"
+                                                                    <input type="text" data-error="Age"
                                                                         name="patient_age" class="field">
                                                                     @error('patient_age')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -505,9 +503,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Gender <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Gender" name="patient_gender"
-                                                                        class="field">
+                                                                    <input type="text" data-error="Gender"
+                                                                        name="patient_gender" class="field">
                                                                     @error('patient_gender')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror
@@ -517,8 +514,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Socio Economic <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Socio Economic"
+                                                                    <input type="text" data-error="Socio Economic"
                                                                         name="patient_socio_economic" class="field">
                                                                     @error('patient_socio_economic')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -529,8 +525,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Concomitant <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Concomitant"
+                                                                    <input type="text" data-error="Concomitant"
                                                                         name="patient_concomitant" class="field">
                                                                     @error('patient_concomitant')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -541,9 +536,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Others <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Others" name="patient_others"
-                                                                        class="field">
+                                                                    <input type="text" data-error="Others"
+                                                                        name="patient_others" class="field">
                                                                     @error('patient_others')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror
@@ -642,7 +636,7 @@
                                                                     <label class="title">Image Quality <span
                                                                             class="text-danger">*</span>
                                                                         :</label>
-                                                                    <select data-required data-error="Image Quality"
+                                                                    <select data-error="Image Quality"
                                                                         name="image_quality" class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
@@ -725,7 +719,6 @@
                                                                                                     :name="'image_types[' +
                                                                                                     index +
                                                                                                         '][names][]'"
-                                                                                                    data-required
                                                                                                     data-error="Image Name">
                                                                                             </li>
                                                                                         </template>
@@ -747,7 +740,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Specific Diagnosis Title <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
+                                                                    <input type="text"
                                                                         data-error="Specific Diagnosis Title"
                                                                         name="diagnosis_title" class="field">
                                                                     @error('diagnosis_title')
@@ -784,7 +777,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Diagnosed Disease <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Diagnosed Disease"
+                                                                    <select data-error="Diagnosed Disease"
                                                                         name="diagnosed_disease"
                                                                         class="field select2-select">
                                                                         <option value="" selected disabled>Select
@@ -813,7 +806,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Ease of Diagnosis <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Ease of Diagnosis"
+                                                                    <select data-error="Ease of Diagnosis"
                                                                         name="ease_of_diagnosis"
                                                                         class="field select2-select">
                                                                         <option value="" selected disabled>Select
@@ -842,8 +835,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Certainty <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Certainty"
-                                                                        name="certainty" class="field select2-select">
+                                                                    <select data-error="Certainty" name="certainty"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($certaintyOptions as $option)
@@ -877,8 +870,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Ethnicity <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Ethnicity"
-                                                                        name="ethnicity" class="field select2-select">
+                                                                    <select data-error="Ethnicity" name="ethnicity"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($ethnicityOptions as $option)
@@ -909,8 +902,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Segment <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Segment"
-                                                                        name="segment" class="field select2-select">
+                                                                    <select data-error="Segment" name="segment"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($segmentOptions as $option)
@@ -930,7 +923,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Clinical Examination <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
+                                                                    <input type="text"
                                                                         data-error="Clinical Examination"
                                                                         name="clinical_examination" class="field">
                                                                     @error('clinical_examination')
@@ -1041,7 +1034,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Age <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required data-error="Age"
+                                                                    <input type="text" data-error="Age"
                                                                         name="patient_age" class="field">
                                                                     @error('patient_age')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -1052,9 +1045,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Gender <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Gender" name="patient_gender"
-                                                                        class="field">
+                                                                    <input type="text" data-error="Gender"
+                                                                        name="patient_gender" class="field">
                                                                     @error('patient_gender')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror
@@ -1064,8 +1056,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Socio Economic <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Socio Economic"
+                                                                    <input type="text" data-error="Socio Economic"
                                                                         name="patient_socio_economic" class="field">
                                                                     @error('patient_socio_economic')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -1076,8 +1067,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Concomitant <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Concomitant"
+                                                                    <input type="text" data-error="Concomitant"
                                                                         name="patient_concomitant" class="field">
                                                                     @error('patient_concomitant')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -1088,9 +1078,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Others <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Others" name="patient_others"
-                                                                        class="field">
+                                                                    <input type="text" data-error="Others"
+                                                                        name="patient_others" class="field">
                                                                     @error('patient_others')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror
@@ -1120,7 +1109,7 @@
                                                                     <label class="title">Image Quality <span
                                                                             class="text-danger">*</span>
                                                                         :</label>
-                                                                    <select data-required data-error="Image Quality"
+                                                                    <select data-error="Image Quality"
                                                                         name="image_quality" class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
@@ -1203,7 +1192,6 @@
                                                                                                     :name="'image_types[' +
                                                                                                     index +
                                                                                                         '][names][]'"
-                                                                                                    data-required
                                                                                                     data-error="Image Name">
                                                                                             </li>
                                                                                         </template>
@@ -1225,7 +1213,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Specific Diagnosis Title <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
+                                                                    <input type="text"
                                                                         data-error="Specific Diagnosis Title"
                                                                         name="diagnosis_title" class="field">
                                                                     @error('diagnosis_title')
@@ -1262,7 +1250,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Diagnosed Disease <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Diagnosed Disease"
+                                                                    <select data-error="Diagnosed Disease"
                                                                         name="diagnosed_disease"
                                                                         class="field select2-select">
                                                                         <option value="" selected disabled>Select
@@ -1291,7 +1279,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Ease of Diagnosis <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Ease of Diagnosis"
+                                                                    <select data-error="Ease of Diagnosis"
                                                                         name="ease_of_diagnosis"
                                                                         class="field select2-select">
                                                                         <option value="" selected disabled>Select
@@ -1320,8 +1308,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Certainty <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Certainty"
-                                                                        name="certainty" class="field select2-select">
+                                                                    <select data-error="Certainty" name="certainty"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($certaintyOptions as $option)
@@ -1355,8 +1343,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Ethnicity <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Ethnicity"
-                                                                        name="ethnicity" class="field select2-select">
+                                                                    <select data-error="Ethnicity" name="ethnicity"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($ethnicityOptions as $option)
@@ -1387,8 +1375,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Segment <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <select data-required data-error="Segment"
-                                                                        name="segment" class="field select2-select">
+                                                                    <select data-error="Segment" name="segment"
+                                                                        class="field select2-select">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         @foreach ($segmentOptions as $option)
@@ -1408,7 +1396,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Clinical Examination <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
+                                                                    <input type="text"
                                                                         data-error="Clinical Examination"
                                                                         name="clinical_examination" class="field">
                                                                     @error('clinical_examination')
@@ -1520,7 +1508,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Age <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required data-error="Age"
+                                                                    <input type="text" data-error="Age"
                                                                         name="patient_age" class="field">
                                                                     @error('patient_age')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -1531,9 +1519,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Gender <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Gender" name="patient_gender"
-                                                                        class="field">
+                                                                    <input type="text" data-error="Gender"
+                                                                        name="patient_gender" class="field">
                                                                     @error('patient_gender')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror
@@ -1543,8 +1530,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Socio Economic <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Socio Economic"
+                                                                    <input type="text" data-error="Socio Economic"
                                                                         name="patient_socio_economic" class="field">
                                                                     @error('patient_socio_economic')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -1555,8 +1541,7 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Concomitant <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Concomitant"
+                                                                    <input type="text" data-error="Concomitant"
                                                                         name="patient_concomitant" class="field">
                                                                     @error('patient_concomitant')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -1567,9 +1552,8 @@
                                                                 <div class="form-fields">
                                                                     <label class="title">Others <span
                                                                             class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-required
-                                                                        data-error="Others" name="patient_others"
-                                                                        class="field">
+                                                                    <input type="text" data-error="Others"
+                                                                        name="patient_others" class="field">
                                                                     @error('patient_others')
                                                                         <div class="text-danger">{{ $message }}</div>
                                                                     @enderror

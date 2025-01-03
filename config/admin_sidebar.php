@@ -17,7 +17,7 @@ return [
         'route' => 'admin.users.index',
     ],
     [
-        'title' => 'Cases Management',
+        'title' => 'Cases',
         'icon' => 'bx bx-search-alt',
         'route' => 'admin.cases.index',
     ],
@@ -26,7 +26,7 @@ return [
         'icon' => 'bx bxs-cog',
         'submenu' => [
             [
-                'title' => 'Logo Management',
+                'title' => 'Logo',
                 'icon' => 'bx bxs-image',
                 'route' => 'admin.logo.show',
             ],
