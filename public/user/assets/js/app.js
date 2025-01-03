@@ -764,3 +764,17 @@ function initializeFeatures() {
             syncToEditable(field);
         });
 }
+
+
+
+const showMessage = (message, type) => {
+    $.toast({
+        heading: type === 'success' ? 'Success!' : 'Error!',
+        position: 'bottom-right',
+        text: message,
+        loaderBg: type === 'success' ? '#ff6849' : '#ff6849',
+        icon: type === 'success' ? 'success' : 'error',
+        hideAfter: 3000,
+        stack: 6
+    });
+}

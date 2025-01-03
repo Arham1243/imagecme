@@ -30,28 +30,39 @@ class DiagnosticCaseController extends Controller
     public function store(Request $request)
     {
 
-        $diagnosticCase = DiagnosticCase::create([
-            'slug' => $this->createSlug($request['diagnosis_title'], 'cases'),
-            'case_type' => $request['case_type'],
-            'user_id' => Auth::user()->id,
-            'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
-            'image_quality' => $request['image_quality'],
-            'diagnosis_title' => $request['diagnosis_title'],
-            'diagnosed_disease' => $request['diagnosed_disease'],
-            'ease_of_diagnosis' => $request['ease_of_diagnosis'] ?? null,
-            'certainty' => $request['certainty'] ?? null,
-            'ethnicity' => $request['ethnicity'] ?? null,
-            'segment' => $request['segment'] ?? null,
-            'clinical_examination' => $request['clinical_examination'] ?? null,
-            'patient_age' => $request['patient_age'] ?? null,
-            'patient_gender' => $request['patient_gender'] ?? null,
-            'patient_socio_economic' => $request['patient_socio_economic'] ?? null,
-            'patient_concomitant' => $request['patient_concomitant'] ?? null,
-            'patient_others' => $request['patient_others'] ?? null,
-            'status' => $request['status'],
-            'authors' => json_encode($request['authors']),
-            'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
-        ]);
+        if ($request['case_type'] !== 'ask_ai_image_diagnosis') {
+            $title = $request['diagnosis_title'];
+            $diagnosticCase = DiagnosticCase::create([
+                'slug' => $this->createSlug($title, 'cases'),
+                'case_type' => $request['case_type'],
+                'user_id' => Auth::user()->id,
+                'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
+                'image_quality' => $request['image_quality'],
+                'diagnosis_title' => $title,
+                'diagnosed_disease' => $request['diagnosed_disease'],
+                'ease_of_diagnosis' => $request['ease_of_diagnosis'] ?? null,
+                'certainty' => $request['certainty'] ?? null,
+                'ethnicity' => $request['ethnicity'] ?? null,
+                'segment' => $request['segment'] ?? null,
+                'clinical_examination' => $request['clinical_examination'] ?? null,
+                'patient_age' => $request['patient_age'] ?? null,
+                'patient_gender' => $request['patient_gender'] ?? null,
+                'patient_socio_economic' => $request['patient_socio_economic'] ?? null,
+                'patient_concomitant' => $request['patient_concomitant'] ?? null,
+                'patient_others' => $request['patient_others'] ?? null,
+                'status' => $request['status'],
+                'authors' => json_encode($request['authors']),
+                'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
+            ]);
+        } else {
+            $title = 'Untitled';
+            $diagnosticCase = DiagnosticCase::create([
+                'slug' => $this->createSlug($title, 'cases'),
+                'case_type' => $request['case_type'],
+                'user_id' => Auth::user()->id,
+                'diagnosis_title' => $title,
+            ]);
+        }
 
         if ($request->has('image_types')) {
             foreach ($request->input('image_types') as $key => $imageTypeData) {
@@ -103,28 +114,40 @@ class DiagnosticCaseController extends Controller
     {
         $diagnosticCase = DiagnosticCase::findOrFail($id);
 
-        $diagnosticCase->update([
-            'slug' => $this->createSlug($request['diagnosis_title'], 'cases', $diagnosticCase->slug),
-            'case_type' => $request['case_type'],
-            'user_id' => Auth::user()->id,
-            'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
-            'image_quality' => $request['image_quality'],
-            'diagnosis_title' => $request['diagnosis_title'],
-            'diagnosed_disease' => $request['diagnosed_disease'],
-            'ease_of_diagnosis' => $request['ease_of_diagnosis'] ?? null,
-            'certainty' => $request['certainty'] ?? null,
-            'ethnicity' => $request['ethnicity'] ?? null,
-            'segment' => $request['segment'] ?? null,
-            'clinical_examination' => $request['clinical_examination'] ?? null,
-            'patient_age' => $request['patient_age'] ?? null,
-            'patient_gender' => $request['patient_gender'] ?? null,
-            'patient_socio_economic' => $request['patient_socio_economic'] ?? null,
-            'patient_concomitant' => $request['patient_concomitant'] ?? null,
-            'patient_others' => $request['patient_others'] ?? null,
-            'status' => $request['status'],
-            'authors' => json_encode($request['authors']),
-            'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
-        ]);
+        if ($request['case_type'] !== 'ask_ai_image_diagnosis') {
+            $title = $request['diagnosis_title'];
+
+            $diagnosticCase->update([
+                'slug' => $this->createSlug($title, 'cases', $diagnosticCase->slug),
+                'case_type' => $request['case_type'],
+                'user_id' => Auth::user()->id,
+                'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
+                'image_quality' => $request['image_quality'],
+                'diagnosis_title' => $title,
+                'diagnosed_disease' => $request['diagnosed_disease'],
+                'ease_of_diagnosis' => $request['ease_of_diagnosis'] ?? null,
+                'certainty' => $request['certainty'] ?? null,
+                'ethnicity' => $request['ethnicity'] ?? null,
+                'segment' => $request['segment'] ?? null,
+                'clinical_examination' => $request['clinical_examination'] ?? null,
+                'patient_age' => $request['patient_age'] ?? null,
+                'patient_gender' => $request['patient_gender'] ?? null,
+                'patient_socio_economic' => $request['patient_socio_economic'] ?? null,
+                'patient_concomitant' => $request['patient_concomitant'] ?? null,
+                'patient_others' => $request['patient_others'] ?? null,
+                'status' => $request['status'],
+                'authors' => json_encode($request['authors']),
+                'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
+            ]);
+        } else {
+            $title = 'Untitled';
+            $diagnosticCase->update([
+                'slug' => $this->createSlug($title, 'cases', $diagnosticCase->slug),
+                'case_type' => $request['case_type'],
+                'user_id' => Auth::user()->id,
+                'diagnosis_title' => $title,
+            ]);
+        }
 
         if ($request->has('image_types')) {
             foreach ($request->input('image_types') as $key => $imageTypeData) {
@@ -155,6 +178,24 @@ class DiagnosticCaseController extends Controller
 
         return redirect()->route('user.cases.index')
             ->with('notify_success', 'Case updated successfully.');
+    }
+
+    public function updateTitle(Request $request, $id)
+    {
+        $diagnosticCase = DiagnosticCase::findOrFail($id);
+
+        $title = $request['diagnosis_title'];
+
+        $diagnosticCase->update([
+            'slug' => $this->createSlug($title, 'cases', $diagnosticCase->slug),
+            'case_type' => $request['case_type'],
+            'user_id' => Auth::user()->id,
+            'diagnosis_title' => $title,
+        ]);
+
+        return response()->json([
+            'message' => 'Case updated successfully.',
+        ], 200);
     }
 
     public function chat($id)

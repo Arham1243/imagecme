@@ -16,7 +16,7 @@
 
             </div>
             <div class="d-flex gap-3">
-                <h2 class="mb-0">{{ $case->diagnosis_title }}</h2>
+                <input class="heading" id="title-input" value="{{ $case->diagnosis_title }}">
                 <form id="publishForm" action="{{ route('user.cases.chat.publish', $case->id) }}" method="POST">
                     <div class="form-check form-switch" data-enabled-text="Publish Conversation"
                         data-disabled-text="Publish Conversation">
@@ -84,9 +84,20 @@
             opacity: 1;
         }
 
-        .dashboard-header h2 {
+        .dashboard-header h2,
+        .dashboard-header .heading {
             color: #b4b4b4;
             font-size: 1.35rem;
+            width: fit-content;
+            border: none;
+            background: none;
+            text-align: center;
+            border-radius: 0.35rem;
+            text-transform: inherit
+        }
+
+        .dashboard-header input.heading:focus {
+            outline: 1px solid #b4b4b4;
         }
 
         .dashboard-header {
@@ -126,6 +137,28 @@
                     publishForm.submit();
                 });
             }
+        });
+
+        document.getElementById('title-input').addEventListener('blur', function() {
+            const case_type = 'ask_ai_image_diagnosis';
+            const title = this.value;
+            const case_save_route = '{{ route('user.api.cases.update', $case->id) }}';
+
+            axios.post(case_save_route, {
+                    diagnosis_title: title,
+                    case_type: case_type
+                }, {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then(response => {
+                    showMessage('Title saved successfully.', 'success');
+                })
+                .catch(error => {
+                    showMessage(error.response?.data?.message || 'An error occurred while saving the title.',
+                        'error');
+                });
         });
     </script>
 @endpush

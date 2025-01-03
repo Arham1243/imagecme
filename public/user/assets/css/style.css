@@ -278,7 +278,7 @@ ul.sidebar-nav li .active {
     padding-inline: 1.5rem !important;
 }
 
-.dashboard-header h2 {
+.dashboard-header h2,.dashboard-header .heading {
     font-size: 1.65rem;
     text-transform: capitalize;
     font-weight: 600;
