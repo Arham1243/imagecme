@@ -76,478 +76,9 @@
                                                                     @enderror
                                                                 </div>
                                                             </div>
-
-                                                            <div class="col-lg-12 mb-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 mb-2">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm">Case Image:</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-4">
-                                                                @php
-                                                                    $imageQualities = ['Low', 'Medium', 'High'];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Image Quality <span
-                                                                            class="text-danger">*</span>
-                                                                        :</label>
-                                                                    <select data-error="Image Quality" name="image_quality"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($imageQualities as $imageQuality)
-                                                                            <option value="{{ $imageQuality }}"
-                                                                                {{ old('image_quality') === $imageQuality ? 'selected' : '' }}>
-                                                                                {{ $imageQuality }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('image_quality')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div x-data="imageTypeManager()">
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <div class="form-fields mb-4">
-                                                                        <label class="title">Image Type <span
-                                                                                class="text-danger">*</span>:</label>
-                                                                        <select x-model="selectedType"
-                                                                            @change="addTypeRow()" class="field">
-                                                                            <option value="" selected disabled>Select
-                                                                            </option>
-                                                                            <template x-for="type in types"
-                                                                                :key="type">
-                                                                                <option :value="type"
-                                                                                    :disabled="selectedTypes.includes(type)"
-                                                                                    x-text="type">
-                                                                                </option>
-                                                                            </template>
-                                                                        </select>
-                                                                    </div>
-                                                                    <template x-for="(type, index) in selectedTypes"
-                                                                        :key="index">
-                                                                        <div class="case-image-box mt-4">
-                                                                            <div class="close-btn"
-                                                                                @click="removeTypeRow(index)">
-                                                                                <i class='bx bx-x'></i>
-                                                                            </div>
-                                                                            <div class="form-fields mb-3">
-                                                                                <div class="title title--sm"
-                                                                                    x-text="type">
-                                                                                </div>
-                                                                                <input type="hidden"
-                                                                                    :name="'image_types[' + index + '][type]'"
-                                                                                    :value="type">
-                                                                                <div class="multiple-upload mt-3">
-                                                                                    <input type="file"
-                                                                                        :id="'gallery-input-' + index"
-                                                                                        class="gallery-input d-none"
-                                                                                        multiple accept="image/*"
-                                                                                        @change="previewFiles($event, index)"
-                                                                                        :name="'image_types[' + index +
-                                                                                            '][files][]'">
-                                                                                    <label :for="'gallery-input-' + index"
-                                                                                        class="multiple-upload__btn themeBtn">
-                                                                                        <i class='bx bx-upload'></i> Choose
-                                                                                        images
-                                                                                    </label>
-                                                                                    <ul
-                                                                                        class="multiple-upload__imgs mt-4 pt-2">
-                                                                                        <template
-                                                                                            x-for="(file, fileIndex) in uploadedFiles[index]"
-                                                                                            :key="fileIndex">
-                                                                                            <li class="single-image">
-                                                                                                <div class="delete-btn"
-                                                                                                    @click="removeFile(index, fileIndex)">
-                                                                                                    <i
-                                                                                                        class='bx bxs-trash-alt'></i>
-                                                                                                </div>
-                                                                                                <a class="mask"
-                                                                                                    :href="file.preview"
-                                                                                                    data-fancybox="gallery">
-                                                                                                    <img :src="file.preview"
-                                                                                                        class="imgFluid" />
-                                                                                                </a>
-                                                                                                <input class="field"
-                                                                                                    placeholder="Enter Name"
-                                                                                                    :name="'image_types[' +
-                                                                                                    index + '][names][]'"
-                                                                                                    data-error="Image Name">
-                                                                                            </li>
-                                                                                        </template>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Specific Diagnosis Title <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text"
-                                                                        data-error="Specific Diagnosis Title"
-                                                                        name="diagnosis_title" class="field">
-                                                                    @error('diagnosis_title')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $specialities = [
-                                                                        'Cardiology',
-                                                                        'Dermatology',
-                                                                        'Endocrinology',
-                                                                        'ENT',
-                                                                        'Gastroenterology',
-                                                                        'Gynaecology',
-                                                                        'Haematology',
-                                                                        'Infectious diseases',
-                                                                        'Neurology',
-                                                                        'Nephrology',
-                                                                        'Neurosurgery',
-                                                                        'Oncology',
-                                                                        'Ophthalmology',
-                                                                        'Orthopaedics',
-                                                                        'Paediatrics',
-                                                                        'Pulmonology',
-                                                                        'Radiology',
-                                                                        'Rheumatology',
-                                                                        'Surgery',
-                                                                        'Urology',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Diagnosed Disease <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Diagnosed Disease"
-                                                                        name="diagnosed_disease"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($specialities as $speciality)
-                                                                            <option value="{{ $speciality }}"
-                                                                                {{ old('diagnosed_disease') === $speciality ? 'selected' : '' }}>
-                                                                                {{ $speciality }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('diagnosed_disease')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $easeOfDiagnosisOptions = [
-                                                                        'Easy',
-                                                                        'Difficult',
-                                                                        'Very Difficult',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Ease of Diagnosis <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Ease of Diagnosis"
-                                                                        name="ease_of_diagnosis"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($easeOfDiagnosisOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('ease_of_diagnosis') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('ease_of_diagnosis')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $certaintyOptions = [
-                                                                        'Certainty',
-                                                                        'Almost Certain',
-                                                                        'Uncertain',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Certainty <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Certainty" name="certainty"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($certaintyOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('certainty') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('certainty')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $ethnicityOptions = [
-                                                                        'Black',
-                                                                        'African American',
-                                                                        'White',
-                                                                        'Hispanic',
-                                                                        'Latino',
-                                                                        'Asian',
-                                                                        'American Indian',
-                                                                        'Alaska Native',
-                                                                        'Caucasian',
-                                                                        'Native American',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Ethnicity <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Ethnicity" name="ethnicity"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($ethnicityOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('ethnicity') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('ethnicity')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-2">
-                                                                @php
-                                                                    $segmentOptions = [
-                                                                        'Elderly Male',
-                                                                        'Elderly Female',
-                                                                        'Adult Male',
-                                                                        'Adult Female',
-                                                                        'Adolescent',
-                                                                        'Child',
-                                                                        'Infant',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Segment <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Segment" name="segment"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($segmentOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('segment') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('segment')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-2">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Clinical Examination <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text"
-                                                                        data-error="Clinical Examination"
-                                                                        name="clinical_examination" class="field">
-                                                                    @error('clinical_examination')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-12">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm mb-2">Add Co-Author:</div>
-                                                                    <div class="repeater-table" x-data="{
-                                                                        authors: [{ name: '', doi: '', article_link: '' }],
-                                                                        addAuthor() {
-                                                                            this.authors.push({ name: '', doi: '', article_link: '' });
-                                                                        },
-                                                                        removeAuthor(index) {
-                                                                            this.authors.splice(index, 1);
-                                                                        }
-                                                                    }">
-                                                                        <table class="table table-bordered">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th scope="col">Information</th>
-                                                                                    <th class="text-end" scope="col">
-                                                                                        Remove</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <template
-                                                                                    x-for="(author, index) in authors"
-                                                                                    :key="index">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">Name:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][name]'"
-                                                                                                    x-model="author.name">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.name"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">DOI:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][doi]'"
-                                                                                                    x-model="author.doi">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.doi"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">Article
-                                                                                                    Link, if
-                                                                                                    any:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][article_link]'"
-                                                                                                    x-model="author.article_link">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.article_link"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button type="button"
-                                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                                @click="removeAuthor(index)">
-                                                                                                <i
-                                                                                                    class='bx bxs-trash-alt'></i>
-                                                                                            </button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </template>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <button type="button" class="themeBtn ms-auto"
-                                                                            @click="addAuthor">Add
-                                                                            <i class="bx bx-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-2">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm">Patient info:</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Age <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Age"
-                                                                        name="patient_age" class="field">
-                                                                    @error('patient_age')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Gender <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Gender"
-                                                                        name="patient_gender" class="field">
-                                                                    @error('patient_gender')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Socio Economic <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Socio Economic"
-                                                                        name="patient_socio_economic" class="field">
-                                                                    @error('patient_socio_economic')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Concomitant <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Concomitant"
-                                                                        name="patient_concomitant" class="field">
-                                                                    @error('patient_concomitant')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Others <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Others"
-                                                                        name="patient_others" class="field">
-                                                                    @error('patient_others')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
                                                         </div>
                                                     </div>
-                                                    <div class="pt-4"
-                                                        x-show="case_type === 'challenge_image_diagnosis'">
+                                                    <div class="pt-4" x-show="case_type === 'challenge_image_diagnosis'">
                                                         <div x-data="mcqManager()" class="form-fields">
                                                             <label
                                                                 class="d-flex align-items-center mb-3 justify-content-between">
@@ -616,951 +147,472 @@
                                                                 </table>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12 mb-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 mb-2">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm">Case Image:</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-4">
-                                                                @php
-                                                                    $imageQualities = ['Low', 'Medium', 'High'];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Image Quality <span
-                                                                            class="text-danger">*</span>
-                                                                        :</label>
-                                                                    <select data-error="Image Quality"
-                                                                        name="image_quality" class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($imageQualities as $imageQuality)
-                                                                            <option value="{{ $imageQuality }}"
-                                                                                {{ old('image_quality') === $imageQuality ? 'selected' : '' }}>
-                                                                                {{ $imageQuality }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('image_quality')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div x-data="imageTypeManager()">
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <div class="form-fields mb-4">
-                                                                        <label class="title">Image Type <span
-                                                                                class="text-danger">*</span>:</label>
-                                                                        <select x-model="selectedType"
-                                                                            @change="addTypeRow()" class="field">
-                                                                            <option value="" selected disabled>Select
-                                                                            </option>
-                                                                            <template x-for="type in types"
-                                                                                :key="type">
-                                                                                <option :value="type"
-                                                                                    :disabled="selectedTypes.includes(type)"
-                                                                                    x-text="type">
-                                                                                </option>
-                                                                            </template>
-                                                                        </select>
-                                                                    </div>
-                                                                    <template x-for="(type, index) in selectedTypes"
-                                                                        :key="index">
-                                                                        <div class="case-image-box mt-4">
-                                                                            <div class="close-btn"
-                                                                                @click="removeTypeRow(index)">
-                                                                                <i class='bx bx-x'></i>
-                                                                            </div>
-                                                                            <div class="form-fields mb-3">
-                                                                                <div class="title title--sm"
-                                                                                    x-text="type">
-                                                                                </div>
-                                                                                <input type="hidden"
-                                                                                    :name="'image_types[' + index + '][type]'"
-                                                                                    :value="type">
-                                                                                <div class="multiple-upload mt-3">
-                                                                                    <input type="file"
-                                                                                        :id="'gallery-input-' + index"
-                                                                                        class="gallery-input d-none"
-                                                                                        multiple accept="image/*"
-                                                                                        @change="previewFiles($event, index)"
-                                                                                        :name="'image_types[' + index +
-                                                                                            '][files][]'">
-                                                                                    <label :for="'gallery-input-' + index"
-                                                                                        class="multiple-upload__btn themeBtn">
-                                                                                        <i class='bx bx-upload'></i> Choose
-                                                                                        images
-                                                                                    </label>
-                                                                                    <ul
-                                                                                        class="multiple-upload__imgs mt-4 pt-2">
-                                                                                        <template
-                                                                                            x-for="(file, fileIndex) in uploadedFiles[index]"
-                                                                                            :key="fileIndex">
-                                                                                            <li class="single-image">
-                                                                                                <div class="delete-btn"
-                                                                                                    @click="removeFile(index, fileIndex)">
-                                                                                                    <i
-                                                                                                        class='bx bxs-trash-alt'></i>
-                                                                                                </div>
-                                                                                                <a class="mask"
-                                                                                                    :href="file.preview"
-                                                                                                    data-fancybox="gallery">
-                                                                                                    <img :src="file.preview"
-                                                                                                        class="imgFluid" />
-                                                                                                </a>
-                                                                                                <input class="field"
-                                                                                                    placeholder="Enter Name"
-                                                                                                    :name="'image_types[' +
-                                                                                                    index +
-                                                                                                        '][names][]'"
-                                                                                                    data-error="Image Name">
-                                                                                            </li>
-                                                                                        </template>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </template>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Specific Diagnosis Title <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text"
-                                                                        data-error="Specific Diagnosis Title"
-                                                                        name="diagnosis_title" class="field">
-                                                                    @error('diagnosis_title')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $specialities = [
-                                                                        'Cardiology',
-                                                                        'Dermatology',
-                                                                        'Endocrinology',
-                                                                        'ENT',
-                                                                        'Gastroenterology',
-                                                                        'Gynaecology',
-                                                                        'Haematology',
-                                                                        'Infectious diseases',
-                                                                        'Neurology',
-                                                                        'Nephrology',
-                                                                        'Neurosurgery',
-                                                                        'Oncology',
-                                                                        'Ophthalmology',
-                                                                        'Orthopaedics',
-                                                                        'Paediatrics',
-                                                                        'Pulmonology',
-                                                                        'Radiology',
-                                                                        'Rheumatology',
-                                                                        'Surgery',
-                                                                        'Urology',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Diagnosed Disease <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Diagnosed Disease"
-                                                                        name="diagnosed_disease"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($specialities as $speciality)
-                                                                            <option value="{{ $speciality }}"
-                                                                                {{ old('diagnosed_disease') === $speciality ? 'selected' : '' }}>
-                                                                                {{ $speciality }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('diagnosed_disease')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $easeOfDiagnosisOptions = [
-                                                                        'Easy',
-                                                                        'Difficult',
-                                                                        'Very Difficult',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Ease of Diagnosis <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Ease of Diagnosis"
-                                                                        name="ease_of_diagnosis"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($easeOfDiagnosisOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('ease_of_diagnosis') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('ease_of_diagnosis')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $certaintyOptions = [
-                                                                        'Certainty',
-                                                                        'Almost Certain',
-                                                                        'Uncertain',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Certainty <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Certainty" name="certainty"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($certaintyOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('certainty') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('certainty')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $ethnicityOptions = [
-                                                                        'Black',
-                                                                        'African American',
-                                                                        'White',
-                                                                        'Hispanic',
-                                                                        'Latino',
-                                                                        'Asian',
-                                                                        'American Indian',
-                                                                        'Alaska Native',
-                                                                        'Caucasian',
-                                                                        'Native American',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Ethnicity <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Ethnicity" name="ethnicity"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($ethnicityOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('ethnicity') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('ethnicity')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-2">
-                                                                @php
-                                                                    $segmentOptions = [
-                                                                        'Elderly Male',
-                                                                        'Elderly Female',
-                                                                        'Adult Male',
-                                                                        'Adult Female',
-                                                                        'Adolescent',
-                                                                        'Child',
-                                                                        'Infant',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Segment <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Segment" name="segment"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($segmentOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('segment') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('segment')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-2">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Clinical Examination <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text"
-                                                                        data-error="Clinical Examination"
-                                                                        name="clinical_examination" class="field">
-                                                                    @error('clinical_examination')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-12">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm mb-2">Add Co-Author:</div>
-                                                                    <div class="repeater-table" x-data="{
-                                                                        authors: [{ name: '', doi: '', article_link: '' }],
-                                                                        addAuthor() {
-                                                                            this.authors.push({ name: '', doi: '', article_link: '' });
-                                                                        },
-                                                                        removeAuthor(index) {
-                                                                            this.authors.splice(index, 1);
-                                                                        }
-                                                                    }">
-                                                                        <table class="table table-bordered">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th scope="col">Information</th>
-                                                                                    <th class="text-end" scope="col">
-                                                                                        Remove
-                                                                                    </th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <template
-                                                                                    x-for="(author, index) in authors"
-                                                                                    :key="index">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">Name:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][name]'"
-                                                                                                    x-model="author.name">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.name"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">DOI:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][doi]'"
-                                                                                                    x-model="author.doi">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.doi"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">Article
-                                                                                                    Link, if
-                                                                                                    any:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][article_link]'"
-                                                                                                    x-model="author.article_link">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.article_link"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button type="button"
-                                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                                @click="removeAuthor(index)">
-                                                                                                <i
-                                                                                                    class='bx bxs-trash-alt'></i>
-                                                                                            </button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </template>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <button type="button" class="themeBtn ms-auto"
-                                                                            @click="addAuthor">Add
-                                                                            <i class="bx bx-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-2">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm">Patient info:</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Age <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Age"
-                                                                        name="patient_age" class="field">
-                                                                    @error('patient_age')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Gender <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Gender"
-                                                                        name="patient_gender" class="field">
-                                                                    @error('patient_gender')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Socio Economic <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Socio Economic"
-                                                                        name="patient_socio_economic" class="field">
-                                                                    @error('patient_socio_economic')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Concomitant <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Concomitant"
-                                                                        name="patient_concomitant" class="field">
-                                                                    @error('patient_concomitant')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Others <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Others"
-                                                                        name="patient_others" class="field">
-                                                                    @error('patient_others')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
                                                     </div>
-                                                    <div class="pt-4" x-show="case_type === 'ask_image_diagnosis'">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 mb-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
 
-                                                            <div class="col-lg-12 mb-2">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm">Case Image:</div>
-                                                                </div>
+                                                    <div class="row" x-show="case_type !== 'ask_ai_image_diagnosis'">
+
+                                                        <div class="col-lg-12 mb-3">
+                                                            <div class="form-fields">
+                                                                <hr>
                                                             </div>
+                                                        </div>
+
+                                                        <div class="col-lg-12 mb-2">
+                                                            <div class="form-fields">
+                                                                <div class="title title--sm">Case Image:</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            @php
+                                                                $imageQualities = ['Low', 'Medium', 'High'];
+                                                            @endphp
+                                                            <div class="form-fields">
+                                                                <label class="title">Image Quality <span
+                                                                        class="text-danger">*</span>
+                                                                    :</label>
+                                                                <select data-error="Image Quality" name="image_quality"
+                                                                    class="field select2-select">
+                                                                    <option value="" selected disabled>Select
+                                                                    </option>
+                                                                    @foreach ($imageQualities as $imageQuality)
+                                                                        <option value="{{ $imageQuality }}"
+                                                                            {{ old('image_quality') === $imageQuality ? 'selected' : '' }}>
+                                                                            {{ $imageQuality }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('image_quality')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div x-data="imageTypeManager()">
                                                             <div class="col-lg-12 mb-4">
-                                                                @php
-                                                                    $imageQualities = ['Low', 'Medium', 'High'];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Image Quality <span
-                                                                            class="text-danger">*</span>
-                                                                        :</label>
-                                                                    <select data-error="Image Quality"
-                                                                        name="image_quality" class="field select2-select">
+                                                                <div class="form-fields mb-4">
+                                                                    <label class="title">Image Type <span
+                                                                            class="text-danger">*</span>:</label>
+                                                                    <select x-model="selectedType" @change="addTypeRow()"
+                                                                        class="field">
                                                                         <option value="" selected disabled>Select
                                                                         </option>
-                                                                        @foreach ($imageQualities as $imageQuality)
-                                                                            <option value="{{ $imageQuality }}"
-                                                                                {{ old('image_quality') === $imageQuality ? 'selected' : '' }}>
-                                                                                {{ $imageQuality }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('image_quality')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div x-data="imageTypeManager()">
-                                                                <div class="col-lg-12 mb-4">
-                                                                    <div class="form-fields mb-4">
-                                                                        <label class="title">Image Type <span
-                                                                                class="text-danger">*</span>:</label>
-                                                                        <select x-model="selectedType"
-                                                                            @change="addTypeRow()" class="field">
-                                                                            <option value="" selected disabled>Select
+                                                                        <template x-for="type in types"
+                                                                            :key="type">
+                                                                            <option :value="type"
+                                                                                :disabled="selectedTypes.includes(type)"
+                                                                                x-text="type">
                                                                             </option>
-                                                                            <template x-for="type in types"
-                                                                                :key="type">
-                                                                                <option :value="type"
-                                                                                    :disabled="selectedTypes.includes(type)"
-                                                                                    x-text="type">
-                                                                                </option>
-                                                                            </template>
-                                                                        </select>
-                                                                    </div>
-                                                                    <template x-for="(type, index) in selectedTypes"
-                                                                        :key="index">
-                                                                        <div class="case-image-box mt-4">
-                                                                            <div class="close-btn"
-                                                                                @click="removeTypeRow(index)">
-                                                                                <i class='bx bx-x'></i>
-                                                                            </div>
-                                                                            <div class="form-fields mb-3">
-                                                                                <div class="title title--sm"
-                                                                                    x-text="type">
-                                                                                </div>
-                                                                                <input type="hidden"
-                                                                                    :name="'image_types[' + index + '][type]'"
-                                                                                    :value="type">
-                                                                                <div class="multiple-upload mt-3">
-                                                                                    <input type="file"
-                                                                                        :id="'gallery-input-' + index"
-                                                                                        class="gallery-input d-none"
-                                                                                        multiple accept="image/*"
-                                                                                        @change="previewFiles($event, index)"
-                                                                                        :name="'image_types[' + index +
-                                                                                            '][files][]'">
-                                                                                    <label :for="'gallery-input-' + index"
-                                                                                        class="multiple-upload__btn themeBtn">
-                                                                                        <i class='bx bx-upload'></i> Choose
-                                                                                        images
-                                                                                    </label>
-                                                                                    <ul
-                                                                                        class="multiple-upload__imgs mt-4 pt-2">
-                                                                                        <template
-                                                                                            x-for="(file, fileIndex) in uploadedFiles[index]"
-                                                                                            :key="fileIndex">
-                                                                                            <li class="single-image">
-                                                                                                <div class="delete-btn"
-                                                                                                    @click="removeFile(index, fileIndex)">
-                                                                                                    <i
-                                                                                                        class='bx bxs-trash-alt'></i>
-                                                                                                </div>
-                                                                                                <a class="mask"
-                                                                                                    :href="file.preview"
-                                                                                                    data-fancybox="gallery">
-                                                                                                    <img :src="file.preview"
-                                                                                                        class="imgFluid" />
-                                                                                                </a>
-                                                                                                <input class="field"
-                                                                                                    placeholder="Enter Name"
-                                                                                                    :name="'image_types[' +
-                                                                                                    index +
-                                                                                                        '][names][]'"
-                                                                                                    data-error="Image Name">
-                                                                                            </li>
-                                                                                        </template>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
+                                                                        </template>
+                                                                    </select>
+                                                                </div>
+                                                                <template x-for="(type, index) in selectedTypes"
+                                                                    :key="index">
+                                                                    <div class="case-image-box mt-4">
+                                                                        <div class="close-btn"
+                                                                            @click="removeTypeRow(index)">
+                                                                            <i class='bx bx-x'></i>
                                                                         </div>
-                                                                    </template>
-
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Specific Diagnosis Title <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text"
-                                                                        data-error="Specific Diagnosis Title"
-                                                                        name="diagnosis_title" class="field">
-                                                                    @error('diagnosis_title')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $specialities = [
-                                                                        'Cardiology',
-                                                                        'Dermatology',
-                                                                        'Endocrinology',
-                                                                        'ENT',
-                                                                        'Gastroenterology',
-                                                                        'Gynaecology',
-                                                                        'Haematology',
-                                                                        'Infectious diseases',
-                                                                        'Neurology',
-                                                                        'Nephrology',
-                                                                        'Neurosurgery',
-                                                                        'Oncology',
-                                                                        'Ophthalmology',
-                                                                        'Orthopaedics',
-                                                                        'Paediatrics',
-                                                                        'Pulmonology',
-                                                                        'Radiology',
-                                                                        'Rheumatology',
-                                                                        'Surgery',
-                                                                        'Urology',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Diagnosed Disease <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Diagnosed Disease"
-                                                                        name="diagnosed_disease"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($specialities as $speciality)
-                                                                            <option value="{{ $speciality }}"
-                                                                                {{ old('diagnosed_disease') === $speciality ? 'selected' : '' }}>
-                                                                                {{ $speciality }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('diagnosed_disease')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $easeOfDiagnosisOptions = [
-                                                                        'Easy',
-                                                                        'Difficult',
-                                                                        'Very Difficult',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Ease of Diagnosis <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Ease of Diagnosis"
-                                                                        name="ease_of_diagnosis"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($easeOfDiagnosisOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('ease_of_diagnosis') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('ease_of_diagnosis')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $certaintyOptions = [
-                                                                        'Certainty',
-                                                                        'Almost Certain',
-                                                                        'Uncertain',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Certainty <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Certainty" name="certainty"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($certaintyOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('certainty') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('certainty')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-4">
-                                                                @php
-                                                                    $ethnicityOptions = [
-                                                                        'Black',
-                                                                        'African American',
-                                                                        'White',
-                                                                        'Hispanic',
-                                                                        'Latino',
-                                                                        'Asian',
-                                                                        'American Indian',
-                                                                        'Alaska Native',
-                                                                        'Caucasian',
-                                                                        'Native American',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Ethnicity <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Ethnicity" name="ethnicity"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($ethnicityOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('ethnicity') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('ethnicity')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-2">
-                                                                @php
-                                                                    $segmentOptions = [
-                                                                        'Elderly Male',
-                                                                        'Elderly Female',
-                                                                        'Adult Male',
-                                                                        'Adult Female',
-                                                                        'Adolescent',
-                                                                        'Child',
-                                                                        'Infant',
-                                                                    ];
-                                                                @endphp
-                                                                <div class="form-fields">
-                                                                    <label class="title">Segment <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <select data-error="Segment" name="segment"
-                                                                        class="field select2-select">
-                                                                        <option value="" selected disabled>Select
-                                                                        </option>
-                                                                        @foreach ($segmentOptions as $option)
-                                                                            <option value="{{ $option }}"
-                                                                                {{ old('segment') === $option ? 'selected' : '' }}>
-                                                                                {{ $option }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('segment')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-6 mb-2">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Clinical Examination <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text"
-                                                                        data-error="Clinical Examination"
-                                                                        name="clinical_examination" class="field">
-                                                                    @error('clinical_examination')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-12">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm mb-2">Add Co-Author:</div>
-                                                                    <div class="repeater-table" x-data="{
-                                                                        authors: [{ name: '', doi: '', article_link: '' }],
-                                                                        addAuthor() {
-                                                                            this.authors.push({ name: '', doi: '', article_link: '' });
-                                                                        },
-                                                                        removeAuthor(index) {
-                                                                            this.authors.splice(index, 1);
-                                                                        }
-                                                                    }">
-                                                                        <table class="table table-bordered">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th scope="col">Information</th>
-                                                                                    <th class="text-end" scope="col">
-                                                                                        Remove
-                                                                                    </th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                                <template
-                                                                                    x-for="(author, index) in authors"
-                                                                                    :key="index">
-                                                                                    <tr>
-                                                                                        <td>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">Name:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][name]'"
-                                                                                                    x-model="author.name">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.name"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">DOI:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][doi]'"
-                                                                                                    x-model="author.doi">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.doi"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                            <div class="form-fields">
-                                                                                                <label
-                                                                                                    class="title">Article
-                                                                                                    Link,
-                                                                                                    if
-                                                                                                    any:</label>
-                                                                                                <input type="hidden"
-                                                                                                    :name="'authors[' + index +
-                                                                                                        '][article_link]'"
-                                                                                                    x-model="author.article_link">
-                                                                                                <input type="text"
-                                                                                                    x-model="author.article_link"
-                                                                                                    class="field">
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button type="button"
-                                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                                @click="removeAuthor(index)">
+                                                                        <div class="form-fields mb-3">
+                                                                            <div class="title title--sm" x-text="type">
+                                                                            </div>
+                                                                            <input type="hidden"
+                                                                                :name="'image_types[' + index + '][type]'"
+                                                                                :value="type">
+                                                                            <div class="multiple-upload mt-3">
+                                                                                <input type="file"
+                                                                                    :id="'gallery-input-' + index"
+                                                                                    class="gallery-input d-none" multiple
+                                                                                    accept="image/*"
+                                                                                    @change="previewFiles($event, index)"
+                                                                                    :name="'image_types[' + index +
+                                                                                        '][files][]'">
+                                                                                <label :for="'gallery-input-' + index"
+                                                                                    class="multiple-upload__btn themeBtn">
+                                                                                    <i class='bx bx-upload'></i> Choose
+                                                                                    images
+                                                                                </label>
+                                                                                <ul
+                                                                                    class="multiple-upload__imgs mt-4 pt-2">
+                                                                                    <template
+                                                                                        x-for="(file, fileIndex) in uploadedFiles[index]"
+                                                                                        :key="fileIndex">
+                                                                                        <li class="single-image">
+                                                                                            <div class="delete-btn"
+                                                                                                @click="removeFile(index, fileIndex)">
                                                                                                 <i
                                                                                                     class='bx bxs-trash-alt'></i>
-                                                                                            </button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </template>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <button type="button" class="themeBtn ms-auto"
-                                                                            @click="addAuthor">Add
-                                                                            <i class="bx bx-plus"></i>
-                                                                        </button>
+                                                                                            </div>
+                                                                                            <a class="mask"
+                                                                                                :href="file.preview"
+                                                                                                data-fancybox="gallery">
+                                                                                                <img :src="file.preview"
+                                                                                                    class="imgFluid" />
+                                                                                            </a>
+                                                                                            <input class="field"
+                                                                                                placeholder="Enter Name"
+                                                                                                :name="'image_types[' +
+                                                                                                index + '][names][]'"
+                                                                                                data-required
+                                                                                                data-error="Image Name">
+                                                                                        </li>
+                                                                                    </template>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 my-3">
-                                                                <div class="form-fields">
-                                                                    <hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 mb-2">
-                                                                <div class="form-fields">
-                                                                    <div class="title title--sm">Patient info:</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Age <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Age"
-                                                                        name="patient_age" class="field">
-                                                                    @error('patient_age')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Gender <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Gender"
-                                                                        name="patient_gender" class="field">
-                                                                    @error('patient_gender')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Socio Economic <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Socio Economic"
-                                                                        name="patient_socio_economic" class="field">
-                                                                    @error('patient_socio_economic')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-4">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Concomitant <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Concomitant"
-                                                                        name="patient_concomitant" class="field">
-                                                                    @error('patient_concomitant')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Others <span
-                                                                            class="text-danger">*</span>:</label>
-                                                                    <input type="text" data-error="Others"
-                                                                        name="patient_others" class="field">
-                                                                    @error('patient_others')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            </div>
+                                                                </template>
 
+                                                            </div>
                                                         </div>
+
+                                                        <div class="col-lg-12 my-3">
+                                                            <div class="form-fields">
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="form-fields">
+                                                                <label class="title">Specific Diagnosis Title <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text"
+                                                                    data-error="Specific Diagnosis Title"
+                                                                    name="diagnosis_title" class="field">
+                                                                @error('diagnosis_title')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            @php
+                                                                $specialities = [
+                                                                    'Cardiology',
+                                                                    'Dermatology',
+                                                                    'Endocrinology',
+                                                                    'ENT',
+                                                                    'Gastroenterology',
+                                                                    'Gynaecology',
+                                                                    'Haematology',
+                                                                    'Infectious diseases',
+                                                                    'Neurology',
+                                                                    'Nephrology',
+                                                                    'Neurosurgery',
+                                                                    'Oncology',
+                                                                    'Ophthalmology',
+                                                                    'Orthopaedics',
+                                                                    'Paediatrics',
+                                                                    'Pulmonology',
+                                                                    'Radiology',
+                                                                    'Rheumatology',
+                                                                    'Surgery',
+                                                                    'Urology',
+                                                                ];
+                                                            @endphp
+                                                            <div class="form-fields">
+                                                                <label class="title">Diagnosed Disease <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <select data-error="Diagnosed Disease"
+                                                                    name="diagnosed_disease" class="field select2-select">
+                                                                    <option value="" selected disabled>Select
+                                                                    </option>
+                                                                    @foreach ($specialities as $speciality)
+                                                                        <option value="{{ $speciality }}"
+                                                                            {{ old('diagnosed_disease') === $speciality ? 'selected' : '' }}>
+                                                                            {{ $speciality }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('diagnosed_disease')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            @php
+                                                                $easeOfDiagnosisOptions = [
+                                                                    'Easy',
+                                                                    'Difficult',
+                                                                    'Very Difficult',
+                                                                ];
+                                                            @endphp
+                                                            <div class="form-fields">
+                                                                <label class="title">Ease of Diagnosis <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <select data-error="Ease of Diagnosis"
+                                                                    name="ease_of_diagnosis" class="field select2-select">
+                                                                    <option value="" selected disabled>Select
+                                                                    </option>
+                                                                    @foreach ($easeOfDiagnosisOptions as $option)
+                                                                        <option value="{{ $option }}"
+                                                                            {{ old('ease_of_diagnosis') === $option ? 'selected' : '' }}>
+                                                                            {{ $option }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('ease_of_diagnosis')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            @php
+                                                                $certaintyOptions = [
+                                                                    'Certainty',
+                                                                    'Almost Certain',
+                                                                    'Uncertain',
+                                                                ];
+                                                            @endphp
+                                                            <div class="form-fields">
+                                                                <label class="title">Certainty <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <select data-error="Certainty" name="certainty"
+                                                                    class="field select2-select">
+                                                                    <option value="" selected disabled>Select
+                                                                    </option>
+                                                                    @foreach ($certaintyOptions as $option)
+                                                                        <option value="{{ $option }}"
+                                                                            {{ old('certainty') === $option ? 'selected' : '' }}>
+                                                                            {{ $option }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('certainty')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-4">
+                                                            @php
+                                                                $ethnicityOptions = [
+                                                                    'Black',
+                                                                    'African American',
+                                                                    'White',
+                                                                    'Hispanic',
+                                                                    'Latino',
+                                                                    'Asian',
+                                                                    'American Indian',
+                                                                    'Alaska Native',
+                                                                    'Caucasian',
+                                                                    'Native American',
+                                                                ];
+                                                            @endphp
+                                                            <div class="form-fields">
+                                                                <label class="title">Ethnicity <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <select data-error="Ethnicity" name="ethnicity"
+                                                                    class="field select2-select">
+                                                                    <option value="" selected disabled>Select
+                                                                    </option>
+                                                                    @foreach ($ethnicityOptions as $option)
+                                                                        <option value="{{ $option }}"
+                                                                            {{ old('ethnicity') === $option ? 'selected' : '' }}>
+                                                                            {{ $option }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('ethnicity')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-2">
+                                                            @php
+                                                                $segmentOptions = [
+                                                                    'Elderly Male',
+                                                                    'Elderly Female',
+                                                                    'Adult Male',
+                                                                    'Adult Female',
+                                                                    'Adolescent',
+                                                                    'Child',
+                                                                    'Infant',
+                                                                ];
+                                                            @endphp
+                                                            <div class="form-fields">
+                                                                <label class="title">Segment <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <select data-error="Segment" name="segment"
+                                                                    class="field select2-select">
+                                                                    <option value="" selected disabled>Select
+                                                                    </option>
+                                                                    @foreach ($segmentOptions as $option)
+                                                                        <option value="{{ $option }}"
+                                                                            {{ old('segment') === $option ? 'selected' : '' }}>
+                                                                            {{ $option }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('segment')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-6 mb-2">
+                                                            <div class="form-fields">
+                                                                <label class="title">Clinical Examination <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text" data-error="Clinical Examination"
+                                                                    name="clinical_examination" class="field">
+                                                                @error('clinical_examination')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-lg-12 my-3">
+                                                            <div class="form-fields">
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            <div class="form-fields">
+                                                                <div class="title title--sm mb-2">Add Co-Author:</div>
+                                                                <div class="repeater-table" x-data="{
+                                                                    authors: [{ name: '', doi: '', article_link: '' }],
+                                                                    addAuthor() {
+                                                                        this.authors.push({ name: '', doi: '', article_link: '' });
+                                                                    },
+                                                                    removeAuthor(index) {
+                                                                        this.authors.splice(index, 1);
+                                                                    }
+                                                                }">
+                                                                    <table class="table table-bordered">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th scope="col">Information</th>
+                                                                                <th class="text-end" scope="col">
+                                                                                    Remove</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <template x-for="(author, index) in authors"
+                                                                                :key="index">
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <div class="form-fields">
+                                                                                            <label
+                                                                                                class="title">Name:</label>
+                                                                                            <input type="hidden"
+                                                                                                :name="'authors[' + index +
+                                                                                                    '][name]'"
+                                                                                                x-model="author.name">
+                                                                                            <input type="text"
+                                                                                                x-model="author.name"
+                                                                                                class="field">
+                                                                                        </div>
+                                                                                        <div class="form-fields">
+                                                                                            <label
+                                                                                                class="title">DOI:</label>
+                                                                                            <input type="hidden"
+                                                                                                :name="'authors[' + index +
+                                                                                                    '][doi]'"
+                                                                                                x-model="author.doi">
+                                                                                            <input type="text"
+                                                                                                x-model="author.doi"
+                                                                                                class="field">
+                                                                                        </div>
+                                                                                        <div class="form-fields">
+                                                                                            <label class="title">Article
+                                                                                                Link, if
+                                                                                                any:</label>
+                                                                                            <input type="hidden"
+                                                                                                :name="'authors[' + index +
+                                                                                                    '][article_link]'"
+                                                                                                x-model="author.article_link">
+                                                                                            <input type="text"
+                                                                                                x-model="author.article_link"
+                                                                                                class="field">
+                                                                                        </div>
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        <button type="button"
+                                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                                            @click="removeAuthor(index)">
+                                                                                            <i
+                                                                                                class='bx bxs-trash-alt'></i>
+                                                                                        </button>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </template>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <button type="button" class="themeBtn ms-auto"
+                                                                        @click="addAuthor">Add
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 my-3">
+                                                            <div class="form-fields">
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-2">
+                                                            <div class="form-fields">
+                                                                <div class="title title--sm">Patient info:</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="form-fields">
+                                                                <label class="title">Age <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text" data-error="Age" name="patient_age"
+                                                                    class="field">
+                                                                @error('patient_age')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="form-fields">
+                                                                <label class="title">Gender <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text" data-error="Gender"
+                                                                    name="patient_gender" class="field">
+                                                                @error('patient_gender')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="form-fields">
+                                                                <label class="title">Socio Economic <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text" data-error="Socio Economic"
+                                                                    name="patient_socio_economic" class="field">
+                                                                @error('patient_socio_economic')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 mb-4">
+                                                            <div class="form-fields">
+                                                                <label class="title">Concomitant <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text" data-error="Concomitant"
+                                                                    name="patient_concomitant" class="field">
+                                                                @error('patient_concomitant')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-fields">
+                                                                <label class="title">Others <span
+                                                                        class="text-danger">*</span>:</label>
+                                                                <input type="text" data-error="Others"
+                                                                    name="patient_others" class="field">
+                                                                @error('patient_others')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
