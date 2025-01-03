@@ -1190,6 +1190,10 @@ body .select2-selection--single.select2-selection--single {
   font-size: 0.85rem;
   font-weight: 500;
 }
+.comment-card__details .comment--lg {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
 
 .comment-card__fields {
   width: 100%;
@@ -1214,7 +1218,7 @@ body .select2-selection--single.select2-selection--single {
   border-color: #ffff;
 }
 
-.comment-card__fields .action-btn {
+.action-btn {
   width: fit-content;
   font-size: 0.95rem;
   font-weight: 600;
@@ -1243,7 +1247,7 @@ body .select2-selection--single.select2-selection--single {
   gap: 0.9rem;
 }
 
-.comment-card__fields .action-btn[disabled] {
+.action-btn[disabled] {
   cursor: initial;
   background: #333333;
   color: #ffffff;
@@ -1384,6 +1388,50 @@ body.fancybox-active.compensate-for-scrollbar {
   object-fit: contain;
   border-radius: 0.25rem;
   background: #9b9b9b;
+}
+.option-item__input {
+    display: none;
+}
+
+.option-item__label {
+    margin: 0;
+    width: 100%;
+    border: 1px solid #717171;
+    padding: 0.35rem 0.85rem;
+    padding-right: 4rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 150ms;
+    position: relative;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin: 0.85rem 0;
+}
+
+.option-item__label:hover {background: #33333349;}
+
+.option-item__input:checked + .option-item__label {border-color: #fff;}
+
+.option-item__input:checked + .option-item__label::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.option-item__label::after {
+    content: "\ed31";
+    font-family: boxicons !important;
+    font-size: 1.1rem;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    right: 0.65rem;
+    transform: translateY(-50%);
+    opacity: 0;
+    visibility: hidden;
 }
 /* comments */
 

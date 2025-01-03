@@ -11,6 +11,7 @@ Route::name('frontend.')->group(function () {
     Route::prefix('cases')->name('cases.')->group(function () {
         Route::get('/{slug}', [DiagnosticCaseController::class, 'details'])->name('details');
         Route::resource('/{slug}/comments', CommentController::class);
+        Route::post('/{slug}/submit-mcq-answers', [CommentController::class, 'submitAnswer'])->name('comments.submitMcqAnswer');
         Route::get('/{slug}/comments/delete-item/{id}', [CommentController::class, 'deleteItem'])->name('comments.deleteItem');
     });
 });

@@ -30,4 +30,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(DiagnosticCase::class);
     }
+
+    public function userMcqAnswers()
+    {
+        return $this->hasMany(UserMcqAnswer::class, 'user_id');
+    }
 }

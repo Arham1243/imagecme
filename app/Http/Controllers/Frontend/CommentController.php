@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\DiagnosticCase;
+use App\Models\UserMcqAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -69,6 +70,24 @@ class CommentController extends Controller
 
         return redirect(url()->previous().'#comments-section')
             ->with('notify_success', 'Comment updated Successfully');
+    }
+
+    public function submitAnswer(Request $request, $slug)
+    {
+        $request->validate([
+            'answer' => 'required|string',
+        ]);
+
+        $case = DiagnosticCase::where('slug', $slug)->first();
+        UserMcqAnswer::updateOrCreate([
+            'case_id' => $case->id,
+            'user_id' => Auth::user()->id,
+        ], [
+            'answer' => $request->answer,
+        ]);
+
+        return redirect(url()->previous().'#comments-section')
+            ->with('notify_success', 'Answer submitted Successfully');
     }
 
     public function deleteItem($slug, $id)

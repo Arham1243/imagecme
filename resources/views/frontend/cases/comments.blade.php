@@ -95,6 +95,55 @@
 
                         </div>
                     </div>
+                    @if ($case->mcq_data)
+                        @php
+                            $userAnswer = Auth::user()
+                                ?->userMcqAnswers->where('case_id', $case->id)
+                                ->first()?->answer;
+                            $mcqData = json_decode($case->mcq_data)[0];
+                        @endphp
+                        <div class="mt-5 mb-2">
+                            <div class="comment-card">
+                                <div class="comment-card__avatar">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($case->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                                        alt="image" class="imgFluid" loading="lazy">
+                                </div>
+                                <div x-show="!isEditMode" class="comment-card__details">
+                                    <div class="wrapper">
+                                        <div class="name">
+                                            {{ $case->user ? $case->user->full_name : 'Anonymous' }}
+                                            @if ($case->user && $case->user->id === $case->user_id)
+                                                <div class="author">Author</div>
+                                            @endif
+                                        </div>
+                                        <div class="time">{{ $case->created_at->diffForHumans() }}</div>
+
+                                    </div>
+                                    <div class="comment comment--lg">{{ $mcqData->question }}</div>
+                                    <form action="{{ route('frontend.cases.comments.submitMcqAnswer', $case->slug) }}"
+                                        method="POST">
+                                        @csrf
+                                        <ul class="options">
+                                            @foreach ($mcqData->answers as $i => $answer)
+                                                <li class="option-item">
+                                                    <input type="radio" name="answer" class="option-item__input"
+                                                        id="answer-{{ $i }}" value="{{ $answer }}"
+                                                        {{ $userAnswer === $answer ? 'checked' : '' }}
+                                                        onclick="toggleSubmitButton()">
+                                                    <label for="answer-{{ $i }}"
+                                                        class="option-item__label">{{ $answer }}</label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        @if (Auth::check())
+                                            <button class="action-btn comment-btn ms-auto" id="submitButton"
+                                                disabled>Submit</button>
+                                        @endif
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     @if (!in_array($case->case_type, ['share_image_diagnosis', 'ask_ai_image_diagnosis']))
                         <div class="case-details__comments" id="comments-section">
                             <div class="heading">{{ count($comments) }} Comments</div>
@@ -131,7 +180,8 @@
                                 </div>
                             @else
                                 <div class="subHeading mb-4 pb-2">
-                                    Please <a href="{{ route('auth.login') }}" class="link">Login</a> to your account to
+                                    Please <a href="{{ route('auth.login') }}" class="link">Login</a> to your account
+                                    to
                                     write a comment.
                                 </div>
                             @endif
@@ -368,6 +418,13 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/emoji-mart@5.6.0/dist/browser.min.js"></script>
     <script>
+        function toggleSubmitButton() {
+            const isAnyOptionChecked = document.querySelector('input[name="answer"]:checked');
+            document.getElementById('submitButton').disabled = !isAnyOptionChecked;
+        }
+
+        window.onload = toggleSubmitButton;
+
         document.addEventListener("DOMContentLoaded", function() {
             const forms = document.querySelectorAll('.comment-form');
 
