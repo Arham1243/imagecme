@@ -21,6 +21,12 @@ class DiagnosticCaseController extends Controller
             $query->where('diagnosed_disease', $request->diagnosed_disease);
         }
 
+        if ($request->has('image_type') && ! empty($request->image_type)) {
+            $query->whereHas('images', function ($query) use ($request) {
+                $query->where('type', $request->image_type);
+            });
+        }
+
         if ($request->has('image_quality') && ! empty($request->image_quality)) {
             $query->where('image_quality', $request->image_quality);
         }

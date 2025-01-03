@@ -152,7 +152,7 @@
                                     <input type="text" class="field date-range-picker" readonly>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-4">
+                            <div class="col-md-12 mb-4">
                                 <div class="form-fields">
                                     <label class="title">Diagnosed Disease </label>
                                     <select data-required data-error="Diagnosed Disease" name="diagnosed_disease"
@@ -162,6 +162,22 @@
                                             <option value="{{ $speciality }}"
                                                 @if (request()->get('diagnosed_disease') == $speciality) selected @endif>
                                                 {{ $speciality }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4">
+                                <div class="form-fields">
+                                    <label class="title">Image Type <span class="text-danger">*</span>:</label>
+                                    <select data-required data-error="Image Quality" name="image_type"
+                                        class="field select2-select">
+                                        <option value="" selected disabled>Select</option>
+                                        @foreach ($imageTypes as $imageType)
+                                            <option value="{{ $imageType }}"
+                                                @if (request()->get('image_type') == $imageType) selected @endif>
+                                                {{ $imageType }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -353,6 +369,10 @@
 
             if (urlParams.has('image_quality')) {
                 filters.image_quality = urlParams.get('image_quality');
+            }
+
+            if (urlParams.has('image_type')) {
+                filters.image_type = urlParams.get('image_type');
             }
 
             if (urlParams.has('ease_of_diagnosis')) {
