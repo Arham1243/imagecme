@@ -2808,3 +2808,13 @@ button[data-tooltip="tooltip"] {
     right: -0.5rem;
 }
 /* Filters */
+.datepicker {
+    width: 100% !important;
+}
+.datepicker-years table.table-condensed {
+    width: 100%;
+}
+.datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-right.datepicker-orient-bottom {
+    top: 100% !important;
+    left: 0 !important;
+}

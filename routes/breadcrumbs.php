@@ -75,4 +75,8 @@ Breadcrumbs::for('user.profile.changePassword', function (BreadcrumbTrail $trail
     $trail->push('Change Password', route('user.profile.changePassword'));
 });
 
+Breadcrumbs::for('user.analytics.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('user.dashboard');
+    $trail->push('Analytics', route('user.analytics.cases'));
+});
 // --------------- Usdr Dashboard---------------

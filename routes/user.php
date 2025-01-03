@@ -3,6 +3,7 @@
 use App\Http\Controllers\BulkActionController;
 use App\Http\Controllers\Frontend\Auth\AuthController;
 use App\Http\Controllers\Frontend\Auth\PasswordResetController;
+use App\Http\Controllers\User\AnalyticsController;
 use App\Http\Controllers\User\DiagnosticCaseController;
 use App\Http\Controllers\User\ProfileSettingsController;
 use App\Http\Controllers\User\RecoveryController;
@@ -40,4 +41,6 @@ Route::middleware(['auth', 'check_user_status'])->prefix('user')->name('user.')-
     Route::resource('profile', ProfileSettingsController::class);
     Route::get('profile/change/password', [ProfileSettingsController::class, 'changePassword'])->name('profile.changePassword');
     Route::post('profile/change/password/update', [ProfileSettingsController::class, 'updatePassword'])->name('profile.updatePassword');
+
+    Route::get('analytics/cases', [AnalyticsController::class, 'cases'])->name('analytics.cases');
 });

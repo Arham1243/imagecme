@@ -12,6 +12,11 @@ return [
         'route' => 'user.dashboard',
     ],
     [
+        'title' => 'Analytics',
+        'icon' => 'bx bx-bar-chart-alt',
+        'route' => 'user.analytics.cases',
+    ],
+    [
         'title' => 'Images',
         'icon' => 'bx bx-search-alt',
         'submenu' => [

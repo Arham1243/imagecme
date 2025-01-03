@@ -118,6 +118,8 @@
                 vAxis: {
                     title: 'Total Cases',
                     minValue: 0,
+
+                    format: '0',
                 },
                 legend: {
                     position: 'top',
