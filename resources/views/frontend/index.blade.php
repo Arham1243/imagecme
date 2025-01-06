@@ -71,8 +71,8 @@
                                     <div class="title">{{ $item->name }}</div>
                                 </div>
                                 <div class="portfolio-card__img">
-                                    <img src="{{ asset($item->featured_image) }}" alt="{{ $item->name }}" class="imgFluid"
-                                        loading="lazy">
+                                    <img src="{{ asset($item->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                        alt="{{ $item->name }}" class="imgFluid" loading="lazy">
                                 </div>
                             </a>
                         </div>
