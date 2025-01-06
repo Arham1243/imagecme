@@ -20,7 +20,7 @@ class IndexController extends Controller
     public function imageTypeDetail($slug)
     {
         $item = ImageType::where('slug', $slug)->first();
-        $cases = DiagnosticCase::where('status', 'active')->latest()->get();
+        $cases = DiagnosticCase::where('status', 'active')->where('is_featured', 1)->latest()->get();
 
         $data = compact('item', 'cases');
 
