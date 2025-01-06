@@ -20,8 +20,15 @@ class IndexController extends Controller
     public function imageTypeDetail($slug)
     {
         $item = ImageType::where('slug', $slug)->first();
-        $cases = DiagnosticCase::where('status', 'active')->latest()->get();
-
+        $cases = DiagnosticCase::where('status', 'active')
+            ->whereHas('images', function ($query) use ($item) {
+                $query->where('type', $item->id);
+            })
+            ->with(['images' => function ($query) use ($item) {
+                $query->where('type', $item->id);
+            }])
+            ->latest()
+            ->get();
         $data = compact('item', 'cases');
 
         return view('frontend.image-types.detail')->with('title', ucfirst(strtolower($item->name)))->with($data);
