@@ -58,9 +58,11 @@
                                                     class="link">{{ $item->name }}</a>
                                             </td>
                                             <td>
-                                                <a href="{{ asset($item->featured_image) }}" data-fancybox="gallery">
-                                                    <img src="{{ asset($item->featured_image) }}" alt="{{ $item->name }}"
-                                                        class="imgFluid list-img" style="width: 100px; height: 100px;">
+                                                <a href="{{ asset($item->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                    data-fancybox="gallery">
+                                                    <img src="{{ asset($item->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                        alt="{{ $item->name }}" class="imgFluid list-img"
+                                                        style="width: 100px; height: 100px;">
                                                 </a>
                                             </td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
