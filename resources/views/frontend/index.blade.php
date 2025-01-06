@@ -49,37 +49,39 @@
             </div>
         </div>
     </div>
-    <div class="portfolio">
-        <div class="container-fluid">
-            <div class="row justify-content-center mb-4">
-                <div class="col-md-10">
-                    <div class="section-content text-center">
-                        <h3 class="heading">Get the most out of Image CME</h3>
-                        <p>Image CME is designed to support you through every stage of your professional journey </p>
+    @if ($imageTypes->isNotEmpty())
+        <div class="portfolio">
+            <div class="container-fluid">
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-10">
+                        <div class="section-content text-center">
+                            <h3 class="heading">Get the most out of Image CME</h3>
+                            <p>Image CME is designed to support you through every stage of your professional journey </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            @php
-            @endphp
-            <div class="row portfolio-slider">
-                @foreach ($imageTypes as $item)
-                    <div class="col-md-4">
-                        <a href="{{ route('frontend.image-types.details', $item->slug) }}" class="portfolio-card">
-                            <div class="portfolio-card__content">
-                                <div class="icon"><i class="bx bx-body"></i></div>
-                                <div class="title">{{ $item->name }}</div>
-                            </div>
-                            <div class="portfolio-card__img">
-                                <img src="{{ asset($item->featured_image) }}" alt="{{ $item->name }}" class="imgFluid"
-                                    loading="lazy">
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
-            </div>
+                @php
+                @endphp
+                <div class="row portfolio-slider">
+                    @foreach ($imageTypes as $item)
+                        <div class="col-md-4">
+                            <a href="{{ route('frontend.image-types.details', $item->slug) }}" class="portfolio-card">
+                                <div class="portfolio-card__content">
+                                    <div class="icon"><i class="bx bx-body"></i></div>
+                                    <div class="title">{{ $item->name }}</div>
+                                </div>
+                                <div class="portfolio-card__img">
+                                    <img src="{{ asset($item->featured_image) }}" alt="{{ $item->name }}" class="imgFluid"
+                                        loading="lazy">
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
 
+            </div>
         </div>
-    </div>
+    @endif
 
     @if ($cases->isNotEmpty())
         <div class='cases section-padding'>

@@ -12,10 +12,10 @@
                         <div class="section-content">
                             <h3 class="heading">Edit: {{ isset($title) ? $title : '' }}</h3>
                         </div>
-                        {{-- <div class="d-flex gap-3">
+                        <div class="d-flex gap-3">
                             <a href="{{ route('frontend.image-types.details', $item->slug) }}" class="themeBtn"><i
                                     class='bx bxs-show'></i> View Type</a>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
                 <div class="row">
