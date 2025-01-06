@@ -96,16 +96,16 @@
             <div class="row portfolio-slider">
                 @foreach ($portfolioItems as $item)
                     <div class="col-md-4">
-                        <div class="portfolio-card">
+                        <a href="{{ route('frontend.imagingDetail', $item['slug']) }}" class="portfolio-card">
                             <div class="portfolio-card__content">
                                 <div class="icon"><i class="bx bx-body"></i></div>
                                 <div class="title">{{ $item['title'] }}</div>
                             </div>
-                            <a href="{{ route('frontend.imagingDetail', $item['slug']) }}" class="portfolio-card__img">
+                            <div class="portfolio-card__img">
                                 <img src="{{ asset($item['image']) }}" alt="{{ $item['slug'] }}" class="imgFluid"
                                     loading="lazy">
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     </div>
                 @endforeach
             </div>

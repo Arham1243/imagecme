@@ -2809,10 +2809,10 @@ button[data-tooltip="tooltip"] {
 }
 /* Filters */
 .datepicker {
-    width: 100% !important;
+    width: 50% !important;
 }
 .datepicker-years table.table-condensed {
-    width: 100%;
+    width: 50%;
 }
 .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-right.datepicker-orient-bottom {
     top: 100% !important;

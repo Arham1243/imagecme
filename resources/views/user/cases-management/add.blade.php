@@ -68,8 +68,7 @@
                                                         <div class="row">
                                                             <div class="col-lg-12 mb-3">
                                                                 <div class="form-fields">
-                                                                    <label class="title">Content <span
-                                                                            class="text-danger">*</span>:</label>
+                                                                    <label class="title">Content </label>
                                                                     <textarea class="editor" name="content" data-placeholder="content" data-error="Content">  {{ old('content') }} </textarea>
                                                                     @error('content')
                                                                         <div class="text-danger">{{ $message }}</div>
@@ -82,16 +81,11 @@
                                                         <div x-data="mcqManager()" class="form-fields">
                                                             <label
                                                                 class="d-flex align-items-center mb-3 justify-content-between">
-                                                                <span class="title title--sm mb-0">Question Others to
-                                                                    diagnosis:</span>
+                                                                <span class="title title--sm mb-0">Challenge Others</span>
                                                             </label>
                                                             <div class="repeater-table">
                                                                 <table class="table table-bordered">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">MCQs</th>
-                                                                        </tr>
-                                                                    </thead>
+
                                                                     <tbody>
                                                                         <template x-for="(mcq, index) in mcqs"
                                                                             :key="index">
@@ -137,7 +131,7 @@
                                                                                     <button type="button"
                                                                                         @click="addAnswer(index)"
                                                                                         class="themeBtn ms-auto mt-3">
-                                                                                        Add Answer <i
+                                                                                        Add Option <i
                                                                                             class="bx bx-plus"></i>
                                                                                     </button>
                                                                                 </td>
@@ -167,8 +161,7 @@
                                                                 $imageQualities = ['Low', 'Medium', 'High'];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Image Quality <span
-                                                                        class="text-danger">*</span>
+                                                                <label class="title">Image Quality
                                                                     :</label>
                                                                 <select data-error="Image Quality" name="image_quality"
                                                                     class="field select2-select">
@@ -189,8 +182,7 @@
                                                         <div x-data="imageTypeManager()">
                                                             <div class="col-lg-12 mb-4">
                                                                 <div class="form-fields mb-4">
-                                                                    <label class="title">Image Type <span
-                                                                            class="text-danger">*</span>:</label>
+                                                                    <label class="title">Image Type </label>
                                                                     <select x-model="selectedType" @change="addTypeRow()"
                                                                         class="field">
                                                                         <option value="" selected disabled>Select
@@ -271,8 +263,7 @@
                                                         </div>
                                                         <div class="col-lg-12 mb-4">
                                                             <div class="form-fields">
-                                                                <label class="title">Specific Diagnosis Title <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Specific Diagnosis Title :</label>
                                                                 <input type="text"
                                                                     data-error="Specific Diagnosis Title"
                                                                     name="diagnosis_title" class="field">
@@ -308,8 +299,7 @@
                                                                 ];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Diagnosed Disease <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Diagnosed Disease :</label>
                                                                 <select data-error="Diagnosed Disease"
                                                                     name="diagnosed_disease" class="field select2-select">
                                                                     <option value="" selected disabled>Select
@@ -336,8 +326,7 @@
                                                                 ];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Ease of Diagnosis <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Ease of Diagnosis :</label>
                                                                 <select data-error="Ease of Diagnosis"
                                                                     name="ease_of_diagnosis" class="field select2-select">
                                                                     <option value="" selected disabled>Select
@@ -364,8 +353,7 @@
                                                                 ];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Certainty <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Certainty :</label>
                                                                 <select data-error="Certainty" name="certainty"
                                                                     class="field select2-select">
                                                                     <option value="" selected disabled>Select
@@ -399,8 +387,7 @@
                                                                 ];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Ethnicity <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Ethnicity :</label>
                                                                 <select data-error="Ethnicity" name="ethnicity"
                                                                     class="field select2-select">
                                                                     <option value="" selected disabled>Select
@@ -431,8 +418,7 @@
                                                                 ];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Segment <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Segment :</label>
                                                                 <select data-error="Segment" name="segment"
                                                                     class="field select2-select">
                                                                     <option value="" selected disabled>Select
@@ -452,8 +438,7 @@
 
                                                         <div class="col-lg-6 mb-2">
                                                             <div class="form-fields">
-                                                                <label class="title">Clinical Examination <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Clinical Examination :</label>
                                                                 <input type="text" data-error="Clinical Examination"
                                                                     name="clinical_examination" class="field">
                                                                 @error('clinical_examination')
@@ -559,8 +544,7 @@
                                                         </div>
                                                         <div class="col-lg-6 mb-4">
                                                             <div class="form-fields">
-                                                                <label class="title">Age <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Age :</label>
                                                                 <input type="text" data-error="Age" name="patient_age"
                                                                     class="field">
                                                                 @error('patient_age')
@@ -570,8 +554,7 @@
                                                         </div>
                                                         <div class="col-lg-6 mb-4">
                                                             <div class="form-fields">
-                                                                <label class="title">Gender <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Gender :</label>
                                                                 <input type="text" data-error="Gender"
                                                                     name="patient_gender" class="field">
                                                                 @error('patient_gender')
@@ -581,8 +564,7 @@
                                                         </div>
                                                         <div class="col-lg-6 mb-4">
                                                             <div class="form-fields">
-                                                                <label class="title">Socio Economic <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Socio Economic :</label>
                                                                 <input type="text" data-error="Socio Economic"
                                                                     name="patient_socio_economic" class="field">
                                                                 @error('patient_socio_economic')
@@ -592,8 +574,7 @@
                                                         </div>
                                                         <div class="col-lg-6 mb-4">
                                                             <div class="form-fields">
-                                                                <label class="title">Concomitant <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Concomitant :</label>
                                                                 <input type="text" data-error="Concomitant"
                                                                     name="patient_concomitant" class="field">
                                                                 @error('patient_concomitant')
@@ -603,8 +584,7 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="form-fields">
-                                                                <label class="title">Others <span
-                                                                        class="text-danger">*</span>:</label>
+                                                                <label class="title">Others :</label>
                                                                 <input type="text" data-error="Others"
                                                                     name="patient_others" class="field">
                                                                 @error('patient_others')

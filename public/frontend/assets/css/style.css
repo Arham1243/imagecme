@@ -543,6 +543,7 @@ body .select2-selection--single.select2-selection--single {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  width: 100%;
 }
 
 .portfolio-card::before {
