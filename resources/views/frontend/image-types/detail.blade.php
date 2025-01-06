@@ -5,7 +5,8 @@
             <div class='row justify-content-center'>
                 <div class='col-lg-11'>
                     <div class="imaging-detail__img">
-                        <img src='{{ asset($item->featured_image) }}' alt='{{ $item->name }}' class='imgFluid' loading='lazy'>
+                        <img src='{{ asset($item->featured_image ?? 'admin/assets/images/placeholder.png') }}'
+                            alt='{{ $item->name }}' class='imgFluid' loading='lazy'>
                     </div>
                     <div class="imaging-detail__content section-content">
                         <div class="heading">{{ $item->name }}</div>
