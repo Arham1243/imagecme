@@ -15,9 +15,6 @@ class CaseCard extends Component
         $this->case = $case;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         return view('components.case-card');

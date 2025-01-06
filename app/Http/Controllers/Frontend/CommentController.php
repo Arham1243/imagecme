@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\CommentReply;
 use App\Models\DiagnosticCase;
 use App\Models\UserMcqAnswer;
 use Illuminate\Http\Request;
@@ -105,5 +106,25 @@ class CommentController extends Controller
 
         return redirect(url()->previous().'#comments-section')
             ->with('notify_success', 'Comment Deleted Successfully');
+    }
+
+    public function storeReply(Request $request, $slug, $id, $parentReplyId = null)
+    {
+
+        $request->validate([
+            'reply_text' => 'required|string|max:1000',
+        ]);
+
+        $case = DiagnosticCase::where('slug', $slug)->first();
+
+        $reply = CommentReply::create([
+            'case_id' => $case->id,
+            'comment_id' => $id,
+            'user_id' => Auth::user()->id,
+            'reply_text' => $request->reply_text,
+            'parent_reply_id' => $parentReplyId,
+        ]);
+
+        return back()->with('notify_success', 'Your reply has been posted.');
     }
 }

@@ -22,4 +22,9 @@ class Comment extends Model
     {
         return $this->belongsTo(UserMcqAnswer::class, 'selected_answer');
     }
+
+    public function replies()
+    {
+        return $this->hasMany(CommentReply::class);
+    }
 }

@@ -39,6 +39,11 @@ class DiagnosticCase extends Model
         return $this->images->groupBy('type');
     }
 
+    public function commentReplies()
+    {
+        return $this->hasManyThrough(CommentReply::class, Comment::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

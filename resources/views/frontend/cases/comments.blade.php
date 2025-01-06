@@ -199,7 +199,7 @@
                             @endif
                             @if ($comments->isNotEmpty())
                                 @foreach ($comments as $comment)
-                                    <div class="comment-card" x-data="{ isEditMode: false, expanded: false, isHeightExceeded: false }" x-init=" const commentElement = $el.querySelector('.comment');
+                                    <div class="comment-card" x-data="{ isEditMode: false, isReplyMode: false, expanded: false, isHeightExceeded: false }" x-init=" const commentElement = $el.querySelector('.comment');
                                      if (commentElement.scrollHeight > 82) { isHeightExceeded = true; }">
 
                                         <div class="comment-card__avatar">
@@ -230,6 +230,75 @@
                                             <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
                                                 {!! nl2br(e($comment->comment_text)) !!}
                                             </div>
+                                            <div class="comment-actions">
+                                                <button type="button" class="text-btn"
+                                                    @click="isReplyMode = true">Reply</button>
+                                            </div>
+                                            <div x-show="isReplyMode" class="comment-card ">
+                                                <div class="comment-card__avatar comment-card__avatar--sm">
+                                                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                                                        alt="image" class="imgFluid" loading="lazy">
+                                                </div>
+                                                <div class="comment-card__fields">
+                                                    <form
+                                                        action="{{ route('frontend.cases.comment.reply.store', ['slug' => $case->slug, 'id' => $comment->id]) }}"
+                                                        method="POST" class="comment-form">
+                                                        @csrf
+                                                        <textarea class="comment-input" type="text" placeholder="Add a reply..." autocomplete="off" required
+                                                            name="reply_text" rows="1"></textarea>
+                                                        <div class="actions-wrapper">
+                                                            <div class="emoji-picker-wrapper">
+                                                                <button type="button" class="emoji-picker">
+                                                                    <i class="bx bx-smile"></i>
+                                                                </button>
+                                                                <div class="emoji-picker-container"
+                                                                    style="display: none;"></div>
+                                                            </div>
+                                                            <div class="actions-btns">
+                                                                <button @click="isReplyMode = false" type="button"
+                                                                    class="action-btn cancel-btn">Cancel</button>
+                                                                <button class="action-btn  comment-btn"
+                                                                    disabled>Reply</button>
+                                                            </div>
+                                                        </div>
+                                                        @error('comment')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                            @if (count($comment->replies) > 0)
+                                                <div x-data="{ showReplies: false }">
+                                                    <div class="show-replies">
+                                                        <button class="text-btn" @click="showReplies = !showReplies">
+                                                            <i class='bx'
+                                                                :class="showReplies ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
+                                                            {{ count($comment->replies) }}
+                                                            {{ count($comment->replies) === 1 ? 'reply' : 'replies' }}
+                                                        </button>
+                                                    </div>
+
+                                                    <div x-show="showReplies">
+                                                        @if ($comment->replies->isNotEmpty())
+                                                            @php
+                                                                $sortedReplies = $comment->replies->sortBy(
+                                                                    'created_at',
+                                                                );
+                                                                $uniqueReplies = $sortedReplies->unique('id');
+                                                            @endphp
+
+                                                            @foreach ($uniqueReplies as $reply)
+                                                                @include('frontend.cases.comments.reply', [
+                                                                    'reply' => $reply,
+                                                                    'parentId' => null,
+                                                                ])
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            @endif
 
                                             @php
                                                 $isLongComment = strlen($comment->comment_text) > 463;
@@ -364,7 +433,6 @@
                                             <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
                                                 {!! nl2br(e($comment->message)) !!}
                                                 @if (isset($comment->images) && !empty($comment->images))
-                                                    <!-- Check if images exist and are an array -->
                                                     <div class="user-uploaded-images">
                                                         @foreach ($comment->images as $image)
                                                             <a href="{{ $image->url }}" data-fancybox="gallery"
@@ -393,10 +461,17 @@
                         </div>
                     @endif
                 </div>
-                @if ($case->image_types->isNotEmpty())
+                @php
+                    $groupImages = $case
+                        ->images()
+                        ->with('imageType')
+                        ->get()
+                        ->groupBy(fn($image) => $image->imageType->name ?? 'Unknown');
+                @endphp
+                @if ($groupImages->isNotEmpty())
                     <div class="col-md-4">
                         <div class="gallery-category-wrapper">
-                            @foreach ($case->image_types as $type => $images)
+                            @foreach ($groupImages as $type => $images)
                                 <div class="gallery-category">
                                     <div class="gallery-category__title">{{ $type }}</div>
                                     <div class="row">

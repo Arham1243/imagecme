@@ -28,8 +28,15 @@
                                     </div>
                                 </div>
                                 <div class="gallery-sidebar__body">
-                                    @if ($case->image_types->isNotEmpty())
-                                        @foreach ($case->image_types as $type => $images)
+                                    @php
+                                        $groupImages = $case
+                                            ->images()
+                                            ->with('imageType')
+                                            ->get()
+                                            ->groupBy(fn($image) => $image->imageType->name ?? 'Unknown');
+                                    @endphp
+                                    @if ($groupImages->isNotEmpty())
+                                        @foreach ($groupImages as $type => $images)
                                             <div class="gallery-category">
                                                 <div class="gallery-category__title">{{ $type }}</div>
                                                 <div class="row">

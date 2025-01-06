@@ -21,13 +21,11 @@
                 <div class="content">Published {{ formatDate($case->created_at) }}</div>
                 <div class="content"> {{ $case->diagnosed_disease ?? 'N/A' }}</div>
                 @php
-
                     $groupImages = $case
                         ->images()
                         ->with('imageType')
                         ->get()
                         ->groupBy(fn($image) => $image->imageType->name ?? 'Unknown');
-
                 @endphp
                 @if ($groupImages->isNotEmpty())
                     <ul class="image-badges">
