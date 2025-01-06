@@ -25,7 +25,9 @@
                                         <div class="col-lg-12 mb-4 pb-1">
                                             <div class="form-fields">
                                                 <div class="title title--sm mb-3">Case Type:</div>
-                                                <div x-data="{ case_type: 'share_image_diagnosis' }">
+                                                <div x-data="{
+                                                    case_type: '{{ request('type') ?? 'share_image_diagnosis' }}'
+                                                }">
                                                     <div class="d-flex align-items-center gap-5 ps-4 mb-1">
                                                         <div class="form-check p-0">
                                                             <input class="form-check-input" type="radio" name="case_type"
@@ -634,6 +636,13 @@
     </div>
 @endsection
 @push('js')
+    @if (request('type') === 'ask_ai_image_diagnosis')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('.caseForm').submit();
+            });
+        </script>
+    @endif
     <script>
         function imageTypeManager() {
             return {

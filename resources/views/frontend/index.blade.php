@@ -16,16 +16,16 @@
                             <span>learners & experts share interpretation & insights</span>
                         </h1>
                         <div class="btns-wrapper d-flex align-items-center justify-content-center flex-wrap">
-                            <a href="{{ route('user.cases.create') }}"
+                            <a href="{{ route('user.cases.create', ['type' => 'share_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline">Share <span>image
                                     diagnosis</span></a>
-                            <a href="{{ route('user.cases.create') }}"
+                            <a href="{{ route('user.cases.create', ['type' => 'challenge_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline"> Challenge <span>image
                                     diagnosis</span></a>
-                            <a href="{{ route('user.cases.create') }}"
+                            <a href="{{ route('user.cases.create', ['type' => 'ask_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline"> Ask <span>image
                                     diagnosis</span></a>
-                            <a href="{{ route('user.cases.create') }}"
+                            <a href="{{ route('user.cases.create', ['type' => 'ask_ai_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline"> Ask AI <span>image
                                     diagnosis</span></a>
                         </div>
@@ -122,7 +122,8 @@
                             <div class='cases-card'>
                                 <div class="cases-card__header">
                                     <div class="title">{{ $case->diagnosis_title }}</div>
-                                    <div class="type-badge">{{ getRelativeType($case->case_type) }}</div>
+                                    <div class="type-badge">
+                                        {{ $case->case_type ? getRelativeType($case->case_type) : 'N/A' }}</div>
                                 </div>
                                 <div class="row g-0 align-items-center">
                                     <div class="col-md-4">
