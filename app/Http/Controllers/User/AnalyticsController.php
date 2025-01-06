@@ -176,22 +176,21 @@ class AnalyticsController extends Controller
 
         $imageTypes = DB::table('case_images')
             ->join('cases', 'case_images.case_id', '=', 'cases.id')
-            ->selectRaw('MONTH(cases.created_at) as month, case_images.type, COUNT(case_images.id) as total_cases')
+            ->join('image_types', 'case_images.type', '=', 'image_types.id')
+            ->selectRaw('MONTH(cases.created_at) as month, case_images.type, image_types.name as type_name, COUNT(case_images.id) as total_cases')
             ->where('cases.user_id', $user->id)
             ->whereYear('cases.created_at', $year)
-            ->groupBy('month', 'case_images.type')
+            ->groupBy('month', 'case_images.type', 'image_types.name')
             ->orderBy('month')
             ->get();
 
         $imageTypeData = $months->mapWithKeys(function ($shortMonthName, $month) use ($imageTypes) {
-            // Group the data for the current month
             $monthData = $imageTypes->filter(function ($item) use ($month) {
                 return $item->month == $month;
             });
 
-            // Map types for the current month
             $typeData = $monthData->mapWithKeys(function ($item) {
-                return [$item->type => $item->total_cases];
+                return [$item->type_name => $item->total_cases];
             });
 
             return [$shortMonthName => $typeData];

@@ -12,4 +12,9 @@ class CaseImage extends Model
     {
         return $this->belongsTo(DiagnosticCase::class);
     }
+
+    public function imageType()
+    {
+        return $this->belongsTo(ImageType::class, 'type', 'id');
+    }
 }

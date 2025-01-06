@@ -3,7 +3,8 @@
     <div class="col-md-12">
         <div class="dashboard-content">
             {{ Breadcrumbs::render('user.recovery.index', $resource) }}
-            <form id="bulkActionForm" method="POST" action="{{ route('user.bulk-actions', ['resource' => $resource]) }}">
+            <form id="bulkActionForm" method="POST"
+                action="{{ route('user.bulk-actions', ['resource' => 'user-' . $resource]) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
@@ -77,4 +78,3 @@
         </div>
     </div>
 @endsection
-

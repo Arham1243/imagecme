@@ -190,10 +190,10 @@
                                                                         <option value="" selected disabled>Select
                                                                         </option>
                                                                         <template x-for="type in types"
-                                                                            :key="type">
-                                                                            <option :value="type"
-                                                                                :disabled="selectedTypes.includes(type)"
-                                                                                x-text="type">
+                                                                            :key="type.id">
+                                                                            <option :value="type.id"
+                                                                                :disabled="selectedTypes.includes(type.id)"
+                                                                                x-text="type.name">
                                                                             </option>
                                                                         </template>
                                                                     </select>
@@ -206,11 +206,11 @@
                                                                             <i class='bx bx-x'></i>
                                                                         </div>
                                                                         <div class="form-fields mb-3">
-                                                                            <div class="title title--sm" x-text="type">
-                                                                            </div>
+                                                                            <div class="title title--sm"
+                                                                                x-text="type.name"></div>
                                                                             <input type="hidden"
                                                                                 :name="'image_types[' + index + '][type]'"
-                                                                                :value="type">
+                                                                                :value="type.id">
                                                                             <div class="multiple-upload mt-3">
                                                                                 <input type="file"
                                                                                     :id="'gallery-input-' + index"
@@ -243,8 +243,8 @@
                                                                                             </a>
                                                                                             <input class="field"
                                                                                                 placeholder="Enter Name"
-                                                                                                :name="'image_types[' +
-                                                                                                index + '][names][]'"
+                                                                                                :name="'image_types[' + index +
+                                                                                                    '][names][]'"
                                                                                                 data-required
                                                                                                 data-error="Image Name">
                                                                                         </li>
@@ -255,13 +255,23 @@
                                                                     </div>
                                                                 </template>
 
+
+
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 mb-2">
                                                             @php
-                                                                $groupImages = $case->images->groupBy('type');
-                                                            @endphp
 
+                                                                $groupImages = $case
+                                                                    ->images()
+                                                                    ->with('imageType')
+                                                                    ->get()
+                                                                    ->groupBy(
+                                                                        fn($image) => $image->imageType->name ??
+                                                                            'Unknown',
+                                                                    );
+
+                                                            @endphp
 
                                                             <div class="form-fields">
                                                                 <div class="title title--sm">Current Case Images:</div>
@@ -301,7 +311,7 @@
                                                         <div class="col-lg-12 mb-4">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title </label>
-                                                                <input type="text"
+                                                                <input type="text" data-required=""
                                                                     data-error="Specific Diagnosis Title"
                                                                     name="diagnosis_title" class="field"
                                                                     value="{{ old('diagnosis_title', $case->diagnosis_title ?? '') }}">
@@ -679,17 +689,21 @@
         function imageTypeManager() {
             return {
                 types: [
-                    "Optical imaging", "X Ray", "Fluoroscopy", "CT Scan", "Ultrasound, Diagnostic",
-                    "Ultrasound, Pregnancy", "MRI", "PET Scan", "Retinography", "Mammography", "Arthrogram",
-                    "Interventional imaging", "Histopathology", "2D", "3D", "4D"
+                    @foreach ($imageTypes as $type)
+                        {
+                            id: {{ $type->id }},
+                            name: "{{ $type->name }}"
+                        },
+                    @endforeach
                 ],
                 selectedType: '',
                 selectedTypes: [],
                 uploadedFiles: {},
 
                 addTypeRow() {
-                    if (this.selectedType && !this.selectedTypes.includes(this.selectedType)) {
-                        this.selectedTypes.push(this.selectedType);
+                    const selected = this.types.find(type => type.id === parseInt(this.selectedType));
+                    if (selected && !this.selectedTypes.some(type => type.id === selected.id)) {
+                        this.selectedTypes.push(selected);
                         this.uploadedFiles[this.selectedTypes.length - 1] = [];
                         this.selectedType = '';
                     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\CaseImage;
 use App\Models\DiagnosticCase;
+use App\Models\ImageType;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -74,12 +75,13 @@ class DiagnosticCaseController extends Controller
 
     public function create()
     {
-        return view('user.cases-management.add')->with('title', 'Add Image');
+        $imageTypes = ImageType::where('status', 'active')->latest()->get();
+
+        return view('user.cases-management.add')->with('title', 'Add Image')->with(compact('imageTypes'));
     }
 
     public function store(Request $request)
     {
-
         if ($request['case_type'] !== 'ask_ai_image_diagnosis') {
             $diagnosis_title = $request['diagnosis_title'];
             $diagnosticCase = DiagnosticCase::create([
@@ -117,15 +119,13 @@ class DiagnosticCaseController extends Controller
 
         if ($request->has('image_types')) {
             foreach ($request->input('image_types') as $key => $imageTypeData) {
-                // Regular input data
                 $type = $imageTypeData['type'];
                 $names = $imageTypeData['names'] ?? [];
                 $files = $request->file("image_types.{$key}.files") ?? [];
 
                 foreach ($files as $index => $file) {
-                    $fileName = $names[$index] ?? null;
-
                     if ($file) {
+                        $fileName = $names[$index] ?? null;
                         $filePath = $this->simpleUploadImg(
                             $file,
                             'User/'.Auth::user()->id."/Case/{$diagnosticCase->id}/images/"
@@ -156,9 +156,10 @@ class DiagnosticCaseController extends Controller
 
     public function edit($id)
     {
+        $imageTypes = ImageType::where('status', 'active')->latest()->get();
         $case = DiagnosticCase::find($id);
 
-        return view('user.cases-management.edit')->with('title', ucfirst(strtolower($case->diagnosis_title)))->with(compact('case'));
+        return view('user.cases-management.edit')->with('title', ucfirst(strtolower($case->diagnosis_title)))->with(compact('case', 'imageTypes'));
     }
 
     public function update(Request $request, $id)
@@ -203,15 +204,13 @@ class DiagnosticCaseController extends Controller
 
         if ($request->has('image_types')) {
             foreach ($request->input('image_types') as $key => $imageTypeData) {
-                // Regular input data
                 $type = $imageTypeData['type'];
                 $names = $imageTypeData['names'] ?? [];
                 $files = $request->file("image_types.{$key}.files") ?? [];
 
                 foreach ($files as $index => $file) {
-                    $fileName = $names[$index] ?? null;
-
                     if ($file) {
+                        $fileName = $names[$index] ?? null;
                         $filePath = $this->simpleUploadImg(
                             $file,
                             'User/'.Auth::user()->id."/Case/{$diagnosticCase->id}/images/"
