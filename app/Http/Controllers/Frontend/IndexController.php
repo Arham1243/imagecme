@@ -11,7 +11,7 @@ class IndexController extends Controller
     public function index()
     {
         $cases = DiagnosticCase::where('status', 'active')->latest()->get();
-        $imageTypes = ImageType::where('status', 'active')->latest()->get();
+        $imageTypes = ImageType::where('status', 'active')->where('is_featured', 1)->latest()->get();
         $data = compact('cases', 'imageTypes');
 
         return view('frontend.index')->with('title', 'Home')->with($data);
