@@ -160,7 +160,7 @@
                                             method="POST" class="comment-form">
                                             @csrf
 
-                                            @if ($userCaseAnswer && $userAnswer)
+                                            @if (isset($userCaseAnswer) && $userAnswer)
                                                 <input type="hidden" name="selected_answer"
                                                     value="{{ $userCaseAnswer->id }}" />
                                                 <div class="selected-answer ms-2">

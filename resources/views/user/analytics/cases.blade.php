@@ -20,6 +20,13 @@
             </div>
 
             <div class="chart mb-5">
+                <div class="chart-title">Total Reviewed/Unreviewed Cases</div>
+                <div class="chart-item">
+                    <div id="commentedCasesChart"></div>
+                </div>
+            </div>
+
+            <div class="chart mb-5">
                 <div class="chart-title">Images by Specialty</div>
                 <div class="chart-item">
                     <div id="specialtyChart"></div>
@@ -108,6 +115,7 @@
             drawSegmentChart()
             drawEthnicityChart()
             drawImagesTypeChart()
+            drawCommentedCasesChart()
         }
 
 
@@ -474,6 +482,60 @@
             chart.draw(data, options);
         }
 
+        function drawCommentedCasesChart() {
+            var commentsCasesData = @json($commentsCasesData->toArray());
+
+            if (isAllDataEmpty(commentsCasesData)) {
+                $('#commentedCasesChart').html('<p>No data available to display.</p>');
+                return;
+            }
+
+            var data = google.visualization.arrayToDataTable([
+                ['Month',
+                    @foreach ($commentsCasesData->first() as $ethnicity => $count)
+                        '{{ $ethnicity }}',
+                    @endforeach
+                ],
+                @foreach ($commentsCasesData as $month => $counts)
+                    ['{{ $month }}',
+                        @foreach ($counts as $count)
+                            {{ $count }},
+                        @endforeach
+                    ],
+                @endforeach
+            ]);
+
+            var options = {
+                width: 800,
+                height: 500,
+                isStacked: true,
+                hAxis: {
+                    title: 'Month',
+                    slantedText: true,
+                    slantedTextAngle: 45,
+                },
+                vAxis: {
+                    title: 'Total Cases',
+                    minValue: 0,
+
+                    format: '0',
+                },
+                legend: {
+                    position: 'top',
+                    alignment: 'center',
+                },
+                chartArea: {
+                    left: 50,
+                    top: 50,
+                    width: '80%',
+                    height: '70%',
+                },
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('commentedCasesChart'));
+            chart.draw(data, options);
+        }
+
         function drawEthnicityChart() {
             var ethnicityData = @json($ethnicityData->toArray());
 
@@ -527,6 +589,7 @@
             var chart = new google.visualization.ColumnChart(document.getElementById('ethnicityChart'));
             chart.draw(data, options);
         }
+
 
         function drawOverallCasesChart() {
             var casesData = @json($casesData->toArray());

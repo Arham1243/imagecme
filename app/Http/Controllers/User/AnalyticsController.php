@@ -34,6 +34,40 @@ class AnalyticsController extends Controller
             return [$shortMonthName => $casesPerMonth[$month] ?? 0];
         });
 
+        $reviewedCases = DB::table('cases')
+            ->leftJoin('comments', 'cases.id', '=', 'comments.case_id')
+            ->selectRaw('MONTH(cases.created_at) as month, COUNT(DISTINCT cases.id) as reviewed_cases')
+            ->whereYear('cases.created_at', $year)
+            ->whereNotNull('comments.case_id')
+            ->where('comments.user_id', '!=', DB::raw('cases.user_id')) // Exclude comments by the author
+            ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis']) // Exclude specific types of cases
+            ->groupBy('month')
+            ->get()
+            ->mapWithKeys(function ($case) {
+                return [$case->month => (int) $case->reviewed_cases];
+            });
+
+        $unreviewedCases = DB::table('cases')
+            ->leftJoin('comments', 'cases.id', '=', 'comments.case_id')
+            ->selectRaw('MONTH(cases.created_at) as month, COUNT(DISTINCT cases.id) as unreviewed_cases')
+            ->whereYear('cases.created_at', $year)
+            ->whereNull('comments.case_id') // Only cases without comments are unreviewed
+            ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis']) // Exclude specific types of cases
+            ->groupBy('month')
+            ->get()
+            ->mapWithKeys(function ($case) {
+                return [$case->month => (int) $case->unreviewed_cases];
+            });
+
+        $commentsCasesData = $months->mapWithKeys(function ($shortMonthName, $month) use ($reviewedCases, $unreviewedCases) {
+            return [
+                $shortMonthName => [
+                    'reviewed' => $reviewedCases[$month] ?? 0,
+                    'unreviewed' => $unreviewedCases[$month] ?? 0,
+                ],
+            ];
+        });
+
         $casesBySpecialty = $user->cases()->selectRaw('MONTH(created_at) as month, diagnosed_disease, COUNT(*) as total_cases')
             ->whereYear('created_at', $year)
             ->groupBy('month', 'diagnosed_disease')
@@ -196,6 +230,6 @@ class AnalyticsController extends Controller
             return [$shortMonthName => $typeData];
         });
 
-        return view('user.analytics.cases', compact('imageTypeData', 'ethnicityData', 'segmentData', 'certaintyData', 'easeOfDiagnosisData', 'qualityData', 'casesData', 'specialtyData', 'year', 'months'))->with('title', 'Analytics');
+        return view('user.analytics.cases', compact('commentsCasesData', 'imageTypeData', 'ethnicityData', 'segmentData', 'certaintyData', 'easeOfDiagnosisData', 'qualityData', 'casesData', 'specialtyData', 'year', 'months'))->with('title', 'Analytics');
     }
 }
