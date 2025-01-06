@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
-    Route::get('/imaging/{slug}', [IndexController::class, 'imagingDetail'])->name('imagingDetail');
+    Route::get('/image-types/{slug}', [IndexController::class, 'imageTypeDetail'])->name('image-types.details');
     Route::prefix('cases')->name('cases.')->group(function () {
         Route::get('/{slug}', [DiagnosticCaseController::class, 'details'])->name('details');
         Route::resource('/{slug}/comments', CommentController::class);

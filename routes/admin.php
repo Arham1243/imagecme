@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\DiagnosticCaseController;
+use App\Http\Controllers\Admin\ImageTypeController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\UserController;
@@ -31,6 +32,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('users', UserController::class);
     Route::resource('cases', DiagnosticCaseController::class);
+    Route::resource('image-types', ImageTypeController::class);
     Route::get('analytics/cases', [AnalyticsController::class, 'cases'])->name('analytics.cases');
     Route::get('analytics/users', [AnalyticsController::class, 'users'])->name('analytics.users');
 

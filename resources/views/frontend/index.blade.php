@@ -60,49 +60,17 @@
                 </div>
             </div>
             @php
-                $portfolioItems = [
-                    [
-                        'slug' => 'x-ray',
-                        'title' => 'X Ray',
-                        'image' => 'frontend/assets/images/portfolio/1.png',
-                    ],
-                    [
-                        'slug' => 'ct-scan',
-                        'title' => 'CT Scan',
-                        'image' => 'frontend/assets/images/portfolio/2.png',
-                    ],
-                    [
-                        'slug' => 'mri',
-                        'title' => 'MRI',
-                        'image' => 'frontend/assets/images/portfolio/3.png',
-                    ],
-                    [
-                        'slug' => 'ultrasound-diagnostic',
-                        'title' => 'Ultrasound, Diagnostic',
-                        'image' => 'frontend/assets/images/portfolio/4.png',
-                    ],
-                    [
-                        'slug' => 'mammography',
-                        'title' => 'Mammography',
-                        'image' => 'frontend/assets/images/portfolio/5.jpg',
-                    ],
-                    [
-                        'slug' => 'pet-scan',
-                        'title' => 'PET Scan',
-                        'image' => 'frontend/assets/images/portfolio/5.png',
-                    ],
-                ];
             @endphp
             <div class="row portfolio-slider">
-                @foreach ($portfolioItems as $item)
+                @foreach ($imageTypes as $item)
                     <div class="col-md-4">
-                        <a href="{{ route('frontend.imagingDetail', $item['slug']) }}" class="portfolio-card">
+                        <a href="{{ route('frontend.image-types.details', $item->slug) }}" class="portfolio-card">
                             <div class="portfolio-card__content">
                                 <div class="icon"><i class="bx bx-body"></i></div>
-                                <div class="title">{{ $item['title'] }}</div>
+                                <div class="title">{{ $item->name }}</div>
                             </div>
                             <div class="portfolio-card__img">
-                                <img src="{{ asset($item['image']) }}" alt="{{ $item['slug'] }}" class="imgFluid"
+                                <img src="{{ asset($item->featured_image) }}" alt="{{ $item->name }}" class="imgFluid"
                                     loading="lazy">
                             </div>
                         </a>

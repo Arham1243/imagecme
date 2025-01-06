@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DiagnosticCase;
+use App\Models\ImageType;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -31,6 +32,11 @@ class BulkActionController extends Controller
                 $modelClass = User::class;
                 $column = 'id';
                 $redirectRoute = 'admin.users.index';
+                break;
+            case 'image-types':
+                $modelClass = ImageType::class;
+                $column = 'id';
+                $redirectRoute = 'admin.image-types.index';
                 break;
             default:
                 return Redirect::back()->with('notify_error', 'Resource not found.');

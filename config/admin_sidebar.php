@@ -22,6 +22,22 @@ return [
         'route' => 'admin.cases.index',
     ],
     [
+        'title' => 'Image Types',
+        'icon' => 'bx bx-image',
+        'submenu' => [
+            [
+                'title' => ' Types',
+                'icon' => 'bx bxs-image',
+                'route' => 'admin.image-types.index',
+            ],
+            [
+                'title' => 'Add  Type',
+                'icon' => 'bx bx-plus',
+                'route' => 'admin.image-types.create',
+            ],
+        ],
+    ],
+    [
         'title' => 'Site Setting',
         'icon' => 'bx bxs-cog',
         'submenu' => [

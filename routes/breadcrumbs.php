@@ -32,7 +32,19 @@ Breadcrumbs::for('admin.users.show', function (BreadcrumbTrail $trail, $item) {
     $trail->parent('admin.users.index');
     $trail->push($item->full_name, route('admin.users.show', $item->id));
 });
+Breadcrumbs::for('admin.image-types.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Image Types', route('admin.image-types.index'));
+});
+Breadcrumbs::for('admin.image-types.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.image-types.index');
+    $trail->push('Add Image Type', route('admin.image-types.create'));
+});
 
+Breadcrumbs::for('admin.image-types.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.image-types.index');
+    $trail->push($item->name ?? 'N/A', route('admin.image-types.edit', $item->id));
+});
 // --------------- Admin Dashboard---------------
 
 // --------------- Usdr Dashboard---------------
@@ -54,7 +66,6 @@ Breadcrumbs::for('user.cases.create', function (BreadcrumbTrail $trail) {
     $trail->parent('user.cases.index');
     $trail->push('Add Image', route('user.cases.create'));
 });
-
 Breadcrumbs::for('user.cases.edit', function (BreadcrumbTrail $trail, $item) {
     $trail->parent('user.cases.index');
     $trail->push($item->diagnosis_title ?? 'N/A', route('user.cases.edit', $item->id));
