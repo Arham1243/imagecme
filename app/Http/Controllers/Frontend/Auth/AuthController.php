@@ -21,6 +21,8 @@ class AuthController extends Controller
 
     public function performSignup(Request $request)
     {
+        $redirectTo = $request->input('redirect_url');
+
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -48,12 +50,17 @@ class AuthController extends Controller
         ]);
 
         Auth::login($user);
+        if ($redirectTo) {
+            return redirect()->to($redirectTo)->with('notify_success', 'Account Created Successfully');
+        }
 
         return redirect()->route('user.dashboard')->with('notify_success', 'Account Created Successfully');
     }
 
     public function performLogin(Request $request)
     {
+        $redirectTo = $request->input('redirect_url');
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
@@ -70,8 +77,12 @@ class AuthController extends Controller
                     ->with('notify_error', 'Your account is suspended. Please contact the admin.');
             }
 
+            if ($redirectTo) {
+                return redirect()->to($redirectTo)->with('notify_success', 'Login Successfully');
+            }
+
             return redirect()->intended(route('user.dashboard'))
-                ->with('notify_success', 'Login Successful');
+                ->with('notify_success', 'Login Successfully');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput()->with('notify_error', 'Invalid credentials');

@@ -192,9 +192,9 @@
                                 </div>
                             @else
                                 <div class="subHeading mb-4 pb-2">
-                                    Please <a href="{{ route('auth.login') }}" class="link">Login</a> to your account
-                                    to
-                                    write a comment.
+                                    Please <a href="{{ route('auth.login', ['redirect_url' => url()->current()]) }}"
+                                        class="link">Login</a> to your account
+                                    to write a comment.
                                 </div>
                             @endif
                             @if ($comments->isNotEmpty())

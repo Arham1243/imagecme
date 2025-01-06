@@ -16,7 +16,7 @@
                                 <div class="heading">Sign up</div>
                                 <p>Join our community to learn and share insights in medical imaging and diagnostics.</p>
                             </div>
-                            <form action="{{ route('auth.signup.perform') }}" method="POST">
+                            <form action="{{ route('auth.signup.perform', request()->query()) }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">

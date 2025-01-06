@@ -16,7 +16,7 @@
                                 <div class="heading">Login</div>
                                 <p>Join our community to learn and share insights in medical imaging and diagnostics.</p>
                             </div>
-                            <form action="{{ route('auth.login.perform') }}" method="POST">
+                            <form action="{{ route('auth.login.perform', request()->query()) }}" method="POST">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
@@ -48,7 +48,8 @@
                                     </div>
                                     <div class="col-md-12 mt-3">
                                         <div class="bottom-content text-center">
-                                            <p>Don't have an account? <a href="{{ route('auth.signup') }}">Sign up here</a>
+                                            <p>Don't have an account? <a
+                                                    href="{{ route('auth.signup', request()->query()) }}">Sign up here</a>
                                             </p>
                                             <p><a href="{{ route('password.request') }}">Forgot your password?</a></p>
                                         </div>
