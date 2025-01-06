@@ -17,4 +17,9 @@ class Comment extends Model
     {
         return $this->belongsTo(DiagnosticCase::class);
     }
+
+    public function userAnswer()
+    {
+        return $this->belongsTo(UserMcqAnswer::class, 'selected_answer');
+    }
 }

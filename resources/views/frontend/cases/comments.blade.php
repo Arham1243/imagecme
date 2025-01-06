@@ -97,10 +97,12 @@
                     </div>
                     @if ($case->mcq_data)
                         @php
-                            $userAnswer = Auth::user()
+                            $userCaseAnswer = Auth::user()
                                 ?->userMcqAnswers->where('case_id', $case->id)
-                                ->first()?->answer;
+                                ->first();
                             $mcqData = json_decode($case->mcq_data)[0];
+
+                            $userAnswer = $userCaseAnswer->answer ?? null;
                         @endphp
                         <div class="mt-5 mb-2">
                             <div class="comment-card">
@@ -135,10 +137,10 @@
                                                 </li>
                                             @endforeach
                                         </ul>
-                                        @if (Auth::check())
-                                            <button class="action-btn comment-btn ms-auto" id="submitButton"
-                                                disabled>Submit</button>
+                                        @if (Auth::check() && !$userAnswer)
+                                            <button class="action-btn comment-btn ms-auto" id="submitButton">Submit</button>
                                         @endif
+
                                     </form>
                                 </div>
                             </div>
@@ -157,6 +159,16 @@
                                         <form action="{{ route('frontend.cases.comments.store', $case->slug) }}"
                                             method="POST" class="comment-form">
                                             @csrf
+
+                                            @if ($userCaseAnswer && $userAnswer)
+                                                <input type="hidden" name="selected_answer"
+                                                    value="{{ $userCaseAnswer->id }}" />
+                                                <div class="selected-answer ms-2">
+                                                    <span>Your Answer</span>
+                                                    {{ $userAnswer }}
+                                                </div>
+                                            @endif
+
                                             <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required name="comment"
                                                 rows="1"></textarea>
                                             <div class="actions-wrapper">
@@ -194,7 +206,9 @@
                                             <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
                                                 alt="image" class="imgFluid" loading="lazy">
                                         </div>
+
                                         <div x-show="!isEditMode" class="comment-card__details">
+
                                             <div class="wrapper">
                                                 <div class="name">
                                                     {{ $comment->user ? $comment->user->full_name : 'Anonymous' }}
@@ -207,6 +221,12 @@
                                                     <div class="time">(edited)</div>
                                                 @endif
                                             </div>
+                                            @if ($comment->selected_answer && $comment->userAnswer)
+                                                <div class="selected-answer ms-2">
+                                                    <span>Your Answer</span>
+                                                    {{ $comment->userAnswer->answer }}
+                                                </div>
+                                            @endif
                                             <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
                                                 {!! nl2br(e($comment->comment_text)) !!}
                                             </div>
@@ -229,6 +249,15 @@
                                                         method="POST" class="comment-form">
                                                         @csrf
                                                         @method('PATCH')
+
+                                                        @if ($comment->selected_answer && $comment->userAnswer)
+                                                            <input type="hidden" name="selected_answer"
+                                                                value="{{ $comment->userAnswer->id }}" />
+                                                            <div class="selected-answer ms-2">
+                                                                <span>Your Answer</span>
+                                                                {{ $comment->userAnswer->answer }}
+                                                            </div>
+                                                        @endif
                                                         <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required
                                                             name="comment" rows="1">{{ $comment->comment_text }}</textarea>
                                                         <div class="actions-wrapper">

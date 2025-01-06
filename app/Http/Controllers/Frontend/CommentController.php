@@ -42,6 +42,8 @@ class CommentController extends Controller
             'user_id' => $user_id,
             'case_id' => $case->id,
             'comment_text' => $request->comment,
+            'selected_answer' => $request->selected_answer ?? null,
+
         ]);
 
         return redirect(url()->previous().'#comments-section')

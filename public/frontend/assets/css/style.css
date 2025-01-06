@@ -1433,6 +1433,23 @@ body.fancybox-active.compensate-for-scrollbar {
     opacity: 0;
     visibility: hidden;
 }
+.selected-answer {
+    width: 100%;
+    background: #33333399;
+    padding: 0.7rem 1rem 0.85rem;
+    border-left: 3px solid #fff;
+    border-top: 2px solid #fff;
+    border-radius: 0.25rem;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    margin-bottom: 0.65rem;
+}
+
+.selected-answer > span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
 /* comments */
 
 
