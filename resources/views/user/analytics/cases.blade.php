@@ -27,6 +27,13 @@
             </div>
 
             <div class="chart mb-5">
+                <div class="chart-title">Images by Type</div>
+                <div class="chart-item">
+                    <div id="imagesTypeChart"></div>
+                </div>
+            </div>
+
+            <div class="chart mb-5">
                 <div class="chart-title">Images by Quality</div>
                 <div class="chart-item">
                     <div id="qualityChart"></div>
@@ -100,6 +107,7 @@
             drawCertaintyChart()
             drawSegmentChart()
             drawEthnicityChart()
+            drawImagesTypeChart()
         }
 
 
@@ -112,6 +120,88 @@
             }
             return true;
         }
+
+        function drawImagesTypeChart() {
+            var imageTypeData = @json($imageTypeData->toArray());
+
+            var isEmpty = true;
+            for (var month in imageTypeData) {
+                if (Object.keys(imageTypeData[month]).length > 0) {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            if (isEmpty) {
+                $('#imagesTypeChart').html('<p>No data available to display.</p>');
+                return;
+            }
+
+
+            var chartDataArray = [];
+
+
+            var header = ['Month'];
+
+            var imageTypes = [];
+            for (var month in imageTypeData) {
+                for (var imageType in imageTypeData[month]) {
+                    if (imageTypes.indexOf(imageType) === -1) {
+                        imageTypes.push(imageType);
+                    }
+                }
+            }
+
+
+            header = header.concat(imageTypes);
+            chartDataArray.push(header);
+
+
+            for (var month in imageTypeData) {
+                var row = [month];
+
+                for (var i = 0; i < imageTypes.length; i++) {
+                    var imageType = imageTypes[i];
+                    var value = imageTypeData[month][imageType] || 0;
+                    row.push(value);
+                }
+                chartDataArray.push(row);
+            }
+
+
+            var data = google.visualization.arrayToDataTable(chartDataArray);
+
+            var options = {
+                width: 800,
+                height: 500,
+                isStacked: true,
+                hAxis: {
+                    title: 'Month',
+                    slantedText: true,
+                    slantedTextAngle: 45,
+                },
+                vAxis: {
+                    title: 'Total Cases',
+                    minValue: 0,
+                    format: '0',
+                },
+                legend: {
+                    position: 'top',
+                    alignment: 'center',
+                },
+                chartArea: {
+                    left: 50,
+                    top: 50,
+                    width: '80%',
+                    height: '70%',
+                },
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('imagesTypeChart'));
+            chart.draw(data, options);
+        }
+
+
 
 
         function drawSpecialtyChart() {

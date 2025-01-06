@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
 {
@@ -173,6 +174,29 @@ class AnalyticsController extends Controller
             return [$shortMonthName => $monthDataWithNoEmptyKeys];
         });
 
-        return view('user.analytics.cases', compact('ethnicityData', 'segmentData', 'certaintyData', 'easeOfDiagnosisData', 'qualityData', 'casesData', 'specialtyData', 'year', 'months'))->with('title', 'Analytics');
+        $imageTypes = DB::table('case_images')
+            ->join('cases', 'case_images.case_id', '=', 'cases.id')
+            ->selectRaw('MONTH(cases.created_at) as month, case_images.type, COUNT(case_images.id) as total_cases')
+            ->where('cases.user_id', $user->id)
+            ->whereYear('cases.created_at', $year)
+            ->groupBy('month', 'case_images.type')
+            ->orderBy('month')
+            ->get();
+
+        $imageTypeData = $months->mapWithKeys(function ($shortMonthName, $month) use ($imageTypes) {
+            // Group the data for the current month
+            $monthData = $imageTypes->filter(function ($item) use ($month) {
+                return $item->month == $month;
+            });
+
+            // Map types for the current month
+            $typeData = $monthData->mapWithKeys(function ($item) {
+                return [$item->type => $item->total_cases];
+            });
+
+            return [$shortMonthName => $typeData];
+        });
+
+        return view('user.analytics.cases', compact('imageTypeData', 'ethnicityData', 'segmentData', 'certaintyData', 'easeOfDiagnosisData', 'qualityData', 'casesData', 'specialtyData', 'year', 'months'))->with('title', 'Analytics');
     }
 }
