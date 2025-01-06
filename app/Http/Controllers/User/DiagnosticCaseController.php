@@ -110,6 +110,7 @@ class DiagnosticCaseController extends Controller
                 'slug' => $this->createSlug($diagnosis_title, 'cases'),
                 'case_type' => $request['case_type'],
                 'user_id' => Auth::user()->id,
+                'status' => 'inactive',
                 'diagnosis_title' => $diagnosis_title,
             ]);
         }
@@ -195,6 +196,7 @@ class DiagnosticCaseController extends Controller
                 'slug' => $this->createSlug($diagnosis_title, 'cases', $diagnosticCase->slug),
                 'case_type' => $request['case_type'],
                 'user_id' => Auth::user()->id,
+                'status' => 'inactive',
                 'diagnosis_title' => $diagnosis_title,
             ]);
         }
@@ -292,6 +294,7 @@ class DiagnosticCaseController extends Controller
         ]);
 
         $diagnosticCase->update([
+            'status' => 'active',
             'publish_ai_conversation' => $validated['publish_conversation'] ?? 0,
         ]);
 
