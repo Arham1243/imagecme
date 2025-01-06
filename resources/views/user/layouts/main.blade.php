@@ -65,45 +65,6 @@
     @yield('js')
     @stack('js')
     <script type="text/javascript">
-        const MENU_ITEMS = @json($menuItems);
-        document.getElementById('globalSearch').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const resultsContainer = document.querySelector('.search-results__values');
-            resultsContainer.innerHTML = '';
-            if (searchTerm.length === 0) return;
-
-            const filteredMenuItems = MENU_ITEMS.filter(item => {
-
-                if (item.title.toLowerCase() === 'logout') {
-                    return false;
-                }
-                const matchesMainItem = item.title.toLowerCase().includes(searchTerm);
-                const filteredSubmenu = item.submenu?.filter(subItem => subItem.title.toLowerCase()
-                    .includes(searchTerm));
-                return matchesMainItem || (filteredSubmenu && filteredSubmenu.length > 0);
-            });
-            filteredMenuItems.forEach(item => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = item.route;
-                a.textContent = item.title;
-
-                li.appendChild(a);
-                resultsContainer.appendChild(li);
-                if (item.submenu) {
-                    const filteredSubmenu = item.submenu.filter(subItem => subItem.title.toLowerCase()
-                        .includes(searchTerm));
-                    filteredSubmenu.forEach(subItem => {
-                        const subLi = document.createElement('li');
-                        const subA = document.createElement('a');
-                        subA.href = subItem.route;
-                        subA.textContent = '→ ' + subItem.title;
-                        subLi.appendChild(subA);
-                        resultsContainer.appendChild(subLi);
-                    });
-                }
-            });
-        });
         (() => {
             @if (session('notify_success'))
                 $.toast({
