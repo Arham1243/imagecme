@@ -15,13 +15,19 @@ class CommentController extends Controller
     public function index($slug)
     {
         $case = DiagnosticCase::where('slug', $slug)->first();
+        $groupImages = $case
+            ->images()
+            ->with('imageType')
+            ->get()
+            ->groupBy(fn ($image) => $image->imageType->name ?? 'Unknown');
+
         $comments = $case->comments->map(function ($comment) {
             $editAllowedUntil = $comment->created_at->addMinutes(15);
             $comment->canEdit = now()->lessThan($editAllowedUntil);
 
             return $comment;
         });
-        $data = compact('case', 'comments');
+        $data = compact('case', 'comments', 'groupImages');
 
         return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->diagnosis_title)))->with($data);
     }
