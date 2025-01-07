@@ -79,7 +79,7 @@
                                             </td>
                                             <td>
                                                 <a target="_blank"
-                                                    href="{{ route('frontend.cases.details', $item->slug) }}"
+                                                    href="{{ route('frontend.cases.comments.index', $item->slug) }}"
                                                     class="themeBtn"><i class='bx bxs-edit'></i>View</a>
                                             </td>
                                         </tr>
