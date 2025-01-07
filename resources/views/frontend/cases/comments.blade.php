@@ -271,6 +271,17 @@
 
 
                                             </div>
+
+                                            @php
+                                                $isLongComment = strlen($comment->comment_text) > 463;
+                                            @endphp
+
+                                            <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
+                                                x-on:click="expanded = !expanded"
+                                                x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
+                                                style="background: #0E0E0E" type="button" data-more-content="Read more"
+                                                data-less-content="Show Less" data-show-more-btn></button>
+
                                             @if (count($comment->replies) > 0)
                                                 <div x-data="{ showReplies: false }">
                                                     <div class="show-replies">
@@ -302,15 +313,6 @@
                                                 </div>
                                             @endif
 
-                                            @php
-                                                $isLongComment = strlen($comment->comment_text) > 463;
-                                            @endphp
-
-                                            <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
-                                                x-on:click="expanded = !expanded"
-                                                x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
-                                                style="background: #0E0E0E" type="button" data-more-content="Read more"
-                                                data-less-content="Show Less" data-show-more-btn></button>
                                         </div>
                                         @if (Auth::check() && Auth::user()->id === $comment->user_id)
                                             @if ($comment->canEdit)
