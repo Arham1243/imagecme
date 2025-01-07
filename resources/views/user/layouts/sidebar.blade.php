@@ -1,5 +1,5 @@
 <div class="sidebar">
-    <a href="{{ route('user.dashboard') }}" class="sidebar-header">
+    <a href="{{ route('frontend.index') }}" class="sidebar-header">
         <div class="sidebar-header__icon">
             <img src="{{ asset($logo->path ?? 'user/assets/images/placeholder-logo.png') }}" alt="Logo"
                 class="imgFluid">

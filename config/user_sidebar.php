@@ -2,11 +2,6 @@
 
 return [
     [
-        'title' => 'Website',
-        'icon' => 'bx bx-globe',
-        'route' => 'frontend.index',
-    ],
-    [
         'title' => 'Dashboard',
         'icon' => 'bx bxs-home',
         'route' => 'user.dashboard',
