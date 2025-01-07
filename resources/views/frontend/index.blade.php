@@ -6,8 +6,7 @@
                 <div class="col-md-12">
                     <div class="banner-content text-center">
                         <div class="banner-content__logo">
-                            <img alt="xray" class="imgFluid"
-                                src="https://thumbs.dreamstime.com/b/xray-lung-ray-image-healthy-chest-31070096.jpg">
+                            <img alt="xray" class="imgFluid" src="{{ asset('frontend/assets/images/xray.jpg') }}">
                         </div>
                         <h1 class="banner-content__heading">
                             medical imaging <br>
