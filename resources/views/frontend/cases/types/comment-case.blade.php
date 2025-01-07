@@ -174,7 +174,7 @@
                             <div class="show-replies">
                                 <button class="text-btn" @click="showReplies = !showReplies;">
                                     <i class='bx' :class="showReplies ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
-                                    {{ count($comment->replies) }}
+                                    {{ formatBigNumber(count($comment->replies)) }}
                                     {{ count($comment->replies) === 1 ? 'reply' : 'replies' }}
                                 </button>
                             </div>
