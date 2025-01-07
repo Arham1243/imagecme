@@ -18,24 +18,37 @@
                 <div class="col-md-8">
                     <div class="case-details__content">
                         <div class="title">{{ $case->diagnosed_disease }}</div>
-                        <div class="user-profile">
-                            <div class="user-profile___avatar">
-                                <img src="https://ui-avatars.com/api/?name={{ urlencode($case->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
-                                    alt="image" class="imgFluid" loading="lazy">
-                            </div>
-                            <div class="user-profile__info">
-                                <div title="{{ $case->user->full_name ?? 'Anonymous' }}" class="name"
-                                    data-tooltip="tooltip">{{ $case->user->full_name ?? 'Anonymous' }}
-                                    @if ($case->user)
-                                        <i class='bx bxs-check-circle'></i>
-                                    @endif
+                        <div class="case-actions-wrapper">
+                            <div class="user-profile">
+                                <div class="user-profile___avatar">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($case->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                                        alt="{{ $case->user->full_name ?? 'Anonymous' }}" class="imgFluid" loading="lazy">
                                 </div>
-                                <div class="level">{{ $case->user->role ?? '' }}</div>
+                                <div class="user-profile__info">
+                                    <div title="{{ $case->user->full_name ?? 'Anonymous' }}" class="name"
+                                        data-tooltip="tooltip">{{ $case->user->full_name ?? 'Anonymous' }}
+                                        @if ($case->user)
+                                            <i class='bx bxs-check-circle'></i>
+                                        @endif
+                                    </div>
+                                    <div class="level">{{ $case->user->role ?? '' }}</div>
+                                </div>
                             </div>
+                            <ul class="case-actions">
+                                <li>
+                                    <x-like-button :caseId="$case->id" class="case-actions-item" show-count />
+                                </li>
+                                <li><button disabled class="case-actions-item" type="button"><i
+                                            class='bx bx-paper-plane'></i>
+                                        Send</button></li>
+                            </ul>
                         </div>
                     </div>
                     <div class="case-details__details">
-                        <div class="date">{{ formatDate($case->created_at) }}</div>
+                        <div class="d-flex gap-3 flex-wrap">
+                            <div class="date">{{ formatBigNumber(10100) }} views</div>
+                            <div class="date">{{ formatDate($case->created_at) }}</div>
+                        </div>
                         <div x-data="{ expanded: false }" :class="{ 'd-block': expanded }" class="case-details-list"
                             data-show-more-container>
                             <button x-on:click="expanded = !expanded"
@@ -153,6 +166,38 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/emoji-mart@5.6.0/dist/browser.min.js"></script>
     <script>
+        const likeCase = async (likeBtn, caseId) => {
+            try {
+                const action = likeBtn.getAttribute('data-action');
+                const slug = likeBtn.getAttribute('data-slug');
+
+                const likeCaseRoute =
+                    `{{ route('frontend.cases.comments.likeCase', ['slug' => ':slug', 'action' => ':action']) }}`
+                    .replace(':slug', slug)
+                    .replace(':action', action);
+
+                const response = await axios.post(likeCaseRoute, {
+                    caseId,
+                    action
+                });
+
+                const icon = likeBtn.querySelector('i');
+                const counter = likeBtn.querySelector('.total');
+
+                if (response.data.action === 'like') {
+                    icon.className = 'bx bxs-like bx-tada';
+                    setTimeout(() => icon.classList.remove('bx-tada'), 500);
+                    likeBtn.setAttribute('data-action', 'unlike');
+                } else {
+                    icon.className = 'bx bx-like';
+                    likeBtn.setAttribute('data-action', 'like');
+                }
+                counter.textContent = response.data.likesCount;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
         function toggleSubmitButton() {
             const isAnyOptionChecked = document.querySelector('input[name="answer"]:checked');
             if (document.getElementById('submitButton')) {

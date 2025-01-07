@@ -81,6 +81,42 @@ class CommentController extends Controller
             ->with('notify_success', 'Comment updated Successfully');
     }
 
+    public function likeCase(Request $request, $slug, $action)
+    {
+        $case = DiagnosticCase::where('slug', $slug)->first();
+
+        if (! $case) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Case not found',
+            ], 404);
+        }
+
+        $likeExists = $case->likes()->where('user_id', Auth::user()->id)->exists();
+
+        if ($action == 'like' && ! $likeExists) {
+            $case->likes()->create([
+                'user_id' => Auth::user()->id,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'action' => 'like',
+                'message' => 'Case liked successfully',
+                'likesCount' => formatBigNumber($case->likes()->count()),
+            ]);
+        } elseif ($action == 'unlike' && $likeExists) {
+            $case->likes()->where('user_id', Auth::user()->id)->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'action' => 'unlike',
+                'message' => 'Case unliked successfully',
+                'likesCount' => formatBigNumber($case->likes()->count()),
+            ]);
+        }
+    }
+
     public function submitAnswer(Request $request, $slug)
     {
         $request->validate([

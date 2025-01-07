@@ -1,4 +1,6 @@
-<div class="comment-card mb-3 mt-2" x-data="parentReply($el)" x-init="init()">
+<div class="comment-card mb-3 mt-2" x-data="{
+    isReplyModeReply: false,
+}">
     <div class="comment-card__avatar comment-card__avatar--sm">
         <img src="https://ui-avatars.com/api/?name={{ urlencode($reply->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
             alt="image" class="imgFluid" loading="lazy">
@@ -61,12 +63,3 @@
         </div>
     </div>
 </div>
-@push('js')
-    <script>
-        function parentReply($el) {
-            return {
-                isReplyModeReply: false,
-            };
-        }
-    </script>
-@endpush
