@@ -42,6 +42,7 @@ class AnalyticsController extends Controller
             ->whereNotNull('comments.case_id')
             ->where('comments.user_id', '!=', DB::raw('cases.user_id'))
             ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis'])
+            ->where('cases.user_id', $user->id)
             ->groupBy('month')
             ->get()
             ->mapWithKeys(function ($case) {
@@ -54,6 +55,7 @@ class AnalyticsController extends Controller
             ->whereYear('cases.created_at', $year)
             ->whereNull('comments.case_id')
             ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis'])
+            ->where('cases.user_id', $user->id)
             ->groupBy('month')
             ->get()
             ->mapWithKeys(function ($case) {
