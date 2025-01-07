@@ -230,10 +230,12 @@
                                             <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
                                                 {!! nl2br(e($comment->comment_text)) !!}
                                             </div>
-                                            <div class="comment-actions">
-                                                <button type="button" class="text-btn"
-                                                    @click="isReplyMode = true">Reply</button>
-                                            </div>
+                                            @if (Auth::check())
+                                                <div class="comment-actions">
+                                                    <button type="button" class="text-btn"
+                                                        @click="isReplyMode = true">Reply</button>
+                                                </div>
+                                            @endif
                                             <div x-show="isReplyMode" class="comment-card ">
                                                 <div class="comment-card__avatar comment-card__avatar--sm">
                                                     <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
