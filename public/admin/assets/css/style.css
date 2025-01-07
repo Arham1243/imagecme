@@ -2383,9 +2383,11 @@ button[data-tooltip="tooltip"] {
 }
 .datepicker {
     width: 50% !important;
+    left: 0 !important;
+    top: 0 !important;
 }
 .datepicker-years table.table-condensed {
-    width: 50%;
+    width: 100%;
 }
 .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-right.datepicker-orient-bottom {
     top: 100% !important;
