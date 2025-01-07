@@ -55,7 +55,7 @@
                                                                 image diagnosis
                                                             </label>
                                                         </div>
-                                                        <div class="form-check p-0">
+                                                        {{-- <div class="form-check p-0">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-4" name="case_type" x-model="case_type"
                                                                 value="ask_ai_image_diagnosis"
@@ -64,7 +64,7 @@
                                                                 Ask AI
                                                                 image diagnosis
                                                             </label>
-                                                        </div>
+                                                        </div> --}}
                                                     </div>
                                                     <div class="pt-4" x-show="case_type === 'share_image_diagnosis'">
                                                         <div class="row">

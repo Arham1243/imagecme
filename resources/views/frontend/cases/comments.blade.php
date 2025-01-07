@@ -93,10 +93,10 @@
                         </div>
                     </div>
                     @if (!in_array($case->case_type, ['share_image_diagnosis', 'ask_ai_image_diagnosis']))
-                        @include('frontend.cases.case-types.comment-case')
+                        @include('frontend.cases.types.comment-case')
                     @endif
                     @if ($case->case_type === 'ask_ai_image_diagnosis' && $case->ai_conversation && $case->publish_ai_conversation === 1)
-                        @include('frontend.cases.case-types.ai-case')
+                        @include('frontend.cases.types.ai-case')
                     @endif
                 </div>
                 @if ($groupImages->isNotEmpty())

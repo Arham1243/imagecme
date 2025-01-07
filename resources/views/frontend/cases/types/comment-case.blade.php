@@ -187,7 +187,7 @@
                                     @endphp
 
                                     @foreach ($uniqueReplies as $reply)
-                                        @include('frontend.cases.case-types.comments.reply', [
+                                        @include('frontend.cases.types.comments.reply', [
                                             'reply' => $reply,
                                             'parentId' => null,
                                         ])
