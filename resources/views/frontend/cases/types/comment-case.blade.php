@@ -48,7 +48,7 @@
     </div>
 @endif
 <div class="case-details__comments" id="comments-section">
-    <div class="heading">{{ count($comments) }} Comments</div>
+    <div class="heading">{{ count($comments) }} {{ count($comments) === 1 ? 'Comment' : 'Comments' }}</div>
     @if (Auth::check())
         <div class="comment-card mb-4 pb-2">
             <div class="comment-card__avatar">

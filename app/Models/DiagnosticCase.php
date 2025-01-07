@@ -26,7 +26,7 @@ class DiagnosticCase extends Model
 
     public function views()
     {
-        return $this->hasMany(Comment::class, 'case_id');
+        return $this->hasMany(CaseView::class, 'case_id');
     }
 
     public function comments()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CaseView;
 use App\Models\Comment;
 use App\Models\CommentReply;
 use App\Models\DiagnosticCase;
@@ -14,7 +15,11 @@ class CommentController extends Controller
 {
     public function index($slug)
     {
+
         $case = DiagnosticCase::where('slug', $slug)->first();
+
+        $this->trackView($case);
+
         $groupImages = $case
             ->images()
             ->with('imageType')
@@ -30,6 +35,24 @@ class CommentController extends Controller
         $data = compact('case', 'comments', 'groupImages');
 
         return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->diagnosis_title)))->with($data);
+    }
+
+    private function trackView(DiagnosticCase $case)
+    {
+        if (Auth::check()) {
+            $userId = Auth::check() ? Auth::id() : null;
+
+            $existingView = CaseView::where('case_id', $case->id)
+                ->where('user_id', $userId)
+                ->exists();
+
+            if (! $existingView) {
+                CaseView::create([
+                    'case_id' => $case->id,
+                    'user_id' => $userId,
+                ]);
+            }
+        }
     }
 
     public function store(Request $request, $slug)

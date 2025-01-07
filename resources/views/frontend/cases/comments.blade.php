@@ -46,7 +46,8 @@
                     </div>
                     <div class="case-details__details">
                         <div class="d-flex gap-3 flex-wrap">
-                            <div class="date">{{ formatBigNumber(10100) }} views</div>
+                            <div class="date">{{ formatBigNumber($case->views->count()) }}
+                                {{ $case->views->count() === 1 ? 'view' : 'views' }}</div>
                             <div class="date">{{ formatDate($case->created_at) }}</div>
                         </div>
                         <div x-data="{ expanded: false }" :class="{ 'd-block': expanded }" class="case-details-list"

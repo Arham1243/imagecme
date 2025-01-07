@@ -1,6 +1,6 @@
 <div class='cases-card'>
     <div class="cases-card__header">
-        <div class="title">{{ $case->diagnosis_title }}</div>
+        <div class="title" title="{{ $case->diagnosis_title }}" data-tooltip="tooltip">{{ $case->diagnosis_title }}</div>
         <div class="type-badge">
             {{ $case->case_type ? getRelativeType($case->case_type) : 'N/A' }}</div>
     </div>
@@ -54,7 +54,7 @@
                             <div class="names">
                                 @if ($case->likes->count() > 1)
                                     {{ implode(', ', $showLikedUsers->pluck('full_name')->toArray()) }} and
-                                    {{ $case->likes->count() - 1 }} others
+                                    {{ formatBigNumber($case->likes->count() - 1) }} others
                                 @else
                                     {{ implode(', ', $showLikedUsers->pluck('full_name')->toArray()) }}
                                 @endif
@@ -66,7 +66,8 @@
                     <div class="reaction-list__comments">
                         <span>{{ formatBigNumber($case->views->count()) }} views</span>
                         <span><i class='bx bxs-circle'></i></span>
-                        <span>{{ formatBigNumber($case->comments->count()) }} comments</span>
+                        <span><a href="{{ route('frontend.cases.comments.index', $case->slug) }}">{{ formatBigNumber($case->comments->count()) }}
+                                comments</a></span>
                     </div>
                 </div>
                 <ul class="reaction-action">

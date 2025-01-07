@@ -648,6 +648,12 @@ body .select2-selection--single.select2-selection--single {
 .cases-card__header .title {
     font-size: 1.35rem;
     font-weight: 700;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    align-self: center;
+    width: 75%;
 }
 
 .cases-card__header {
@@ -655,7 +661,7 @@ body .select2-selection--single.select2-selection--single {
 }
 
 .cases-card__header .type-badge {
-    color: #4fbef8;
+    color: #1a1818;
     border: 2px solid #bbbbbb;
     font-size: 1rem;
     padding: 0 0.5rem;
@@ -1548,7 +1554,7 @@ body.fancybox-active.compensate-for-scrollbar {
     font-size: 1.2rem;
 }
 /* comments */
-
+/* reactions */
 .reaction-list {
     display: flex;
     align-items: center;
@@ -1556,7 +1562,7 @@ body.fancybox-active.compensate-for-scrollbar {
     font-size: 0.95rem;
     font-weight: 500;
     color: #5c5a5a;
-    padding: 1rem 1rem 0.5rem;
+    padding: 0.85rem 1rem;
     border-bottom: 1px solid #ccccccb3;
 }
 
@@ -1611,6 +1617,7 @@ body.fancybox-active.compensate-for-scrollbar {
 }
 
 .reaction-action-item {
+    color: inherit;
     width: 100%;
     border: none;
     outline: none;
@@ -1646,3 +1653,10 @@ body.fancybox-active.compensate-for-scrollbar {
 .reaction-action-item:hover {
     background: #5e5d5d14;
 }
+.reaction-action-item[disabled] {
+    cursor: inherit;
+}
+.reaction-list__comments a {
+    color: inherit;
+}
+/* reactions */
