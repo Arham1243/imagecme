@@ -1,5 +1,5 @@
 <div class="sidebar">
-    <a href="{{ route('frontend.index') }}" class="sidebar-header">
+    <a target="_blank" href="{{ route('frontend.index') }}" class="sidebar-header">
         <div class="sidebar-header__icon">
             <img src="{{ asset($logo->path ?? 'admin/assets/images/placeholder-logo.png') }}" alt="Logo"
                 class="imgFluid">

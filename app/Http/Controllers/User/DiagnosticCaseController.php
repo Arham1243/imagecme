@@ -18,6 +18,8 @@ class DiagnosticCaseController extends Controller
 
     public function index(Request $request)
     {
+        $imageTypes = ImageType::where('status', 'active')->latest()->get();
+
         $query = DiagnosticCase::where('user_id', Auth::user()->id);
 
         if ($request->has('start_date') && ! empty($request->start_date) && $request->has('end_date') && ! empty($request->end_date)) {
@@ -70,7 +72,7 @@ class DiagnosticCaseController extends Controller
 
         return view('user.cases-management.list')
             ->with('title', 'Images')
-            ->with(compact('cases'));
+            ->with(compact('cases', 'imageTypes'));
     }
 
     public function create()

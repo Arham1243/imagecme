@@ -124,24 +124,6 @@
                                 'Surgery',
                                 'Urology',
                             ];
-                            $imageTypes = [
-                                'Optical imaging',
-                                'X Ray',
-                                'Fluoroscopy',
-                                'CT Scan',
-                                'Ultrasound, Diagnostic',
-                                'Ultrasound, Pregnancy',
-                                'MRI',
-                                'PET Scan',
-                                'Retinography',
-                                'Mammography',
-                                'Arthrogram',
-                                'Interventional imaging',
-                                'Histopathology',
-                                '2D',
-                                '3D',
-                                '4D',
-                            ];
                         @endphp
                         <div class="row">
                             <div class="col-md-12 mb-4">
@@ -175,9 +157,9 @@
                                         class="field select2-select">
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($imageTypes as $imageType)
-                                            <option value="{{ $imageType }}"
-                                                @if (request()->get('image_type') == $imageType) selected @endif>
-                                                {{ $imageType }}
+                                            <option value="{{ $imageType->id }}"
+                                                @if (request()->get('image_type') == $imageType->id) selected @endif>
+                                                {{ $imageType->name }}
                                             </option>
                                         @endforeach
                                     </select>
