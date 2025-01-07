@@ -20,7 +20,6 @@
                                             <option value="" disabled selected>Bulk Actions</option>
                                             <option value="active">Make Active</option>
                                             <option value="inactive">Make inactive</option>
-                                            <option value="delete">Delete</option>
                                         </select>
                                         <button type="submit" onclick="confirmBulkAction(event)"
                                             class="themeBtn">Apply</button>
