@@ -272,10 +272,6 @@
 
                                             </div>
 
-                                            @php
-                                                $isLongComment = strlen($comment->comment_text) > 463;
-                                            @endphp
-
                                             <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
                                                 x-on:click="expanded = !expanded"
                                                 x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
@@ -408,10 +404,6 @@
                                                 {!! nl2br(e($comment->message)) !!}
                                             </div>
 
-                                            @php
-                                                $isLongComment = strlen($comment->message) > 463;
-                                            @endphp
-
                                             <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
                                                 x-on:click="expanded = !expanded"
                                                 x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
@@ -448,10 +440,6 @@
                                                 @endif
 
                                             </div>
-
-                                            @php
-                                                $isLongComment = strlen($comment->message) > 463;
-                                            @endphp
 
                                             <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
                                                 x-on:click="expanded = !expanded"
