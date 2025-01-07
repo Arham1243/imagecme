@@ -1508,10 +1508,11 @@ body.fancybox-active.compensate-for-scrollbar {
     background: transparent;
     color: #fff;
     border-radius: 100px;
-    padding: 0.3rem 0.8rem;
+    padding: 0.25rem 0.75rem;
     font-size: 0.85rem;
     border: none;
     outline: none;
+    margin: 0.25rem 0;
 }
 .text-btn:hover {
   background: #333333;

@@ -248,21 +248,6 @@
                                                         @csrf
                                                         <textarea class="comment-input" type="text" placeholder="Add a reply..." autocomplete="off" required
                                                             name="reply_text" rows="1"></textarea>
-                                                        <div class="actions-wrapper">
-                                                            <div class="emoji-picker-wrapper">
-                                                                <button type="button" class="emoji-picker">
-                                                                    <i class="bx bx-smile"></i>
-                                                                </button>
-                                                                <div class="emoji-picker-container"
-                                                                    style="display: none;"></div>
-                                                            </div>
-                                                            <div class="actions-btns">
-                                                                <button @click="isReplyMode = false" type="button"
-                                                                    class="action-btn cancel-btn">Cancel</button>
-                                                                <button class="action-btn  comment-btn"
-                                                                    disabled>Reply</button>
-                                                            </div>
-                                                        </div>
                                                         @error('comment')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -281,6 +266,21 @@
                                                 x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
                                                 style="background: #0E0E0E" type="button" data-more-content="Read more"
                                                 data-less-content="Show Less" data-show-more-btn></button>
+
+                                            <div class="actions-wrapper">
+                                                <div class="emoji-picker-wrapper">
+                                                    <button type="button" class="emoji-picker">
+                                                        <i class="bx bx-smile"></i>
+                                                    </button>
+                                                    <div class="emoji-picker-container" style="display: none;"></div>
+                                                </div>
+                                                <div class="actions-btns">
+                                                    <button @click="isReplyMode = false" type="button"
+                                                        class="action-btn cancel-btn">Cancel</button>
+                                                    <button class="action-btn  comment-btn" disabled>Reply</button>
+                                                </div>
+                                            </div>
+
 
                                             @if (count($comment->replies) > 0)
                                                 <div x-data="{ showReplies: false }">
