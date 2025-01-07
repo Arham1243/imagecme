@@ -98,9 +98,7 @@
     @endif
     @if ($comments->isNotEmpty())
         @foreach ($comments as $comment)
-            <div class="comment-card" x-data="{ isEditMode: false, isReplyMode: false, expanded: false, isHeightExceeded: false }" x-init=" const commentElement = $el.querySelector('.comment');
-             if (commentElement.scrollHeight > 82) { isHeightExceeded = true; }">
-
+            <div class="comment-card" x-data="parentComment($el)" x-init="init()">
                 <div class="comment-card__avatar">
                     <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
                         alt="image" class="imgFluid" loading="lazy">
@@ -139,7 +137,7 @@
                             <button type="button" class="text-btn" @click="isReplyMode = true">Reply</button>
                         </div>
                     @endif
-                    <div x-show="isReplyMode" class="comment-card ">
+                    <div x-show="isReplyMode" class="comment-card">
                         <div class="comment-card__avatar comment-card__avatar--sm">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
                                 alt="image" class="imgFluid" loading="lazy">
@@ -169,14 +167,12 @@
                                 @enderror
                             </form>
                         </div>
-
-
                     </div>
 
                     @if (count($comment->replies) > 0)
                         <div x-data="{ showReplies: false }">
                             <div class="show-replies">
-                                <button class="text-btn" @click="showReplies = !showReplies">
+                                <button class="text-btn" @click="showReplies = !showReplies;">
                                     <i class='bx' :class="showReplies ? 'bx-chevron-up' : 'bx-chevron-down'"></i>
                                     {{ count($comment->replies) }}
                                     {{ count($comment->replies) === 1 ? 'reply' : 'replies' }}
@@ -271,5 +267,23 @@
             </div>
         @endforeach
     @endif
-
 </div>
+@push('js')
+    <script>
+        function parentComment($el) {
+            return {
+                isEditMode: false,
+                isReplyMode: false,
+                expanded: false,
+                isHeightExceeded: false,
+                commentElement: $el.querySelector('.comment'),
+                isHeightExceeded: false,
+                init() {
+                    if (this.commentElement.scrollHeight > 82) {
+                        this.isHeightExceeded = true;
+                    }
+                }
+            }
+        }
+    </script>
+@endpush

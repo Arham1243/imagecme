@@ -155,7 +155,9 @@
     <script>
         function toggleSubmitButton() {
             const isAnyOptionChecked = document.querySelector('input[name="answer"]:checked');
-            document.getElementById('submitButton').disabled = !isAnyOptionChecked;
+            if (document.getElementById('submitButton')) {
+                document.getElementById('submitButton').disabled = !isAnyOptionChecked;
+            }
         }
 
         window.onload = toggleSubmitButton;

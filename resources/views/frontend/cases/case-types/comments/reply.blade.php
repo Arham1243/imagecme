@@ -1,11 +1,8 @@
-<div class="comment-card mb-3 mt-2" x-data="{ isReplyModeReply: false, expandedReply: false, isReplyHeightExceeded: false }" x-init=" const commentElement = $el.querySelector('.comment');
- if (commentElement.scrollHeight > 82) { isReplyHeightExceeded = true; }">
-
+<div class="comment-card mb-3 mt-2" x-data="parentReply($el)" x-init="init()">
     <div class="comment-card__avatar comment-card__avatar--sm">
         <img src="https://ui-avatars.com/api/?name={{ urlencode($reply->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
             alt="image" class="imgFluid" loading="lazy">
     </div>
-
     <div class="comment-card__details">
         <div class="wrapper">
             <div class="name">
@@ -20,15 +17,11 @@
                 <div class="time">(edited)</div>
             @endif
         </div>
-        <div :class="{ 'd-block': expandedReply }" class="comment" data-show-more-container>
+
+        <div class="d-block" class="comment comment--reply" data-show-more-container>
             {!! nl2br(e($reply->reply_text)) !!}
         </div>
 
-        <button x-show="isReplyHeightExceeded" class="position-static px-0 pt-2"
-            x-on:click="expandedReply = !expandedReply"
-            x-text="expandedReply ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
-            style="background: #0E0E0E" type="button" data-more-content="Read more" data-less-content="Show Less"
-            data-show-more-btn></button>
 
         @if (Auth::check())
             <div class="comment-actions">
@@ -68,3 +61,12 @@
         </div>
     </div>
 </div>
+@push('js')
+    <script>
+        function parentReply($el) {
+            return {
+                isReplyModeReply: false,
+            };
+        }
+    </script>
+@endpush
