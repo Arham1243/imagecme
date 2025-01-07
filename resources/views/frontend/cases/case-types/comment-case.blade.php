@@ -107,7 +107,6 @@
                 </div>
 
                 <div x-show="!isEditMode" class="comment-card__details">
-
                     <div class="wrapper">
                         <div class="name">
                             {{ $comment->user ? $comment->user->full_name : 'Anonymous' }}
@@ -129,6 +128,12 @@
                     <div :class="{ 'd-block': expanded }" class="comment" data-show-more-container>
                         {!! nl2br(e($comment->comment_text)) !!}
                     </div>
+                    <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
+                        x-on:click="expanded = !expanded"
+                        x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
+                        style="background: #0E0E0E" type="button" data-more-content="Read more"
+                        data-less-content="Show Less" data-show-more-btn></button>
+
                     @if (Auth::check())
                         <div class="comment-actions">
                             <button type="button" class="text-btn" @click="isReplyMode = true">Reply</button>
@@ -167,12 +172,6 @@
 
 
                     </div>
-
-                    <button x-show="isHeightExceeded" class="position-static px-0 pt-2"
-                        x-on:click="expanded = !expanded"
-                        x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
-                        style="background: #0E0E0E" type="button" data-more-content="Read more"
-                        data-less-content="Show Less" data-show-more-btn></button>
 
                     @if (count($comment->replies) > 0)
                         <div x-data="{ showReplies: false }">
