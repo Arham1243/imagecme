@@ -242,32 +242,35 @@ class AnalyticsController extends Controller
 
         $year = $request->input('year', date('Y'));
 
-        $caseViewsData = DiagnosticCase::withCount(['views as total_views' => function ($query) use ($year) {
-            $query->whereYear('created_at', $year);
-        }])->get()->map(function ($case) {
-            return [
-                'case' => $case->diagnosis_title ?? 'N/A',
-                'views' => $case->total_views ?? 0,
-            ];
-        });
+        $caseViewsData = DiagnosticCase::where('user_id', $user->id) // Filter by user ID
+            ->withCount(['views as total_views' => function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            }])->get()->map(function ($case) {
+                return [
+                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'views' => $case->total_views ?? 0,
+                ];
+            });
 
-        $caseLikesData = DiagnosticCase::withCount(['likes as total_likes' => function ($query) use ($year) {
-            $query->whereYear('created_at', $year);
-        }])->get()->map(function ($case) {
-            return [
-                'case' => $case->diagnosis_title ?? 'N/A',
-                'likes' => $case->total_likes ?? 0,
-            ];
-        });
+        $caseLikesData = DiagnosticCase::where('user_id', $user->id) // Filter by user ID
+            ->withCount(['likes as total_likes' => function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            }])->get()->map(function ($case) {
+                return [
+                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'likes' => $case->total_likes ?? 0,
+                ];
+            });
 
-        $caseCommentsData = DiagnosticCase::withCount(['comments as total_comments' => function ($query) use ($year) {
-            $query->whereYear('created_at', $year);
-        }])->get()->map(function ($case) {
-            return [
-                'case' => $case->diagnosis_title ?? 'N/A',
-                'comments' => $case->total_comments ?? 0,
-            ];
-        });
+        $caseCommentsData = DiagnosticCase::where('user_id', $user->id) // Filter by user ID
+            ->withCount(['comments as total_comments' => function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            }])->get()->map(function ($case) {
+                return [
+                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'comments' => $case->total_comments ?? 0,
+                ];
+            });
 
         return view('user.analytics.cases-insights', compact('year', 'caseViewsData', 'caseLikesData', 'caseCommentsData'))->with('title', 'Analytics');
     }
