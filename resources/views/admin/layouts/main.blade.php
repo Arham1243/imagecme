@@ -38,24 +38,28 @@
     });
 @endphp
 
-<body class="responsive">
-    <div class="dashboard">
-        <div class="container-fluid p-0">
-            <div class="row g-0">
-                <div class="col-md-2">
-                    @include('admin.layouts.sidebar')
-                </div>
-                <div class="col-md-10">
-                    <div class="row g-0">
-                        <div class="col-12">
-                            @include('admin.layouts.header')
+<body>
+    @if (!isset($is_login))
+        <div class="dashboard">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                        @include('admin.layouts.sidebar')
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row g-0">
+                            <div class="col-12">
+                                @include('admin.layouts.header')
+                            </div>
+                            @yield('content')
                         </div>
-                        @yield('content')
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        @yield('content')
+    @endif
     <div class="loader-mask" id="loader">
         <div class="loader"></div>
     </div>
