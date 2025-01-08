@@ -1,5 +1,6 @@
 @extends('admin.login_layouts.main')
 @section('content')
+    {{--  --}}
     <section class="green-back-2 d-flex align-items-center justify-content-center">
         <div class="container">
             <div class="card web-card">
