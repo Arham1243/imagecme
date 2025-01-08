@@ -3,6 +3,7 @@
     $is_login = true;
 @endphp
 @section('content')
+    {{--  --}}
     <div class="login-wrapper">
         <div class="container-fluid p-0">
             <div class="row g-0">
