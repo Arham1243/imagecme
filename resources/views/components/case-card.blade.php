@@ -65,20 +65,24 @@
                     </div>
                     <div class="reaction-list__comments">
                         <span>{{ formatBigNumber($case->views->count()) }} views</span>
-                        <span><i class='bx bxs-circle'></i></span>
-                        <span><a href="{{ route('frontend.cases.comments.index', $case->slug) }}">{{ formatBigNumber($case->comments->count()) }}
-                                comments</a></span>
+                        @if ($case->case_type !== 'share_image_diagnosis')
+                            <span><i class='bx bxs-circle'></i></span>
+                            <span><a href="{{ route('frontend.cases.comments.index', $case->slug) }}">{{ formatBigNumber($case->comments->count()) }}
+                                    comments</a></span>
+                        @endif
                     </div>
                 </div>
                 <ul class="reaction-action">
                     <li>
                         <x-like-button :caseId="$case->id" class="reaction-action-item" label="Like" />
                     </li>
-                    <li>
-                        <a data-label="Comment" href="{{ route('frontend.cases.comments.index', $case->slug) }}"
-                            class="reaction-action-item">
-                            <i class='bx bxs-message-rounded-dots'></i> </a>
-                    </li>
+                    @if ($case->case_type !== 'share_image_diagnosis')
+                        <li>
+                            <a data-label="Comment" href="{{ route('frontend.cases.comments.index', $case->slug) }}"
+                                class="reaction-action-item">
+                                <i class='bx bxs-message-rounded-dots'></i> </a>
+                        </li>
+                    @endif
                     <li>
                         <button data-label="Send" class="reaction-action-item">
                             <i class='bx bxs-paper-plane'></i>
