@@ -74,7 +74,6 @@
                     <li>
                         <x-like-button :caseId="$case->id" class="reaction-action-item" label="Like" />
                     </li>
-                    {{--  --}}
                     <li>
                         <a data-label="Comment" href="{{ route('frontend.cases.comments.index', $case->slug) }}"
                             class="reaction-action-item">
