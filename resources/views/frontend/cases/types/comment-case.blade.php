@@ -29,10 +29,14 @@
                     @csrf
                     <ul class="options">
                         @foreach ($mcqData->answers as $i => $answer)
-                            <li class="option-item {{ !Auth::check() ? 'disabled' : '' }}">
+                            <li
+                                class="option-item 
+                        {{ !Auth::check() || (isset($userAnswer) && $userAnswer !== $answer && $userAnswer !== null) ? 'disabled' : '' }}">
                                 <input type="radio" name="answer" class="option-item__input"
                                     id="answer-{{ $i }}" value="{{ $answer }}"
-                                    {{ $userAnswer === $answer ? 'checked' : '' }} onclick="toggleSubmitButton()">
+                                    {{ $userAnswer === $answer ? 'checked' : '' }}
+                                    {{ !Auth::check() || (isset($userAnswer) && $userAnswer !== $answer) ? 'disabled' : '' }}
+                                    onclick="toggleSubmitButton()">
                                 <label for="answer-{{ $i }}"
                                     class="option-item__label">{{ $answer }}</label>
                             </li>
