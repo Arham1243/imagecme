@@ -258,9 +258,6 @@ i.bx {
     margin: 0.75rem 0 1.25rem;
 }
 
-.footer li > a:hover {
-    color: var(--color-primary);
-}
 
 .footer__quickLinks > ul > li > a i {
     font-size: 1.25rem;
