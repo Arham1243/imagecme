@@ -237,11 +237,17 @@
                                                                                                 class="imgFluid" />
                                                                                         </a>
                                                                                         <input class="field"
-                                                                                            placeholder="Enter Name"
+                                                                                            placeholder="Enter description"
+                                                                                            x-model="file.description"
                                                                                             :name="'image_types[' + index +
                                                                                                 '][names][]'"
                                                                                             data-required
-                                                                                            data-error="Image Name">
+                                                                                            data-error="Image Description">
+                                                                                        <span class="text-danger"
+                                                                                            x-show="!file.description">
+                                                                                            Please enter image
+                                                                                            description
+                                                                                        </span>
                                                                                     </li>
                                                                                 </template>
                                                                             </ul>
@@ -249,9 +255,6 @@
                                                                     </div>
                                                                 </div>
                                                             </template>
-
-
-
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-12 mb-2">
@@ -638,38 +641,37 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="seo-wrapper">
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Publish</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="active"
-                                        value="active"
-                                        {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="active">
-                                        active
-                                    </label>
+                    <div class="col-md-3">
+                        <div class="seo-wrapper">
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Publish</div>
                                 </div>
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="radio" name="status" id="inactive"
-                                        value="inactive"
-                                        {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="inactive">
-                                        inactive
-                                    </label>
+                                <div class="form-box__body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="active"
+                                            value="active"
+                                            {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="active">
+                                            active
+                                        </label>
+                                    </div>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="status" id="inactive"
+                                            value="inactive"
+                                            {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="inactive">
+                                            inactive
+                                        </label>
+                                    </div>
+                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
-                                <button class="themeBtn ms-auto mt-4">Save Changes</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
-        </form>
-    </div>
     </div>
 @endsection
 @php
@@ -715,6 +717,7 @@
                         reader.onload = () => {
                             this.uploadedFiles[index].push({
                                 name: file.name,
+                                description: '',
                                 preview: reader.result
                             });
                         };
@@ -743,4 +746,19 @@
             }
         }
     </script>
+@endpush
+@push('css')
+    <style>
+        .multiple-upload__imgs .single-image .text-danger {
+            font-size: 0.75rem;
+            display: block;
+            line-height: 1.35;
+            margin-top: 0.5rem;
+        }
+
+        .multiple-upload__imgs .single-image {
+            box-shadow: none;
+            text-align: center;
+        }
+    </style>
 @endpush

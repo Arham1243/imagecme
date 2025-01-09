@@ -242,11 +242,17 @@
                                                                                                     class="imgFluid" />
                                                                                             </a>
                                                                                             <input class="field"
-                                                                                                placeholder="Enter Name"
+                                                                                                placeholder="Enter description"
+                                                                                                x-model="file.description"
                                                                                                 :name="'image_types[' + index +
                                                                                                     '][names][]'"
                                                                                                 data-required
-                                                                                                data-error="Image Name">
+                                                                                                data-error="Image Description">
+                                                                                            <span class="text-danger"
+                                                                                                x-show="!file.description">
+                                                                                                Please enter image
+                                                                                                description
+                                                                                            </span>
                                                                                         </li>
                                                                                     </template>
                                                                                 </ul>
@@ -684,6 +690,7 @@
                         reader.onload = () => {
                             this.uploadedFiles[index].push({
                                 name: file.name,
+                                description: '',
                                 preview: reader.result
                             });
                         };
@@ -712,4 +719,19 @@
             }
         }
     </script>
+@endpush
+@push('css')
+    <style>
+        .multiple-upload__imgs .single-image .text-danger {
+            font-size: 0.75rem;
+            display: block;
+            line-height: 1.35;
+            margin-top: 0.5rem;
+        }
+
+        .multiple-upload__imgs .single-image {
+            box-shadow: none;
+            text-align: center;
+        }
+    </style>
 @endpush
