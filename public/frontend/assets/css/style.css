@@ -1457,15 +1457,15 @@ body.fancybox-active.compensate-for-scrollbar {
     margin: 0.85rem 0;
 }
 
-.option-item__label:hover {
+.option-item:not(.disabled) .option-item__label:hover {
     background: #33333349;
 }
 
-.option-item__input:checked + .option-item__label {
+.option-item:not(.disabled) .option-item__input:checked + .option-item__label {
     border-color: #fff;
 }
 
-.option-item__input:checked + .option-item__label::after {
+.option-item:not(.disabled) .option-item__input:checked + .option-item__label::after {
     opacity: 1;
     visibility: visible;
 }
@@ -1542,6 +1542,7 @@ body.fancybox-active.compensate-for-scrollbar {
     gap: 0.35rem;
     font-size: 1rem;
     transition: all 150ms;
+    outline: none;
 }
 .case-actions-item[disabled] {
     cursor: initial;

@@ -29,7 +29,7 @@
                     @csrf
                     <ul class="options">
                         @foreach ($mcqData->answers as $i => $answer)
-                            <li class="option-item">
+                            <li class="option-item {{ !Auth::check() ? 'disabled' : '' }}">
                                 <input type="radio" name="answer" class="option-item__input"
                                     id="answer-{{ $i }}" value="{{ $answer }}"
                                     {{ $userAnswer === $answer ? 'checked' : '' }} onclick="toggleSubmitButton()">
@@ -132,11 +132,9 @@
                         style="background: #0E0E0E" type="button" data-more-content="Read more"
                         data-less-content="Show Less" data-show-more-btn></button>
 
-                    @if (Auth::check())
-                        <div class="comment-actions">
-                            <button type="button" class="text-btn" @click="isReplyMode = true">Reply</button>
-                        </div>
-                    @endif
+                    <div class="comment-actions">
+                        <button type="button" class="text-btn" @click="isReplyMode = true">Reply</button>
+                    </div>
                     <div x-show="isReplyMode" class="comment-card">
                         <div class="comment-card__avatar comment-card__avatar--sm">
                             <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"

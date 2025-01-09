@@ -106,6 +106,14 @@ class CommentController extends Controller
 
     public function likeCase(Request $request, $slug, $action)
     {
+        if (! Auth::check()) {
+            return response()->json([
+                'status' => 'error',
+                'redirect_url' => route('auth.login', ['redirect_url' => $request->input('current_url')]),
+                'message' => 'Please login to like.',
+            ], 401);
+        }
+
         $case = DiagnosticCase::where('slug', $slug)->first();
 
         if (! $case) {
@@ -175,6 +183,10 @@ class CommentController extends Controller
 
     public function storeReply(Request $request, $slug, $id, $parentReplyId = null)
     {
+
+        if (! Auth::check()) {
+            return redirect()->route('auth.login', ['redirect_url' => route('frontend.cases.comments.index', $slug)])->with('notify_error', 'Please login to reply.');
+        }
 
         $request->validate([
             'reply_text' => 'required|string|max:1000',
