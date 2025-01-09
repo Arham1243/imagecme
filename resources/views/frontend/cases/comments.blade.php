@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-8">
                     <div class="case-details__content">
-                        <div class="title">{{ $case->diagnosed_disease }}</div>
+                        <div class="title">{{ $case->diagnosis_title }}</div>
                         <div class="case-actions-wrapper">
                             <div class="user-profile">
                                 <div class="user-profile___avatar">
