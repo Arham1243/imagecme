@@ -10,9 +10,12 @@ class CaseCard extends Component
 {
     public $case;
 
-    public function __construct($case)
+    public $send_popup_theme;
+
+    public function __construct($case, $send_popup_theme = 'light')
     {
         $this->case = $case;
+        $this->send_popup_theme = $send_popup_theme;
     }
 
     public function render(): View|Closure|string

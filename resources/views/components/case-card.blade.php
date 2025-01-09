@@ -84,9 +84,8 @@
                         </li>
                     @endif
                     <li>
-                        <button data-label="Send" class="reaction-action-item">
-                            <i class='bx bxs-paper-plane'></i>
-                        </button>
+                        <x-send-button :caseId="$case->id" class="reaction-action-item" label="Send"
+                            theme="{{ $send_popup_theme }}" />
                     </li>
                 </ul>
             </div>

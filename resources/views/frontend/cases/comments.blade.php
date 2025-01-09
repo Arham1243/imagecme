@@ -38,9 +38,9 @@
                                 <li>
                                     <x-like-button :caseId="$case->id" class="case-actions-item" show-count />
                                 </li>
-                                <li><button disabled class="case-actions-item" type="button"><i
-                                            class='bx bx-paper-plane'></i>
-                                        Send</button></li>
+                                <li>
+                                    <x-send-button :caseId="$case->id" class="case-actions-item" theme="dark" showText />
+                                </li>
                             </ul>
                         </div>
                     </div>

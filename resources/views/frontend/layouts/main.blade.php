@@ -23,31 +23,42 @@
 
 
     <script type="text/javascript">
-        (() => {
-
-            @if (session('notify_success') || isset($_GET['notify_success']))
+        const showMessage = (message, type, position = 'bottom-right') => {
                 $.toast({
-                    heading: 'Success!',
-                    position: 'bottom-right',
-                    text: '{{ session('notify_success') ?? $_GET['notify_success'] }}',
-                    loaderBg: '#ff6849',
-                    icon: 'success',
-                    hideAfter: 4000,
+                    heading: type === 'success' ? 'Success!' : 'Error!',
+                    position: position,
+                    text: message,
+                    loaderBg: type === 'success' ? '#ff6849' : '#ff6849',
+                    icon: type === 'success' ? 'success' : 'error',
+                    hideAfter: 3000,
                     stack: 6
                 });
-            @elseif (session('notify_error') || isset($_GET['notify_error']))
-                $.toast({
-                    heading: 'Error!',
-                    position: 'bottom-right',
-                    text: '{{ session('notify_error') ?? $_GET['notify_error'] }}',
-                    loaderBg: '#ff6849',
-                    icon: 'error',
-                    hideAfter: 5000,
-                    stack: 6
-                });
-            @endif
+            }
+            (() => {
 
-        })()
+                @if (session('notify_success') || isset($_GET['notify_success']))
+                    $.toast({
+                        heading: 'Success!',
+                        position: 'bottom-right',
+                        text: '{{ session('notify_success') ?? $_GET['notify_success'] }}',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 4000,
+                        stack: 6
+                    });
+                @elseif (session('notify_error') || isset($_GET['notify_error']))
+                    $.toast({
+                        heading: 'Error!',
+                        position: 'bottom-right',
+                        text: '{{ session('notify_error') ?? $_GET['notify_error'] }}',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 5000,
+                        stack: 6
+                    });
+                @endif
+
+            })()
     </script>
 </body>
 
