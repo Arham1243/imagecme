@@ -24,6 +24,11 @@ class DiagnosticCase extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function views()
+    {
+        return $this->hasMany(CaseView::class, 'case_id');
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class, 'case_id');
@@ -42,6 +47,11 @@ class DiagnosticCase extends Model
     public function commentReplies()
     {
         return $this->hasManyThrough(CommentReply::class, Comment::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(CaseLike::class, 'case_id');
     }
 
     protected static function boot()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\DiagnosticCase;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,8 +40,9 @@ class AnalyticsController extends Controller
             ->selectRaw('MONTH(cases.created_at) as month, COUNT(DISTINCT cases.id) as reviewed_cases')
             ->whereYear('cases.created_at', $year)
             ->whereNotNull('comments.case_id')
-            ->where('comments.user_id', '!=', DB::raw('cases.user_id')) // Exclude comments by the author
-            ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis']) // Exclude specific types of cases
+            ->where('comments.user_id', '!=', DB::raw('cases.user_id'))
+            ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis'])
+            ->where('cases.user_id', $user->id)
             ->groupBy('month')
             ->get()
             ->mapWithKeys(function ($case) {
@@ -51,8 +53,9 @@ class AnalyticsController extends Controller
             ->leftJoin('comments', 'cases.id', '=', 'comments.case_id')
             ->selectRaw('MONTH(cases.created_at) as month, COUNT(DISTINCT cases.id) as unreviewed_cases')
             ->whereYear('cases.created_at', $year)
-            ->whereNull('comments.case_id') // Only cases without comments are unreviewed
-            ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis']) // Exclude specific types of cases
+            ->whereNull('comments.case_id')
+            ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis'])
+            ->where('cases.user_id', $user->id)
             ->groupBy('month')
             ->get()
             ->mapWithKeys(function ($case) {
@@ -231,5 +234,44 @@ class AnalyticsController extends Controller
         });
 
         return view('user.analytics.cases', compact('commentsCasesData', 'imageTypeData', 'ethnicityData', 'segmentData', 'certaintyData', 'easeOfDiagnosisData', 'qualityData', 'casesData', 'specialtyData', 'year', 'months'))->with('title', 'Analytics');
+    }
+
+    public function casesInsights(Request $request)
+    {
+        $user = Auth::user();
+
+        $year = $request->input('year', date('Y'));
+
+        $caseViewsData = DiagnosticCase::where('user_id', $user->id) // Filter by user ID
+            ->withCount(['views as total_views' => function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            }])->get()->map(function ($case) {
+                return [
+                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'views' => $case->total_views ?? 0,
+                ];
+            });
+
+        $caseLikesData = DiagnosticCase::where('user_id', $user->id) // Filter by user ID
+            ->withCount(['likes as total_likes' => function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            }])->get()->map(function ($case) {
+                return [
+                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'likes' => $case->total_likes ?? 0,
+                ];
+            });
+
+        $caseCommentsData = DiagnosticCase::where('user_id', $user->id) // Filter by user ID
+            ->withCount(['comments as total_comments' => function ($query) use ($year) {
+                $query->whereYear('created_at', $year);
+            }])->get()->map(function ($case) {
+                return [
+                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'comments' => $case->total_comments ?? 0,
+                ];
+            });
+
+        return view('user.analytics.cases-insights', compact('year', 'caseViewsData', 'caseLikesData', 'caseCommentsData'))->with('title', 'Analytics');
     }
 }

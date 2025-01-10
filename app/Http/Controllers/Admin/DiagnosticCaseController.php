@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DiagnosticCase;
+use App\Models\ImageType;
 use Illuminate\Http\Request;
 
 class DiagnosticCaseController extends Controller
 {
     public function index(Request $request)
     {
+        $imageTypes = ImageType::where('status', 'active')->latest()->get();
 
         $query = DiagnosticCase::query();
 
@@ -61,6 +63,6 @@ class DiagnosticCaseController extends Controller
 
         $cases = $query->latest()->get();
 
-        return view('admin.cases-management.list')->with('title', 'Images')->with(compact('cases'));
+        return view('admin.cases-management.list')->with('title', 'Images')->with(compact('cases', 'imageTypes'));
     }
 }

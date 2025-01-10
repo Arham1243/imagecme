@@ -35,4 +35,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserMcqAnswer::class, 'user_id');
     }
+
+    public function likedCases()
+    {
+        return $this->hasMany(CaseLike::class, 'user_id');
+    }
 }

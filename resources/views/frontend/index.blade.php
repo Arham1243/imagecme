@@ -6,8 +6,7 @@
                 <div class="col-md-12">
                     <div class="banner-content text-center">
                         <div class="banner-content__logo">
-                            <img alt="xray" class="imgFluid"
-                                src="https://thumbs.dreamstime.com/b/xray-lung-ray-image-healthy-chest-31070096.jpg">
+                            <img alt="xray" class="imgFluid" src="{{ asset('frontend/assets/images/xray.jpg') }}">
                         </div>
                         <h1 class="banner-content__heading">
                             medical imaging <br>
@@ -25,9 +24,9 @@
                             <a href="{{ route('user.cases.create', ['type' => 'ask_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline"> Ask <span>image
                                     diagnosis</span></a>
-                            <a href="{{ route('user.cases.create', ['type' => 'ask_ai_image_diagnosis']) }}"
+                            {{-- <a href="{{ route('user.cases.create', ['type' => 'ask_ai_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline"> Ask AI <span>image
-                                    diagnosis</span></a>
+                                    diagnosis</span></a> --}}
                         </div>
                     </div>
                 </div>

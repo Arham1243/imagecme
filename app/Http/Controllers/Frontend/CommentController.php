@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CaseView;
 use App\Models\Comment;
 use App\Models\CommentReply;
 use App\Models\DiagnosticCase;
@@ -14,16 +15,44 @@ class CommentController extends Controller
 {
     public function index($slug)
     {
+
         $case = DiagnosticCase::where('slug', $slug)->first();
+
+        $this->trackView($case);
+
+        $groupImages = $case
+            ->images()
+            ->with('imageType')
+            ->get()
+            ->groupBy(fn ($image) => $image->imageType->name ?? 'Unknown');
+
         $comments = $case->comments->map(function ($comment) {
             $editAllowedUntil = $comment->created_at->addMinutes(15);
             $comment->canEdit = now()->lessThan($editAllowedUntil);
 
             return $comment;
         });
-        $data = compact('case', 'comments');
+        $data = compact('case', 'comments', 'groupImages');
 
         return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->diagnosis_title)))->with($data);
+    }
+
+    private function trackView(DiagnosticCase $case)
+    {
+        if (Auth::check()) {
+            $userId = Auth::check() ? Auth::id() : null;
+
+            $existingView = CaseView::where('case_id', $case->id)
+                ->where('user_id', $userId)
+                ->exists();
+
+            if (! $existingView) {
+                CaseView::create([
+                    'case_id' => $case->id,
+                    'user_id' => $userId,
+                ]);
+            }
+        }
     }
 
     public function store(Request $request, $slug)
@@ -75,6 +104,50 @@ class CommentController extends Controller
             ->with('notify_success', 'Comment updated Successfully');
     }
 
+    public function likeCase(Request $request, $slug, $action)
+    {
+        if (! Auth::check()) {
+            return response()->json([
+                'status' => 'error',
+                'redirect_url' => route('auth.login', ['redirect_url' => $request->input('current_url')]),
+                'message' => 'Please login to like.',
+            ], 401);
+        }
+
+        $case = DiagnosticCase::where('slug', $slug)->first();
+
+        if (! $case) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Case not found',
+            ], 404);
+        }
+
+        $likeExists = $case->likes()->where('user_id', Auth::user()->id)->exists();
+
+        if ($action == 'like' && ! $likeExists) {
+            $case->likes()->create([
+                'user_id' => Auth::user()->id,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'action' => 'like',
+                'message' => 'Case liked successfully',
+                'likesCount' => formatBigNumber($case->likes()->count()),
+            ]);
+        } elseif ($action == 'unlike' && $likeExists) {
+            $case->likes()->where('user_id', Auth::user()->id)->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'action' => 'unlike',
+                'message' => 'Case unliked successfully',
+                'likesCount' => formatBigNumber($case->likes()->count()),
+            ]);
+        }
+    }
+
     public function submitAnswer(Request $request, $slug)
     {
         $request->validate([
@@ -110,6 +183,10 @@ class CommentController extends Controller
 
     public function storeReply(Request $request, $slug, $id, $parentReplyId = null)
     {
+
+        if (! Auth::check()) {
+            return redirect()->route('auth.login', ['redirect_url' => route('frontend.cases.comments.index', $slug)])->with('notify_error', 'Please login to reply.');
+        }
 
         $request->validate([
             'reply_text' => 'required|string|max:1000',

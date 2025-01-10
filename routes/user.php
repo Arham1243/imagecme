@@ -43,4 +43,5 @@ Route::middleware(['auth', 'check_user_status'])->prefix('user')->name('user.')-
     Route::post('profile/change/password/update', [ProfileSettingsController::class, 'updatePassword'])->name('profile.updatePassword');
 
     Route::get('analytics/cases', [AnalyticsController::class, 'cases'])->name('analytics.cases');
+    Route::get('analytics/cases-insights', [AnalyticsController::class, 'casesInsights'])->name('analytics.cases-insights');
 });

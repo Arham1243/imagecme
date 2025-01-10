@@ -12,9 +12,9 @@ Route::name('frontend.')->group(function () {
         Route::get('/{slug}', [DiagnosticCaseController::class, 'details'])->name('details');
         Route::resource('/{slug}/comments', CommentController::class);
         Route::post('/{slug}/submit-mcq-answers', [CommentController::class, 'submitAnswer'])->name('comments.submitMcqAnswer');
+        Route::post('/{slug}/like-case/{action}', [CommentController::class, 'likeCase'])->name('comments.likeCase');
         Route::get('/{slug}/comments/delete-item/{id}', [CommentController::class, 'deleteItem'])->name('comments.deleteItem');
         Route::post('/{slug}/comments/{id}/reply/{parentReplyId?}', [CommentController::class, 'storeReply'])->name('comment.reply.store');
-
     });
 });
 
