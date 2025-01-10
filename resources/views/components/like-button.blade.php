@@ -1,9 +1,17 @@
-<button data-slug="{{ $case->slug }}" class="{{ $class }}"
-    @if ($label) data-label="{{ $label }}" @endif
-    data-action="{{ $liked ? 'unlike' : 'like' }}" onclick="likeCase(this, {{ $case->id }})" type="button">
-    <i class='{{ $liked ? 'bx bxs-like' : 'bx bx-like' }}'></i>
-    <span class="total {{ $showCount ? 'd-block' : 'd-none' }}">{{ formatBigNumber($likesCount) }}</span>
-</button>
+@if (Auth::check())
+    <button data-slug="{{ $case->slug }}" class="{{ $class }}"
+        @if ($label) data-label="{{ $label }}" @endif
+        data-action="{{ $liked ? 'unlike' : 'like' }}" onclick="likeCase(this, {{ $case->id }})" type="button">
+        <i class='{{ $liked ? 'bx bxs-like' : 'bx bx-like' }}'></i>
+        <span class="total {{ $showCount ? 'd-block' : 'd-none' }}">{{ formatBigNumber($likesCount) }}</span>
+    </button>
+@else
+    <a href="{{ route('auth.login', ['redirect_url' => url()->current()]) }}" class="{{ $class }}"
+        @if ($label) data-label="{{ $label }}" @endif>
+        <i class='bx bx-likebx bx-like'></i>
+        <span class="total {{ $showCount ? 'd-block' : 'd-none' }}">{{ formatBigNumber($likesCount) }}</span>
+    </a>
+@endif
 @section('js')
     <script>
         const likeCase = async (likeBtn, caseId) => {
