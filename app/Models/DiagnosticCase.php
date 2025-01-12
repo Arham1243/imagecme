@@ -31,7 +31,7 @@ class DiagnosticCase extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'case_id');
+        return $this->hasMany(CaseComment::class, 'case_id');
     }
 
     public function getFeaturedImageAttribute()
@@ -46,7 +46,7 @@ class DiagnosticCase extends Model
 
     public function commentReplies()
     {
-        return $this->hasManyThrough(CommentReply::class, Comment::class);
+        return $this->hasManyThrough(CaseCommentReply::class, CaseComment::class, 'case_id', 'comment_id', 'id', 'id');
     }
 
     public function likes()

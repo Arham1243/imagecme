@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class CaseComment extends Model
 {
+    protected $table = 'case_comments';
+
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function user()
@@ -25,6 +27,6 @@ class Comment extends Model
 
     public function replies()
     {
-        return $this->hasMany(CommentReply::class);
+        return $this->hasMany(CaseCommentReply::class, 'comment_id', 'id');
     }
 }
