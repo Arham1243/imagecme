@@ -34,7 +34,7 @@ class CommentController extends Controller
         });
         $data = compact('case', 'comments', 'groupImages');
 
-        return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->diagnosis_title)))->with($data);
+        return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->title)))->with($data);
     }
 
     private function trackView(DiagnosticCase $case)

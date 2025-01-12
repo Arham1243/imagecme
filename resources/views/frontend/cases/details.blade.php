@@ -70,6 +70,7 @@
                                                 Discussion</a>
                                             <div class="my-4">
                                                 <ul class="case-details-list">
+                                                    <li><strong> Title:</strong> {{ $case->title }}</li>
                                                     <li><strong>Diagnosis Title:</strong> {{ $case->diagnosis_title }}</li>
                                                     <li><strong>Diagnosed Disease:</strong> {{ $case->diagnosed_disease }}
                                                     </li>

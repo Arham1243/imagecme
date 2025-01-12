@@ -16,7 +16,7 @@
 
             </div>
             <div class="d-flex gap-3">
-                <input class="heading" id="title-input" value="{{ $case->diagnosis_title }}">
+                <input class="heading" id="title-input" value="{{ $case->title }}">
                 <form id="publishForm" action="{{ route('user.cases.chat.publish', $case->id) }}" method="POST">
                     <div class="form-check form-switch" data-enabled-text="Publish Conversation"
                         data-disabled-text="Publish Conversation">
@@ -145,7 +145,7 @@
             const case_save_route = '{{ route('user.api.cases.update', $case->id) }}';
 
             axios.post(case_save_route, {
-                    diagnosis_title: title,
+                    title: title,
                     case_type: case_type
                 }, {
                     headers: {

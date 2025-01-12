@@ -62,7 +62,7 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('user.cases.edit', $item->id) }}"
-                                                    class="link">{{ $item->diagnosis_title }}</a>
+                                                    class="link">{{ $item->title }}</a>
                                             </td>
                                             <td>
                                                 {{ format_type($item->case_type) }}

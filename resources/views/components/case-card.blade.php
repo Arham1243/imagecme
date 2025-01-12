@@ -1,6 +1,6 @@
 <div class='cases-card'>
     <div class="cases-card__header">
-        <div class="title" title="{{ $case->diagnosis_title }}" data-tooltip="tooltip">{{ $case->diagnosis_title }}</div>
+        <div class="title" title="{{ $case->title }}" data-tooltip="tooltip">{{ $case->title ?? '-' }}</div>
         <div class="type-badge">
             {{ $case->case_type ? getRelativeType($case->case_type) : 'N/A' }}</div>
     </div>

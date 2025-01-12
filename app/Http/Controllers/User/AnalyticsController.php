@@ -247,7 +247,7 @@ class AnalyticsController extends Controller
                 $query->whereYear('created_at', $year);
             }])->get()->map(function ($case) {
                 return [
-                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'case' => $case->title ?? 'N/A',
                     'views' => $case->total_views ?? 0,
                 ];
             });
@@ -257,7 +257,7 @@ class AnalyticsController extends Controller
                 $query->whereYear('created_at', $year);
             }])->get()->map(function ($case) {
                 return [
-                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'case' => $case->title ?? 'N/A',
                     'likes' => $case->total_likes ?? 0,
                 ];
             });
@@ -267,7 +267,7 @@ class AnalyticsController extends Controller
                 $query->whereYear('created_at', $year);
             }])->get()->map(function ($case) {
                 return [
-                    'case' => $case->diagnosis_title ?? 'N/A',
+                    'case' => $case->title ?? 'N/A',
                     'comments' => $case->total_comments ?? 0,
                 ];
             });

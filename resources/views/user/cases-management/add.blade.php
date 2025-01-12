@@ -66,88 +66,112 @@
                                                             </label>
                                                         </div> --}}
                                                     </div>
-                                                    <div class="pt-4" x-show="case_type === 'share_image_diagnosis'">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 mb-3">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Content </label>
-                                                                    <textarea class="editor" name="content" data-placeholder="content" data-error="Content">  {{ old('content') }} </textarea>
-                                                                    @error('content')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
+
+                                                    <div class="row" x-show="case_type !== 'ask_ai_image_diagnosis'">
+                                                        <div class="col-lg-12 mt-3">
+                                                            <div class="form-fields">
+                                                                <label class="title">Case Title :</label>
+                                                                <input type="text" data-required=""
+                                                                    data-error="Case Title" name="title" class="field">
+                                                                @error('title')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="pt-4" x-show="case_type === 'challenge_image_diagnosis'">
-                                                        <div x-data="mcqManager()" class="form-fields">
-                                                            <label
-                                                                class="d-flex align-items-center mb-3 justify-content-between">
-                                                                <span class="title title--sm mb-0">Challenge Others</span>
-                                                            </label>
-                                                            <div class="repeater-table">
-                                                                <table class="table table-bordered">
 
-                                                                    <tbody>
-                                                                        <template x-for="(mcq, index) in mcqs"
-                                                                            :key="index">
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-fields">
-                                                                                        <label
-                                                                                            class="title">Question</label>
-                                                                                        <input type="text"
-                                                                                            x-model="mcq.question"
-                                                                                            placeholder="" class="field"
-                                                                                            :name="'mcqs[' + index +
-                                                                                                '][question]'" />
-                                                                                    </div>
-                                                                                    <template
-                                                                                        x-for="(answer, answerIndex) in mcq.answers"
-                                                                                        :key="answerIndex">
-                                                                                        <div class="form-fields mt-4 py-2">
-                                                                                            <label class="title"
-                                                                                                x-text="`Option ${answerIndex + 1}`"></label>
-                                                                                            <div
-                                                                                                class="d-flex align-items-center gap-3">
+                                                        <div class="col-md-12">
+                                                            <div class="pt-4"
+                                                                x-show="case_type === 'share_image_diagnosis'">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 mb-3">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Content </label>
+                                                                            <textarea class="editor" name="content" data-placeholder="content" data-error="Content">  {{ old('content') }} </textarea>
+                                                                            @error('content')
+                                                                                <div class="text-danger">{{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="pt-4"
+                                                                x-show="case_type === 'challenge_image_diagnosis'">
+                                                                <div x-data="mcqManager()" class="form-fields">
+                                                                    <label
+                                                                        class="d-flex align-items-center mb-3 justify-content-between">
+                                                                        <span class="title title--sm mb-0">Challenge
+                                                                            Others</span>
+                                                                    </label>
+                                                                    <div class="repeater-table">
+                                                                        <table class="table table-bordered">
+
+                                                                            <tbody>
+                                                                                <template x-for="(mcq, index) in mcqs"
+                                                                                    :key="index">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div class="form-fields">
+                                                                                                <label
+                                                                                                    class="title">Question</label>
                                                                                                 <input type="text"
-                                                                                                    x-model="mcq.answers[answerIndex]"
+                                                                                                    x-model="mcq.question"
                                                                                                     placeholder=""
                                                                                                     class="field"
                                                                                                     :name="'mcqs[' + index +
-                                                                                                        '][answers][' +
-                                                                                                        answerIndex +
-                                                                                                        ']'" />
-                                                                                                <button type="button"
-                                                                                                    @click="removeAnswer(index, answerIndex)"
-                                                                                                    class="delete-btn ms-auto delete-btn--static"
-                                                                                                    :disabled="mcq.answers
-                                                                                                        .length <= 1">
-                                                                                                    <i
-                                                                                                        class="bx bxs-trash-alt"></i>
-                                                                                                </button>
+                                                                                                        '][question]'" />
                                                                                             </div>
-                                                                                        </div>
-                                                                                    </template>
+                                                                                            <template
+                                                                                                x-for="(answer, answerIndex) in mcq.answers"
+                                                                                                :key="answerIndex">
+                                                                                                <div
+                                                                                                    class="form-fields mt-4 py-2">
+                                                                                                    <label class="title"
+                                                                                                        x-text="`Option ${answerIndex + 1}`"></label>
+                                                                                                    <div
+                                                                                                        class="d-flex align-items-center gap-3">
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            x-model="mcq.answers[answerIndex]"
+                                                                                                            placeholder=""
+                                                                                                            class="field"
+                                                                                                            :name="'mcqs[' +
+                                                                                                            index +
+                                                                                                                '][answers][' +
+                                                                                                                answerIndex +
+                                                                                                                ']'" />
+                                                                                                        <button
+                                                                                                            type="button"
+                                                                                                            @click="removeAnswer(index, answerIndex)"
+                                                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                                                            :disabled="mcq.answers
+                                                                                                                .length <=
+                                                                                                                1">
+                                                                                                            <i
+                                                                                                                class="bx bxs-trash-alt"></i>
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </template>
 
-                                                                                    <button type="button"
-                                                                                        @click="addAnswer(index)"
-                                                                                        class="themeBtn ms-auto mt-3">
-                                                                                        Add Option <i
-                                                                                            class="bx bx-plus"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </template>
-                                                                    </tbody>
-                                                                </table>
+                                                                                            <button type="button"
+                                                                                                @click="addAnswer(index)"
+                                                                                                class="themeBtn ms-auto mt-3">
+                                                                                                Add Option <i
+                                                                                                    class="bx bx-plus"></i>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </template>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
                                                         </div>
-                                                    </div>
 
-                                                    <div class="row" x-show="case_type !== 'ask_ai_image_diagnosis'">
-
-                                                        <div class="col-lg-12 mb-3">
+                                                        <div class="col-lg-12 my-3">
                                                             <div class="form-fields">
                                                                 <hr>
                                                             </div>
@@ -274,7 +298,7 @@
                                                         <div class="col-lg-12 mb-4">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title :</label>
-                                                                <input type="text" data-required=""
+                                                                <input type="text"
                                                                     data-error="Specific Diagnosis Title"
                                                                     name="diagnosis_title" class="field">
                                                                 @error('diagnosis_title')

@@ -85,14 +85,15 @@ class DiagnosticCaseController extends Controller
     public function store(Request $request)
     {
         if ($request['case_type'] !== 'ask_ai_image_diagnosis') {
-            $diagnosis_title = $request['diagnosis_title'];
+            $title = $request['title'];
             $diagnosticCase = DiagnosticCase::create([
-                'slug' => $this->createSlug($diagnosis_title, 'cases'),
+                'slug' => $this->createSlug($title, 'cases'),
                 'case_type' => $request['case_type'],
                 'user_id' => Auth::user()->id,
                 'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
                 'image_quality' => $request['image_quality'],
-                'diagnosis_title' => $diagnosis_title,
+                'title' => $title,
+                'diagnosis_title' => $request['diagnosis_title'],
                 'diagnosed_disease' => $request['diagnosed_disease'],
                 'ease_of_diagnosis' => $request['ease_of_diagnosis'] ?? null,
                 'certainty' => $request['certainty'] ?? null,
@@ -109,13 +110,14 @@ class DiagnosticCaseController extends Controller
                 'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
             ]);
         } else {
-            $diagnosis_title = 'Untitled';
+            $title = 'Untitled';
             $diagnosticCase = DiagnosticCase::create([
-                'slug' => $this->createSlug($diagnosis_title, 'cases'),
+                'slug' => $this->createSlug($title, 'cases'),
                 'case_type' => $request['case_type'],
                 'user_id' => Auth::user()->id,
                 'status' => 'inactive',
-                'diagnosis_title' => $diagnosis_title,
+                'title' => $title,
+                'diagnosis_title' => $request['diagnosis_title'],
             ]);
         }
 
@@ -161,7 +163,7 @@ class DiagnosticCaseController extends Controller
         $imageTypes = ImageType::where('status', 'active')->latest()->get();
         $case = DiagnosticCase::find($id);
 
-        return view('user.cases-management.edit')->with('title', ucfirst(strtolower($case->diagnosis_title)))->with(compact('case', 'imageTypes'));
+        return view('user.cases-management.edit')->with('title', ucfirst(strtolower($case->title)))->with(compact('case', 'imageTypes'));
     }
 
     public function update(Request $request, $id)
@@ -169,15 +171,16 @@ class DiagnosticCaseController extends Controller
         $diagnosticCase = DiagnosticCase::findOrFail($id);
 
         if ($request['case_type'] !== 'ask_ai_image_diagnosis') {
-            $diagnosis_title = $request['diagnosis_title'];
+            $title = $request['title'];
 
             $diagnosticCase->update([
-                'slug' => $this->createSlug($diagnosis_title, 'cases', $diagnosticCase->slug),
+                'slug' => $this->createSlug($title, 'cases', $diagnosticCase->slug),
                 'case_type' => $request['case_type'],
                 'user_id' => Auth::user()->id,
                 'content' => $request['case_type'] === 'share_image_diagnosis' ? ($request['content'] ?? null) : null,
                 'image_quality' => $request['image_quality'],
-                'diagnosis_title' => $diagnosis_title,
+                'title' => $title,
+                'diagnosis_title' => $request['diagnosis_title'],
                 'diagnosed_disease' => $request['diagnosed_disease'],
                 'ease_of_diagnosis' => $request['ease_of_diagnosis'] ?? null,
                 'certainty' => $request['certainty'] ?? null,
@@ -194,13 +197,14 @@ class DiagnosticCaseController extends Controller
                 'mcq_data' => $request['case_type'] === 'challenge_image_diagnosis' ? json_encode($request['mcqs']) : null,
             ]);
         } else {
-            $diagnosis_title = 'Untitled';
+            $title = 'Untitled';
             $diagnosticCase->update([
-                'slug' => $this->createSlug($diagnosis_title, 'cases', $diagnosticCase->slug),
+                'slug' => $this->createSlug($title, 'cases', $diagnosticCase->slug),
                 'case_type' => $request['case_type'],
                 'user_id' => Auth::user()->id,
                 'status' => 'inactive',
-                'diagnosis_title' => $diagnosis_title,
+                'title' => $title,
+                'diagnosis_title' => $request['diagnosis_title'],
             ]);
         }
 
@@ -237,13 +241,14 @@ class DiagnosticCaseController extends Controller
     {
         $diagnosticCase = DiagnosticCase::findOrFail($id);
 
-        $diagnosis_title = $request['diagnosis_title'];
+        $title = $request['title'];
 
         $diagnosticCase->update([
-            'slug' => $this->createSlug($diagnosis_title, 'cases', $diagnosticCase->slug),
+            'slug' => $this->createSlug($title, 'cases', $diagnosticCase->slug),
             'case_type' => $request['case_type'],
             'user_id' => Auth::user()->id,
-            'diagnosis_title' => $diagnosis_title,
+            'title' => $title,
+            'title' => $request['title'],
         ]);
 
         return response()->json([
@@ -255,7 +260,7 @@ class DiagnosticCaseController extends Controller
     {
         $case = DiagnosticCase::find($id);
 
-        return view('user.cases-management.chat')->with('title', ucfirst(strtolower($case->diagnosis_title)))->with(compact('case'));
+        return view('user.cases-management.chat')->with('title', ucfirst(strtolower($case->title)))->with(compact('case'));
     }
 
     public function saveChat(Request $request, $id)

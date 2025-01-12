@@ -68,7 +68,7 @@ Breadcrumbs::for('user.cases.create', function (BreadcrumbTrail $trail) {
 });
 Breadcrumbs::for('user.cases.edit', function (BreadcrumbTrail $trail, $item) {
     $trail->parent('user.cases.index');
-    $trail->push($item->diagnosis_title ?? 'N/A', route('user.cases.edit', $item->id));
+    $trail->push($item->title ?? 'N/A', route('user.cases.edit', $item->id));
 });
 
 Breadcrumbs::for('user.cases.chat', function (BreadcrumbTrail $trail, $item) {
