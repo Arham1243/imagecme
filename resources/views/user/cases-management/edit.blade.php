@@ -34,133 +34,156 @@
                                     <div class="row">
                                         <div class="col-lg-12 mb-4 pb-1">
                                             <div class="form-fields">
-                                                <div class="title title--sm mb-3">Image Type:</div>
+                                                <div class="title title--sm mb-3">Case Type:</div>
                                                 <div x-data="{ case_type: '{{ old('case_type', $case->case_type ?? 'share_image_diagnosis') }}' }">
-                                                    <div
-                                                        class="d-flex align-items-center justify-content-between gap-3 mb-1 case-types">
-                                                        <div class="form-check p-0 w-100">
+                                                    <div class="d-flex align-items-center gap-5 ps-4 mb-1">
+                                                        <div class="form-check p-0">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-1" x-model="case_type"
                                                                 value="share_image_diagnosis" />
-                                                            <label class="form-check-label"
-                                                                :class="{ 'active': case_type === 'share_image_diagnosis' }"
-                                                                for="case-type-1">Share image
+                                                            <label class="form-check-label" for="case-type-1">Share image
                                                                 diagnosis</label>
                                                         </div>
-                                                        <div class="form-check p-0 w-100">
+                                                        <div class="form-check p-0">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-2" x-model="case_type"
                                                                 value="challenge_image_diagnosis" />
-                                                            <label
-                                                                :class="{ 'active': case_type === 'challenge_image_diagnosis' }"
-                                                                class="form-check-label" for="case-type-2">Challenge
+                                                            <label class="form-check-label" for="case-type-2">Challenge
                                                                 image diagnosis</label>
                                                         </div>
-                                                        <div class="form-check p-0 w-100">
+                                                        <div class="form-check p-0">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-3" x-model="case_type"
                                                                 value="ask_image_diagnosis" />
-                                                            <label
-                                                                :class="{ 'active': case_type === 'ask_image_diagnosis' }"
-                                                                class="form-check-label" for="case-type-3">Help image
+                                                            <label class="form-check-label" for="case-type-3">Ask image
                                                                 diagnosis</label>
                                                         </div>
-                                                        {{-- <div class="form-check p-0 w-100">
+                                                        {{-- <div class="form-check p-0">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-4" x-model="case_type"
                                                                 value="ask_ai_image_diagnosis"
                                                                 @change="document.querySelector('.caseForm').submit()" />
-                                                            <label 
-                                                            :class="{ 'active': case_type === 'ask_ai_image_diagnosis' }" 
-                                                            class="form-check-label" for="case-type-4">Ask AI image
+                                                            <label class="form-check-label" for="case-type-4">Ask AI image
                                                                 diagnosis</label> --}}
                                                     </div>
-                                                    <div class="pt-4" x-show="case_type === 'share_image_diagnosis'">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 mb-3">
-                                                                <div class="form-fields">
-                                                                    <label class="title">Content </label>
-                                                                    <textarea class="editor" name="content" data-placeholder="content" data-error="Content">{{ old('content', $case->content ?? '') }}</textarea>
-                                                                    @error('content')
-                                                                        <div class="text-danger">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
+
+
+                                                    <div class="row" x-show="case_type !== 'ask_ai_image_diagnosis'">
+                                                        <div class="col-lg-12 mt-3">
+                                                            <div class="form-fields">
+                                                                <label class="title">Case Title :</label>
+                                                                <input type="text" data-required=""
+                                                                    data-error="Case Title" name="title" class="field"
+                                                                    value="{{ old('title', $case->title ?? '') }}">
+                                                                @error('title')
+                                                                    <div class="text-danger">{{ $message }}</div>
+                                                                @enderror
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="pt-4" x-show="case_type === 'challenge_image_diagnosis'">
-                                                        <div x-data="mcqManager()" class="form-fields">
-                                                            <label
-                                                                class="d-flex align-items-center mb-3 justify-content-between">
-                                                                <span class="title title--sm mb-0">MCQs Image
-                                                                    Diagnosis</span>
-                                                            </label>
-                                                            <div class="repeater-table">
-                                                                <table class="table table-bordered">
 
-                                                                    <tbody>
-                                                                        <template x-for="(mcq, index) in mcqs"
-                                                                            :key="index">
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <div class="form-fields">
-                                                                                        <label class="title">MCQ</label>
-                                                                                        <input type="text"
-                                                                                            x-model="mcq.question"
-                                                                                            placeholder="" class="field"
-                                                                                            :name="'mcqs[' + index +
-                                                                                                '][question]'" />
-                                                                                    </div>
-                                                                                    <template
-                                                                                        x-for="(answer, answerIndex) in mcq.answers"
-                                                                                        :key="answerIndex">
-                                                                                        <div class="form-fields mt-4 py-2">
-                                                                                            <label class="title"
-                                                                                                x-text="`Option ${answerIndex + 1}`"></label>
-                                                                                            <div
-                                                                                                class="d-flex align-items-center gap-3">
+                                                        <div class="col-lg-12">
+                                                            <div class="pt-4"
+                                                                x-show="case_type === 'share_image_diagnosis'">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 mb-3">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Content </label>
+                                                                            <textarea class="editor" name="content" data-placeholder="content" data-error="Content">{{ old('content', $case->content ?? '') }}</textarea>
+                                                                            @error('content')
+                                                                                <div class="text-danger">{{ $message }}
+                                                                                </div>
+                                                                            @enderror
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="pt-4"
+                                                                x-show="case_type === 'challenge_image_diagnosis'">
+                                                                <div x-data="mcqManager()" class="form-fields">
+                                                                    <label
+                                                                        class="d-flex align-items-center mb-3 justify-content-between">
+                                                                        <span class="title title--sm mb-0">Challenge
+                                                                            Others</span>
+                                                                    </label>
+                                                                    <div class="repeater-table">
+                                                                        <table class="table table-bordered">
+
+                                                                            <tbody>
+                                                                                <template x-for="(mcq, index) in mcqs"
+                                                                                    :key="index">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div class="form-fields">
+                                                                                                <label
+                                                                                                    class="title">Question</label>
                                                                                                 <input type="text"
-                                                                                                    x-model="mcq.answers[answerIndex]"
+                                                                                                    x-model="mcq.question"
                                                                                                     placeholder=""
                                                                                                     class="field"
                                                                                                     :name="'mcqs[' + index +
-                                                                                                        '][answers][' +
-                                                                                                        answerIndex +
-                                                                                                        ']'" />
-                                                                                                <button type="button"
-                                                                                                    @click="removeAnswer(index, answerIndex)"
-                                                                                                    class="delete-btn ms-auto delete-btn--static"
-                                                                                                    :disabled="mcq.answers
-                                                                                                        .length <= 1">
-                                                                                                    <i
-                                                                                                        class="bx bxs-trash-alt"></i>
-                                                                                                </button>
+                                                                                                        '][question]'" />
                                                                                             </div>
-                                                                                        </div>
-                                                                                    </template>
+                                                                                            <template
+                                                                                                x-for="(answer, answerIndex) in mcq.answers"
+                                                                                                :key="answerIndex">
+                                                                                                <div
+                                                                                                    class="form-fields mt-4 py-2">
+                                                                                                    <label class="title"
+                                                                                                        x-text="`Option ${answerIndex + 1}`"></label>
+                                                                                                    <div
+                                                                                                        class="d-flex align-items-center gap-3">
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            x-model="mcq.answers[answerIndex]"
+                                                                                                            placeholder=""
+                                                                                                            class="field"
+                                                                                                            :name="'mcqs[' +
+                                                                                                            index +
+                                                                                                                '][answers][' +
+                                                                                                                answerIndex +
+                                                                                                                ']'" />
+                                                                                                        <button
+                                                                                                            type="button"
+                                                                                                            @click="removeAnswer(index, answerIndex)"
+                                                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                                                            :disabled="mcq.answers
+                                                                                                                .length <=
+                                                                                                                1">
+                                                                                                            <i
+                                                                                                                class="bx bxs-trash-alt"></i>
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </template>
 
-                                                                                    <button type="button"
-                                                                                        @click="addAnswer(index)"
-                                                                                        class="themeBtn ms-auto mt-3">
-                                                                                        Add Option <i
-                                                                                            class="bx bx-plus"></i>
-                                                                                    </button>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </template>
-                                                                    </tbody>
-                                                                </table>
+                                                                                            <button type="button"
+                                                                                                @click="addAnswer(index)"
+                                                                                                class="themeBtn ms-auto mt-3">
+                                                                                                Add Option <i
+                                                                                                    class="bx bx-plus"></i>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </template>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="pt-4"
+                                                                x-show="case_type === 'ask_ai_image_diagnosis'">
+
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="pt-4" x-show="case_type === 'ask_ai_image_diagnosis'">
 
-                                                    </div>
-
-                                                    <div class="row" x-show="case_type !== 'ask_ai_image_diagnosis'">
-                                                        <div class="col-lg-12 mb-3">
+                                                        <div class="col-lg-12 my-3">
                                                             <div class="form-fields">
                                                                 <hr>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12 mb-2">
+                                                            <div class="form-fields">
+                                                                <div class="title title--sm">Case Image:</div>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 mb-4">
@@ -266,57 +289,59 @@
                                                                 </template>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 mb-2">
-                                                            @php
 
-                                                                $groupImages = $case
-                                                                    ->images()
-                                                                    ->with('imageType')
-                                                                    ->get()
-                                                                    ->groupBy(
-                                                                        fn($image) => $image->imageType->name ??
-                                                                            'Unknown',
-                                                                    );
 
-                                                            @endphp
+                                                        @php
 
-                                                            <div class="form-fields">
-                                                                <div class="title title--sm">Current Case Images:</div>
-                                                            </div>
-                                                            @foreach ($groupImages as $type => $images)
-                                                                <div class="form-fields mb-4">
-                                                                    <div class="title mb-3">{{ $type }}:</div>
-                                                                    <ul class="multiple-upload__imgs">
-                                                                        @foreach ($images as $i => $image)
-                                                                            <li class="single-image">
-                                                                                <a href="{{ route('user.cases.deleteImage', $image->id) }}"
-                                                                                    onclick="return confirm('Are you sure you want to delete this image?')"
-                                                                                    class="delete-btn">
-                                                                                    <i class='bx bxs-trash-alt'></i>
-                                                                                </a>
-                                                                                <a class="mask"
-                                                                                    href="{{ asset($image->path) }}"
-                                                                                    data-fancybox="gallery-{{ $i }}">
-                                                                                    <img src="{{ asset($image->path) }}"
-                                                                                        class="imgFluid"
-                                                                                        alt="{{ $image->name }}" />
-                                                                                </a>
-                                                                                <div class="filename">
-                                                                                    {{ $image->name }}</div>
-                                                                            </li>
-                                                                        @endforeach
-                                                                    </ul>
+                                                            $groupImages = $case
+                                                                ->images()
+                                                                ->with('imageType')
+                                                                ->get()
+                                                                ->groupBy(
+                                                                    fn($image) => $image->imageType->name ?? 'Unknown',
+                                                                );
+
+                                                        @endphp
+                                                        @if ($groupImages->isNotEmpty())
+                                                            <div class="col-lg-12 mb-2">
+
+                                                                <div class="form-fields">
+                                                                    <div class="title title--sm">Current Case Images:</div>
                                                                 </div>
-                                                            @endforeach
+                                                                @foreach ($groupImages as $type => $images)
+                                                                    <div class="form-fields mb-4">
+                                                                        <div class="title mb-3">{{ $type }}:</div>
+                                                                        <ul class="multiple-upload__imgs">
+                                                                            @foreach ($images as $i => $image)
+                                                                                <li class="single-image">
+                                                                                    <a href="{{ route('user.cases.deleteImage', $image->id) }}"
+                                                                                        onclick="return confirm('Are you sure you want to delete this image?')"
+                                                                                        class="delete-btn">
+                                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                                    </a>
+                                                                                    <a class="mask"
+                                                                                        href="{{ asset($image->path) }}"
+                                                                                        data-fancybox="gallery-{{ $i }}">
+                                                                                        <img src="{{ asset($image->path) }}"
+                                                                                            class="imgFluid"
+                                                                                            alt="{{ $image->name }}" />
+                                                                                    </a>
+                                                                                    <div class="filename">
+                                                                                        {{ $image->name }}</div>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endforeach
 
-                                                        </div>
+                                                            </div>
+                                                        @endif
                                                         <div class="col-lg-12 my-3">
                                                             <div class="form-fields">
                                                                 <hr>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 mb-4"
-                                                            x-show="case_type !== 'challenge_image_diagnosis'">
+                                                        <div class="col-lg-12 mb-4">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title </label>
                                                                 <input type="text" data-required=""
@@ -656,38 +681,37 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="seo-wrapper">
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Publish</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="active"
-                                        value="active"
-                                        {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="active">
-                                        Publish
-                                    </label>
+                    <div class="col-md-3">
+                        <div class="seo-wrapper">
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Publish</div>
                                 </div>
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="radio" name="status" id="inactive"
-                                        value="inactive"
-                                        {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="inactive">
-                                        Unpublish
-                                    </label>
+                                <div class="form-box__body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="active"
+                                            value="active"
+                                            {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="active">
+                                            active
+                                        </label>
+                                    </div>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="status" id="inactive"
+                                            value="inactive"
+                                            {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="inactive">
+                                            inactive
+                                        </label>
+                                    </div>
+                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
-                                <button class="themeBtn ms-auto mt-4">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </form>
         </div>
-        </form>
-    </div>
     </div>
 @endsection
 @php
