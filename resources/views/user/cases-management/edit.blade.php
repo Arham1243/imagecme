@@ -656,37 +656,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="seo-wrapper">
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Publish</div>
+                </div>
+                <div class="col-md-3">
+                    <div class="seo-wrapper">
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Publish</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="status" id="active"
+                                        value="active"
+                                        {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="active">
+                                        Publish
+                                    </label>
                                 </div>
-                                <div class="form-box__body">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="status" id="active"
-                                            value="active"
-                                            {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="active">
-                                            Publish
-                                        </label>
-                                    </div>
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="radio" name="status" id="inactive"
-                                            value="inactive"
-                                            {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="inactive">
-                                            Unpublish
-                                        </label>
-                                    </div>
-                                    <button class="themeBtn ms-auto mt-4">Submit</button>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="radio" name="status" id="inactive"
+                                        value="inactive"
+                                        {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="inactive">
+                                        Unpublish
+                                    </label>
                                 </div>
+                                <button class="themeBtn ms-auto mt-4">Submit</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
+        </form>
+    </div>
     </div>
 @endsection
 @php

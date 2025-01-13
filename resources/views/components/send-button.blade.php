@@ -1,6 +1,6 @@
 @php
     $caseUrl = route('frontend.cases.comments.index', $case->slug);
-    $caseTitle = $case->diagnosis_title;
+    $caseTitle = $case->title;
 @endphp
 
 <button data-send-button data-popup-theme="{{ $theme }}" data-case-url="{{ $caseUrl }}"

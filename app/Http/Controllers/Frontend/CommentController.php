@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CaseComment;
+use App\Models\CaseCommentReply;
 use App\Models\CaseView;
-use App\Models\Comment;
-use App\Models\CommentReply;
 use App\Models\DiagnosticCase;
 use App\Models\UserMcqAnswer;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class CommentController extends Controller
         });
         $data = compact('case', 'comments', 'groupImages');
 
-        return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->diagnosis_title)))->with($data);
+        return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->title)))->with($data);
     }
 
     private function trackView(DiagnosticCase $case)
@@ -86,7 +86,7 @@ class CommentController extends Controller
             'comment' => 'required|string',
         ]);
 
-        $comment = Comment::find($id);
+        $comment = CaseComment::find($id);
 
         if (! $comment) {
             return redirect()->back()->with('notify_error', 'Comment not found.');
@@ -169,7 +169,7 @@ class CommentController extends Controller
     public function deleteItem($slug, $id)
     {
 
-        $comment = Comment::find($id);
+        $comment = CaseComment::find($id);
 
         if (! $comment) {
             return redirect()->back()->with('notify_error', 'Comment not found.');
@@ -194,7 +194,7 @@ class CommentController extends Controller
 
         $case = DiagnosticCase::where('slug', $slug)->first();
 
-        $reply = CommentReply::create([
+        $reply = CaseCommentReply::create([
             'case_id' => $case->id,
             'comment_id' => $id,
             'user_id' => Auth::user()->id,

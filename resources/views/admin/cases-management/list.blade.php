@@ -60,7 +60,7 @@
                                                 </div>
                                             </td>
                                             <td>{{ getRelativeType($item->case_type) }}</td>
-                                            <td>{{ $item->diagnosis_title }}</td>
+                                            <td>{{ $item->title }}</td>
                                             <td>
                                                 @if ($item->user)
                                                     <a href="{{ route('admin.users.show', $item->user->id) }}"

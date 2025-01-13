@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CommentReply extends Model
+class CaseCommentReply extends Model
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
@@ -15,7 +15,7 @@ class CommentReply extends Model
 
     public function comment()
     {
-        return $this->belongsTo(Comment::class);
+        return $this->belongsTo(CaseComment::class);
     }
 
     public function user()
@@ -25,11 +25,11 @@ class CommentReply extends Model
 
     public function parentReply()
     {
-        return $this->belongsTo(CommentReply::class, 'parent_reply_id');
+        return $this->belongsTo(CaseCommentReply::class, 'parent_reply_id');
     }
 
     public function replies()
     {
-        return $this->hasMany(CommentReply::class, 'parent_reply_id');
+        return $this->hasMany(CaseCommentReply::class, 'parent_reply_id');
     }
 }

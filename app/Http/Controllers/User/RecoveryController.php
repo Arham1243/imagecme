@@ -10,7 +10,7 @@ class RecoveryController extends Controller
 {
     private $columnsConfig = [
         'cases' => [
-            'diagnosis_title' => 'Title',
+            'title' => 'Title',
             'deleted_at' => 'Deleted On',
         ],
     ];

@@ -12,6 +12,6 @@ class DiagnosticCaseController extends Controller
         $case = DiagnosticCase::where('slug', $slug)->first();
         $data = compact('case');
 
-        return view('frontend.cases.details')->with('title', ucfirst(strtolower($case->diagnosis_title)).' - Case Details')->with($data);
+        return view('frontend.cases.details')->with('title', ucfirst(strtolower($case->title)).' - Case Details')->with($data);
     }
 }
