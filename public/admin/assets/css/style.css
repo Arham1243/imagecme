@@ -1506,9 +1506,9 @@ a.custom-dropdown__active {
 /* badge */
 .badge {
     padding: 0.4rem 0.85rem;
-    font-size: 0.85em;
+    font-size: 0.75em;
     width: 75px;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .badge.bg-danger {

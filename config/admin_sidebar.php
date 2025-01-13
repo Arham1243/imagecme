@@ -17,7 +17,7 @@ return [
         'route' => 'admin.users.index',
     ],
     [
-        'title' => 'Cases',
+        'title' => 'Images',
         'icon' => 'bx bx-search-alt',
         'route' => 'admin.cases.index',
     ],

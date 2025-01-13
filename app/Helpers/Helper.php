@@ -57,13 +57,13 @@ if (! function_exists('getRelativeType')) {
     function getRelativeType(string $type): string
     {
         $typeMapping = [
-            'share_image_diagnosis' => 'Share Case',
-            'challenge_image_diagnosis' => 'Challenge Case',
-            'ask_image_diagnosis' => 'Help Case',
-            'ask_ai_image_diagnosis' => 'AI Case',
+            'share_image_diagnosis' => 'Share image',
+            'challenge_image_diagnosis' => 'Challenge image',
+            'ask_image_diagnosis' => 'Help image',
+            'ask_ai_image_diagnosis' => 'AI image',
         ];
 
-        return $typeMapping[$type] ?? 'Unknown Type';
+        return $typeMapping[$type] ?? 'N/A';
     }
 }
 if (! function_exists('formatBigNumber')) {

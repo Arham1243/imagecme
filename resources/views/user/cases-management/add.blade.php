@@ -24,48 +24,50 @@
                                     <div class="row">
                                         <div class="col-lg-12 mb-4 pb-1">
                                             <div class="form-fields">
-                                                <div class="title title--sm mb-3">Case Type:</div>
+                                                <div class="title title--sm mb-3">Image Type:</div>
                                                 <div x-data="{
                                                     case_type: '{{ request('type') ?? 'share_image_diagnosis' }}'
                                                 }">
-                                                    <div class="d-flex align-items-center gap-5 ps-4 mb-1">
-                                                        <div class="form-check p-0">
+                                                    <div
+                                                        class="d-flex align-items-center justify-content-between gap-3 mb-1 case-types">
+                                                        <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
-                                                                id="case-type-1" name="case_type" x-model="case_type"
+                                                                id="case-type-1" x-model="case_type"
                                                                 value="share_image_diagnosis" />
-                                                            <label class="form-check-label" for="case-type-1">Share
-                                                                image
-                                                                diagnosis </label>
+                                                            <label class="form-check-label"
+                                                                :class="{ 'active': case_type === 'share_image_diagnosis' }"
+                                                                for="case-type-1">Share image
+                                                                diagnosis</label>
                                                         </div>
-                                                        <div class="form-check p-0">
+                                                        <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
-                                                                id="case-type-2" name="case_type" x-model="case_type"
+                                                                id="case-type-2" x-model="case_type"
                                                                 value="challenge_image_diagnosis" />
-                                                            <label class="form-check-label" for="case-type-2">
-                                                                Challenge
-                                                                image diagnosis
-                                                            </label>
+                                                            <label class="form-check-label"
+                                                                :class="{ 'active': case_type === 'challenge_image_diagnosis' }"
+                                                                for="case-type-2">Challenge
+                                                                image diagnosis</label>
                                                         </div>
-                                                        <div class="form-check p-0">
+                                                        <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
-                                                                id="case-type-3" name="case_type" x-model="case_type"
+                                                                id="case-type-3" x-model="case_type"
                                                                 value="ask_image_diagnosis" />
-                                                            <label class="form-check-label" for="case-type-3">
-                                                                Ask
-                                                                image diagnosis
-                                                            </label>
+                                                            <label
+                                                                :class="{ 'active': case_type === 'ask_image_diagnosis' }"
+                                                                class="form-check-label" for="case-type-3">Help image
+                                                                diagnosis</label>
                                                         </div>
-                                                        {{-- <div class="form-check p-0">
-                                                            <input class="form-check-input" type="radio" name="case_type"
-                                                                id="case-type-4" name="case_type" x-model="case_type"
-                                                                value="ask_ai_image_diagnosis"
-                                                                @change="document.querySelector('.caseForm').submit()" />
-                                                            <label class="form-check-label" for="case-type-4">
-                                                                Ask AI
-                                                                image diagnosis
-                                                            </label>
-                                                        </div> --}}
+                                                        {{-- <div class="form-check p-0 w-100">
+                                                    <input class="form-check-input" type="radio" name="case_type"
+                                                        id="case-type-4" x-model="case_type"
+                                                        value="ask_ai_image_diagnosis"
+                                                        @change="document.querySelector('.caseForm').submit()" />
+                                                    <label 
+                                                    :class="{ 'active': case_type === 'ask_ai_image_diagnosi' }" 
+                                                    class="form-check-label" for="case-type-4">Ask AI image
+                                                        diagnosis</label> --}}
                                                     </div>
+
                                                     <div class="pt-4" x-show="case_type === 'share_image_diagnosis'">
                                                         <div class="row">
                                                             <div class="col-lg-12 mb-3">
@@ -83,7 +85,8 @@
                                                         <div x-data="mcqManager()" class="form-fields">
                                                             <label
                                                                 class="d-flex align-items-center mb-3 justify-content-between">
-                                                                <span class="title title--sm mb-0">Challenge Others</span>
+                                                                <span class="title title--sm mb-0">MCQs Image
+                                                                    Diagnosis</span>
                                                             </label>
                                                             <div class="repeater-table">
                                                                 <table class="table table-bordered">
@@ -94,8 +97,7 @@
                                                                             <tr>
                                                                                 <td>
                                                                                     <div class="form-fields">
-                                                                                        <label
-                                                                                            class="title">Question</label>
+                                                                                        <label class="title">MCQ</label>
                                                                                         <input type="text"
                                                                                             x-model="mcq.question"
                                                                                             placeholder="" class="field"
@@ -153,11 +155,6 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-12 mb-2">
-                                                            <div class="form-fields">
-                                                                <div class="title title--sm">Case Image:</div>
-                                                            </div>
-                                                        </div>
                                                         <div class="col-lg-12 mb-4">
                                                             @php
                                                                 $imageQualities = ['Low', 'Medium', 'High'];
@@ -207,7 +204,8 @@
                                                                         </div>
                                                                         <div class="form-fields mb-3">
                                                                             <div class="title title--sm"
-                                                                                x-text="type.name"></div>
+                                                                                x-text="type.name">
+                                                                            </div>
                                                                             <input type="hidden"
                                                                                 :name="'image_types[' + index + '][type]'"
                                                                                 :value="type.id">
@@ -271,7 +269,8 @@
                                                                 <hr>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 mb-4">
+                                                        <div class="col-lg-12 mb-4"
+                                                            x-show="case_type !== 'challenge_image_diagnosis'">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title :</label>
                                                                 <input type="text" data-required=""
@@ -623,17 +622,17 @@
                                         <input class="form-check-input" type="radio" name="status" id="active"
                                             checked value="active">
                                         <label class="form-check-label" for="active">
-                                            active
+                                            Publish
                                         </label>
                                     </div>
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="radio" name="status" id="inactive"
                                             value="inactive">
                                         <label class="form-check-label" for="inactive">
-                                            inactive
+                                            Unpublish
                                         </label>
                                     </div>
-                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
+                                    <button class="themeBtn ms-auto mt-4">Submit</button>
                                 </div>
                             </div>
                         </div>

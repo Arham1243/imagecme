@@ -6,8 +6,8 @@
                 <div class="row g-0 justify-content-center">
                     <div class="col-md-5">
                         <div class="inquiry__img">
-                            <img src='https://deif-cdn-umbraco.azureedge.net/media/dxhamvxe/terms-of-use.jpg?width=1200&v=1da9151c9498cb0&v=9'
-                                alt='image' class='imgFluid' loading='lazy'>
+                            <img src='{{ asset('frontend/assets/images/signup.jpg') }}' alt='image' class='imgFluid'
+                                loading='lazy'>
                         </div>
                     </div>
                     <div class="col-md-7">

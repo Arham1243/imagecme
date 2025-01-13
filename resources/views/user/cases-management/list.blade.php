@@ -11,7 +11,7 @@
                             <div class="section-content">
                                 <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                             </div>
-                            <a href="{{ route('user.cases.create') }}" class="themeBtn">Add Case</a>
+                            <a href="{{ route('user.cases.create') }}" class="themeBtn">Add Image</a>
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-5">
@@ -19,8 +19,8 @@
                                     <div class="form-fields d-flex gap-3">
                                         <select class="field" id="bulkActions" name="bulk_actions" required>
                                             <option value="" disabled selected>Bulk Actions</option>
-                                            <option value="active">Make Active</option>
-                                            <option value="inactive">Make inactive</option>
+                                            <option value="active">Make Publish</option>
+                                            <option value="inactive">Make Unpublish</option>
                                             <option value="delete">Delete</option>
                                         </select>
                                         <button type="submit" onclick="confirmBulkAction(event)"
@@ -46,7 +46,7 @@
                                             </div>
                                         </th>
                                         <th>Title</th>
-                                        <th>Case Type</th>
+                                        <th>Image Type</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -65,13 +65,13 @@
                                                     class="link">{{ $item->diagnosis_title }}</a>
                                             </td>
                                             <td>
-                                                {{ format_type($item->case_type) }}
+                                                {{ getRelativeType($item->case_type) }}
                                             </td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span
                                                     class="badge rounded-pill bg-{{ $item->status == 'active' ? 'success' : 'danger' }} ">
-                                                    {{ $item->status }}
+                                                    {{ $item->status === 'active' ? 'publish' : 'Unpublish' }}
                                                 </span>
                                             </td>
                                             <td>

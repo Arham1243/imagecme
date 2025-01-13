@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-md-7">
                     <div class="login-image">
-                        <img src="{{ asset('admin/assets/images/login.jpg') }}" alt="Login" class="imgFluid">
+                        <img src="{{ asset('admin/assets/images/login.webp') }}" alt="Login" class="imgFluid">
                     </div>
                 </div>
             </div>

@@ -36,11 +36,11 @@ class AnalyticsController extends Controller
         });
 
         $reviewedCases = DB::table('cases')
-            ->leftJoin('comments', 'cases.id', '=', 'comments.case_id')
+            ->leftJoin('case_comments', 'cases.id', '=', 'case_comments.case_id')
             ->selectRaw('MONTH(cases.created_at) as month, COUNT(DISTINCT cases.id) as reviewed_cases')
             ->whereYear('cases.created_at', $year)
-            ->whereNotNull('comments.case_id')
-            ->where('comments.user_id', '!=', DB::raw('cases.user_id'))
+            ->whereNotNull('case_comments.case_id')
+            ->where('case_comments.user_id', '!=', DB::raw('cases.user_id'))
             ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis'])
             ->where('cases.user_id', $user->id)
             ->groupBy('month')
@@ -50,10 +50,10 @@ class AnalyticsController extends Controller
             });
 
         $unreviewedCases = DB::table('cases')
-            ->leftJoin('comments', 'cases.id', '=', 'comments.case_id')
+            ->leftJoin('case_comments', 'cases.id', '=', 'case_comments.case_id')
             ->selectRaw('MONTH(cases.created_at) as month, COUNT(DISTINCT cases.id) as unreviewed_cases')
             ->whereYear('cases.created_at', $year)
-            ->whereNull('comments.case_id')
+            ->whereNull('case_comments.case_id')
             ->whereNotIn('cases.case_type', ['share_image_diagnosis', 'ask_ai_image_diagnosis'])
             ->where('cases.user_id', $user->id)
             ->groupBy('month')

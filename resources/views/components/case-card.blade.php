@@ -1,8 +1,9 @@
 <div class='cases-card'>
     <div class="cases-card__header">
-        <div class="title" title="{{ $case->diagnosis_title }}" data-tooltip="tooltip">{{ $case->diagnosis_title }}</div>
         <div class="type-badge">
-            {{ $case->case_type ? getRelativeType($case->case_type) : 'N/A' }}</div>
+            {{ getRelativeType($case->case_type) }}</div>
+        <div class="title" title="{{ $case->title }}" data-tooltip="tooltip">{{ $case->diagnosis_title ?? 'N/A' }}</div>
+
     </div>
     <div class="row g-0 align-items-center">
         <div class="col-md-4">
@@ -12,14 +13,18 @@
         </div>
         <div class="col-md-8">
             <div class='cases-card__content'>
+                @if ($case->diagnosis_title)
+                    <div class="content">Diagnosis: {{ $case->diagnosis_title ?? 'N/A' }}</div>
+                @endif
+
                 <div class="content certain">
-                    <div class="level {{ $case->certainty === 'Uncertain' ? 'yellow' : 'green' }}">
-                    </div>
-                    Diagnois {{ $case->certainty }}
+                    <div class="level {{ $case->certainty === 'Uncertain' ? 'yellow' : 'green' }}"></div>
+                    Certainty: {{ $case->certainty }}
                 </div>
-                <div class="content">{{ $case->user->full_name ?? 'Anonymous' }}</div>
-                <div class="content">Published {{ formatDate($case->created_at) }}</div>
-                <div class="content"> {{ $case->diagnosed_disease ?? 'N/A' }}</div>
+                <div class="content">Author: {{ $case->user->full_name ?? 'Anonymous' }}</div>
+                <div class="content">Date Published {{ formatDate($case->created_at) }}</div>
+                <div class="content">Specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
+                <div class="content">Image Type: {{ getRelativeType($case->case_type) }}</div>
                 @php
                     $groupImages = $case
                         ->images()

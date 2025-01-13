@@ -184,6 +184,11 @@ i.bx {
 .header-main__logo {
     width: 170px;
 }
+.header-main__btns{
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
 
 .social-media {
     display: flex;
@@ -632,13 +637,10 @@ body .select2-selection--single.select2-selection--single {
 /* imaging */
 /* Cases */
 .cases-card {
-    padding: 1.95rem 0 1.5rem;
-}
-
-.cases-card__header {
-    display: flex;
-    /* align-items: center; */
-    justify-content: space-between;
+    margin: 0.85rem 0 1.5rem;
+    box-shadow: 0 0 15px 5px #00000020;
+    padding: 1rem 1.25rem;
+    border-radius: 0.25rem;
 }
 
 .cases-card__header .title {
@@ -663,13 +665,13 @@ body .select2-selection--single.select2-selection--single {
     padding: 0 0.5rem;
     border-radius: 0.25rem;
     opacity: 0.7;
-    align-self: self-start;
-    margin-top: 0.25rem;
+    width: fit-content;
+    margin-bottom: 0.25rem;
 }
 
 .cases-card__img {
     width: 100%;
-    height: 180px;
+    height: 210px;
     background: #000;
 }
 
@@ -694,7 +696,7 @@ body .select2-selection--single.select2-selection--single {
     display: flex;
     align-items: center;
     gap: 0.45rem 0.4rem;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     flex-wrap: wrap;
 }
 
@@ -710,7 +712,6 @@ body .select2-selection--single.select2-selection--single {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    text-transform: lowercase;
 }
 
 .cases-card__content .certain .level {
@@ -1561,17 +1562,17 @@ body.fancybox-active.compensate-for-scrollbar {
     font-size: 0.95rem;
     font-weight: 500;
     color: #5c5a5a;
-    padding: 0.85rem 1rem;
+    padding: 0.85rem;
     border-bottom: 1px solid #ccccccb3;
 }
 
 .reaction-list__likes .people img {
-    width: 29px;
+    width: 22px;
     aspect-ratio: 1/1;
     border-radius: 100%;
     object-fit: cover;
     box-shadow: 0 0 5px 1px #00000020;
-    border: 2px solid #fff;
+    border: 1px solid #fff;
 }
 
 .reaction-list__likes .people img:not(:first-child) {
@@ -1581,7 +1582,7 @@ body.fancybox-active.compensate-for-scrollbar {
 .reaction-list__likes .names {
     font-size: 0.95rem;
     font-weight: 500;
-    width: 270px;
+    width: 265px;
     overflow: hidden;
     white-space: nowrap;
 }

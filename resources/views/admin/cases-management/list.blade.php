@@ -18,8 +18,8 @@
                                     <div class="form-fields d-flex gap-3">
                                         <select class="field" id="bulkActions" name="bulk_actions" required>
                                             <option value="" disabled selected>Bulk Actions</option>
-                                            <option value="active">Make Active</option>
-                                            <option value="inactive">Make inactive</option>
+                                            <option value="active">Make Publish</option>
+                                            <option value="inactive">Make Unpublish</option>
                                         </select>
                                         <button type="submit" onclick="confirmBulkAction(event)"
                                             class="themeBtn">Apply</button>
@@ -43,7 +43,7 @@
                                                     id="select-all">
                                             </div>
                                         </th>
-                                        <th>Case Type</th>
+                                        <th>Image Type</th>
                                         <th>Title</th>
                                         <th>Author Name</th>
                                         <th>Date</th>
@@ -74,7 +74,7 @@
                                             <td>
                                                 <span
                                                     class="badge rounded-pill bg-{{ $item->status == 'active' ? 'success' : 'danger' }} ">
-                                                    {{ $item->status }}
+                                                    {{ $item->status === 'active' ? 'publish' : 'Unpublish' }}
                                                 </span>
                                             </td>
                                             <td>
