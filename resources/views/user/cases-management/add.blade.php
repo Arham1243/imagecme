@@ -28,39 +28,47 @@
                                                 <div x-data="{
                                                     case_type: '{{ request('type') ?? 'share_image_diagnosis' }}'
                                                 }">
-                                                    <div class="d-flex align-items-center gap-5 ps-4 mb-1">
-                                                        <div class="form-check p-0">
+                                                    <div class="d-flex align-items-center gap-4 mb-1 case-types">
+                                                        <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-1" name="case_type" x-model="case_type"
                                                                 value="share_image_diagnosis" />
-                                                            <label class="form-check-label" for="case-type-1">Share
+                                                            <label
+                                                                :class="{ 'active': case_type === 'share_image_diagnosis' }"
+                                                                class="form-check-label" for="case-type-1">Share
                                                                 image
                                                                 diagnosis </label>
                                                         </div>
-                                                        <div class="form-check p-0">
+                                                        <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-2" name="case_type" x-model="case_type"
                                                                 value="challenge_image_diagnosis" />
-                                                            <label class="form-check-label" for="case-type-2">
+                                                            <label
+                                                                :class="{ 'active': case_type === 'challenge_image_diagnosis' }"
+                                                                class="form-check-label" for="case-type-2">
                                                                 Challenge
                                                                 image diagnosis
                                                             </label>
                                                         </div>
-                                                        <div class="form-check p-0">
+                                                        <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-3" name="case_type" x-model="case_type"
                                                                 value="ask_image_diagnosis" />
-                                                            <label class="form-check-label" for="case-type-3">
+                                                            <label
+                                                                :class="{ 'active': case_type === 'ask_image_diagnosis' }"
+                                                                class="form-check-label" for="case-type-3">
                                                                 Ask
                                                                 image diagnosis
                                                             </label>
                                                         </div>
-                                                        {{-- <div class="form-check p-0">
+                                                        {{-- <div class="form-check p-0 w-100">
                                                             <input class="form-check-input" type="radio" name="case_type"
                                                                 id="case-type-4" name="case_type" x-model="case_type"
                                                                 value="ask_ai_image_diagnosis"
                                                                 @change="document.querySelector('.caseForm').submit()" />
-                                                            <label class="form-check-label" for="case-type-4">
+                                                            <label
+                                                            :class="{ 'active': case_type === 'ask_ai_image_diagnosis' }"
+                                                             class="form-check-label" for="case-type-4">
                                                                 Ask AI
                                                                 image diagnosis
                                                             </label>
@@ -295,7 +303,8 @@
                                                                 <hr>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 mb-4">
+                                                        <div class="col-lg-12 mb-4"
+                                                            x-show="case_type !== 'challenge_image_diagnosis'">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title :</label>
                                                                 <input type="text"
