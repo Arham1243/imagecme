@@ -22,7 +22,7 @@
                     Certainty: {{ $case->certainty }}
                 </div>
                 <div class="content">Author: {{ $case->user->full_name ?? 'Anonymous' }}</div>
-                <div class="content">Date Published {{ formatDate($case->created_at) }}</div>
+                <div class="content">Date Published: {{ formatDate($case->created_at) }}</div>
                 <div class="content">Specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
                 <div class="content">Image Type: {{ getRelativeType($case->case_type) }}</div>
                 @php
