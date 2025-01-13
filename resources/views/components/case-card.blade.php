@@ -2,7 +2,7 @@
     <div class="cases-card__header">
         <div class="type-badge">
             {{ getRelativeType($case->case_type) }}</div>
-        <div class="title" title="{{ $case->title }}" data-tooltip="tooltip">{{ $case->diagnosis_title ?? 'N/A' }}</div>
+        <div class="title" title="{{ $case->title }}" data-tooltip="tooltip">{{ $case->title ?? 'N/A' }}</div>
 
     </div>
     <div class="row g-0 align-items-center">
