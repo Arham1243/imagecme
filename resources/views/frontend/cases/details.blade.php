@@ -9,7 +9,15 @@
         <a href="{{ route('frontend.index') }}" class="back-btn"><i class='bx bx-chevron-left'></i></a>
         <div class='container-fluid p-0'>
             <div x-data="{
-                activeImage: '{{ asset($case->featured_image ?? 'user/assets/images/placeholder.png') }}'
+                activeImage: '{{ asset($case->featured_image ?? 'user/assets/images/placeholder.png') }}',
+                isVideo(filePath) {
+                    const extension = filePath.split('.').pop().toLowerCase();
+                    return ['mp4', 'webm', 'ogg'].includes(extension);
+                },
+                isGif(filePath) {
+                    const extension = filePath.split('.').pop().toLowerCase();
+                    return extension === 'gif';
+                }
             }">
                 <div class="gallery-box">
                     <div class='row g-0'>
@@ -46,8 +54,18 @@
                                                                 <div class="cover-image"
                                                                     :class="{ 'active': activeImage === '{{ asset($image->path) }}' }"
                                                                     @click="activeImage = '{{ asset($image->path) }}'">
-                                                                    <img src='{{ asset($image->path) }}' alt='image'
-                                                                        class='imgFluid' loading='lazy'>
+                                                                    <template x-if="!isVideo('{{ asset($image->path) }}')">
+                                                                        <img src="{{ asset($image->path) }}"
+                                                                            alt="{{ $image->name ?? 'image' }}"
+                                                                            class="imgFluid" loading="lazy">
+                                                                    </template>
+                                                                    <template x-if="isVideo('{{ asset($image->path) }}')">
+                                                                        <video>
+                                                                            <source src="{{ asset($image->path) }}"
+                                                                                type="video/mp4">
+                                                                            Your browser does not support the video tag.
+                                                                        </video>
+                                                                    </template>
                                                                 </div>
                                                                 <div class="cover-name">{{ $image->name }}</div>
                                                             </div>
@@ -168,8 +186,17 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="gallery-selected-image">
-                                            <img :src="activeImage" alt="selected image" class="imgFluid"
-                                                loading="lazy">
+
+                                            <template x-if="!isVideo(activeImage)">
+                                                <img :src="activeImage" alt="selected image" class="imgFluid"
+                                                    loading="lazy">
+                                            </template>
+                                            <template x-if="isVideo(activeImage)">
+                                                <video controls>
+                                                    <source :src="activeImage" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            </template>
                                         </div>
                                     </div>
                                 </div>

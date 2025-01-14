@@ -266,8 +266,7 @@
                                                                         </div>
                                                                         <div class="form-fields mb-3">
                                                                             <div class="title title--sm"
-                                                                                x-text="type.name">
-                                                                            </div>
+                                                                                x-text="type.name"></div>
                                                                             <input type="hidden"
                                                                                 :name="'image_types[' + index + '][type]'"
                                                                                 :value="type.id">
@@ -275,7 +274,6 @@
                                                                                 <input type="file"
                                                                                     :id="'gallery-input-' + index"
                                                                                     class="gallery-input d-none" multiple
-                                                                                    accept="image/*"
                                                                                     @change="previewFiles($event, index)"
                                                                                     :name="'image_types[' + index +
                                                                                         '][files][]'">
@@ -298,8 +296,23 @@
                                                                                             <a class="mask"
                                                                                                 :href="file.preview"
                                                                                                 data-fancybox="gallery">
-                                                                                                <img :src="file.preview"
-                                                                                                    class="imgFluid" />
+                                                                                                <template
+                                                                                                    x-if="file.type === 'image'">
+                                                                                                    <img :src="file.preview"
+                                                                                                        class="imgFluid" />
+                                                                                                </template>
+                                                                                                <template
+                                                                                                    x-if="file.type === 'video'">
+                                                                                                    <video
+                                                                                                        class="videoFluid">
+                                                                                                        <source
+                                                                                                            :src="file.preview"
+                                                                                                            type="video/mp4">
+                                                                                                        Your browser does
+                                                                                                        not support the
+                                                                                                        video tag.
+                                                                                                    </video>
+                                                                                                </template>
                                                                                             </a>
                                                                                             <input class="field"
                                                                                                 placeholder="Enter description"
@@ -310,8 +323,7 @@
                                                                                                 data-error="Image Description">
                                                                                             <span class="text-danger"
                                                                                                 x-show="!file.description">
-                                                                                                Please enter image
-                                                                                                description
+                                                                                                Please enter description
                                                                                             </span>
                                                                                         </li>
                                                                                     </template>
@@ -355,9 +367,25 @@
                                                                                     <a class="mask"
                                                                                         href="{{ asset($image->path) }}"
                                                                                         data-fancybox="gallery-{{ $i }}">
-                                                                                        <img src="{{ asset($image->path) }}"
-                                                                                            class="imgFluid"
-                                                                                            alt="{{ $image->name }}" />
+                                                                                        @php
+                                                                                            $extension = pathinfo(
+                                                                                                $image->path,
+                                                                                                PATHINFO_EXTENSION,
+                                                                                            );
+                                                                                        @endphp
+                                                                                        @if (in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                                                                                            <video class="imgFluid">
+                                                                                                <source
+                                                                                                    src="{{ asset($image->path) }}"
+                                                                                                    type="video/{{ $extension }}">
+                                                                                                Your browser does not
+                                                                                                support the video tag.
+                                                                                            </video>
+                                                                                        @else
+                                                                                            <img src="{{ asset($image->path) }}"
+                                                                                                class="imgFluid"
+                                                                                                alt="{{ $image->name }}" />
+                                                                                        @endif
                                                                                     </a>
                                                                                     <div class="filename">
                                                                                         {{ $image->name }}</div>
@@ -788,11 +816,18 @@
                     files.forEach(file => {
                         const reader = new FileReader();
                         reader.onload = () => {
-                            this.uploadedFiles[index].push({
-                                name: file.name,
-                                description: '',
-                                preview: reader.result
-                            });
+                            const mimeType = file.type;
+                            const isImage = mimeType.startsWith('image/');
+                            const isVideo = mimeType.startsWith('video/');
+
+                            if (isImage || isVideo) {
+                                this.uploadedFiles[index].push({
+                                    name: file.name,
+                                    description: '',
+                                    preview: reader.result,
+                                    type: isImage ? 'image' : 'video'
+                                });
+                            }
                         };
                         reader.readAsDataURL(file);
                     });

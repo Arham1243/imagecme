@@ -143,9 +143,24 @@
                                                 <div class="gallery-category__item">
                                                     <a href="{{ asset($image->path) }}" data-fancybox="gallery"
                                                         class="cover-image">
-                                                        <img src='{{ asset($image->path) }}'
-                                                            alt='{{ $image->name ?? 'image' }}' class='imgFluid'
-                                                            loading='lazy'>
+                                                        @php
+                                                            $extension = pathinfo($image->path, PATHINFO_EXTENSION);
+                                                        @endphp
+                                                        @if (in_array(strtolower($extension), ['mp4', 'webm', 'ogg']))
+                                                            <video>
+                                                                <source src="{{ asset($image->path) }}"
+                                                                    type="video/{{ $extension }}">
+                                                                Your browser does not support the video tag.
+                                                            </video>
+                                                        @elseif (strtolower($extension) === 'gif')
+                                                            <img src="{{ asset($image->path) }}"
+                                                                alt="{{ $image->name ?? 'GIF image' }}" class="imgFluid"
+                                                                loading="lazy">
+                                                        @else
+                                                            <img src="{{ asset($image->path) }}"
+                                                                alt="{{ $image->name ?? 'image' }}" class="imgFluid"
+                                                                loading="lazy">
+                                                        @endif
                                                     </a>
                                                     <div class="cover-name">{{ $image->name }}</div>
                                                 </div>

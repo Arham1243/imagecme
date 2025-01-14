@@ -938,7 +938,7 @@ body .select2-selection--single.select2-selection--single {
     border-color: #cb4e00;
 }
 
-.gallery-category__item .cover-image img {
+.gallery-category__item .cover-image :is(img, video) {
     width: 100%;
     height: 96%;
     object-fit: contain;
@@ -959,7 +959,7 @@ body .select2-selection--single.select2-selection--single {
     padding: 6px;
 }
 
-.gallery-selected-image > img {
+.gallery-selected-image > :is(img, video) {
     width: 100%;
     height: 100%;
     object-fit: contain;
