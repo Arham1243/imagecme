@@ -46,7 +46,7 @@
                                                             <label
                                                                 :class="{ 'active': case_type === 'challenge_image_diagnosis' }"
                                                                 class="form-check-label" for="case-type-2">
-                                                                Challenge
+                                                                MCQ
                                                                 image diagnosis
                                                             </label>
                                                         </div>
@@ -57,7 +57,7 @@
                                                             <label
                                                                 :class="{ 'active': case_type === 'ask_image_diagnosis' }"
                                                                 class="form-check-label" for="case-type-3">
-                                                                Ask
+                                                                Help
                                                                 image diagnosis
                                                             </label>
                                                         </div>
@@ -656,17 +656,17 @@
                                         <input class="form-check-input" type="radio" name="status" id="active"
                                             checked value="active">
                                         <label class="form-check-label" for="active">
-                                            active
+                                            publish
                                         </label>
                                     </div>
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="radio" name="status" id="inactive"
                                             value="inactive">
                                         <label class="form-check-label" for="inactive">
-                                            inactive
+                                            Unpublish
                                         </label>
                                     </div>
-                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
+                                    <button class="themeBtn ms-auto mt-4">Submit</button>
                                 </div>
                             </div>
                         </div>

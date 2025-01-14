@@ -65,7 +65,7 @@
                                                             <label
                                                                 :class="{ 'active': case_type === 'ask_image_diagnosis' }"
                                                                 class="form-check-label" for="case-type-3">
-                                                                Ask
+                                                                Help
                                                                 image diagnosis
                                                             </label>
                                                         </div>
@@ -708,7 +708,7 @@
                                             value="active"
                                             {{ old('status', $case->status ?? '') == 'active' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="active">
-                                            active
+                                            publish
                                         </label>
                                     </div>
                                     <div class="form-check mt-2">
@@ -716,10 +716,10 @@
                                             value="inactive"
                                             {{ old('status', $case->status ?? '') == 'inactive' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="inactive">
-                                            inactive
+                                            Unpublish
                                         </label>
                                     </div>
-                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
+                                    <button class="themeBtn ms-auto mt-4">Submit</button>
                                 </div>
                             </div>
                         </div>
