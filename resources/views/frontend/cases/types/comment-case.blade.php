@@ -124,6 +124,41 @@
     @if ($comments->isNotEmpty())
         @foreach ($comments as $comment)
             <div class="comment-card" x-data="parentComment($el)" x-init="init()">
+                @if ($case->case_type === 'ask_image_diagnosis')
+                    @if (!Auth::check())
+                        <a href="{{ route('auth.login', ['redirect_url' => url()->current()]) }}" class="votes">
+                            <button
+                                class="votes-btn upvote-btn {{ $comment->votes->where('user_id', auth()->id())->where('is_upvote', true)->first() ? 'fill' : '' }}"
+                                data-slug="{{ $case->slug }}" data-comment-id="{{ $comment->id }}"
+                                data-action="upvote" onclick="voteCase(this, {{ $comment->id }}, 'upvote')">
+                                <i class='bx bxs-up-arrow'></i>
+                            </button>
+                            <div class="votes-count total">{{ $comment->upvotes->count() }}</div>
+                            <button
+                                class="votes-btn downvote-btn {{ $comment->votes->where('user_id', auth()->id())->where('is_upvote', false)->first() ? 'fill' : '' }}"
+                                data-slug="{{ $case->slug }}" data-comment-id="{{ $comment->id }}"
+                                data-action="downvote" onclick="voteCase(this, {{ $comment->id }}, 'downvote')">
+                                <i class='bx bxs-down-arrow'></i>
+                            </button>
+                        </a>
+                    @else
+                        <div class="votes">
+                            <button
+                                class="votes-btn upvote-btn {{ $comment->votes->where('user_id', auth()->id())->where('is_upvote', true)->first() ? 'fill' : '' }}"
+                                data-slug="{{ $case->slug }}" data-comment-id="{{ $comment->id }}"
+                                data-action="upvote" onclick="voteCase(this, {{ $comment->id }}, 'upvote')">
+                                <i class='bx bxs-up-arrow'></i>
+                            </button>
+                            <div class="votes-count total">{{ $comment->upvotes->count() }}</div>
+                            <button
+                                class="votes-btn downvote-btn {{ $comment->votes->where('user_id', auth()->id())->where('is_upvote', false)->first() ? 'fill' : '' }}"
+                                data-slug="{{ $case->slug }}" data-comment-id="{{ $comment->id }}"
+                                data-action="downvote" onclick="voteCase(this, {{ $comment->id }}, 'downvote')">
+                                <i class='bx bxs-down-arrow'></i>
+                            </button>
+                        </div>
+                    @endif
+                @endif
                 <div class="comment-card__avatar">
                     <img src="https://ui-avatars.com/api/?name={{ urlencode($comment->user->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
                         alt="image" class="imgFluid" loading="lazy">
@@ -311,5 +346,52 @@
                 }
             }
         }
+        @if ($case->case_type === 'ask_image_diagnosis')
+            const voteCase = async (voteBtn, commentId, action) => {
+                try {
+                    const slug = voteBtn.getAttribute('data-slug');
+                    const currentUrl = window.location.href;
+
+                    const route =
+                        `{{ route('frontend.cases.comments.voteCase', ['slug' => ':slug', 'comment_id' => ':comment_id']) }}`
+                        .replace(':slug', slug)
+                        .replace(':comment_id', commentId);
+
+                    const response = await axios.post(route, {
+                        action,
+                        current_url: currentUrl,
+                    });
+
+                    const counter = voteBtn.closest('.votes').querySelector('.votes-count');
+                    const upvoteBtn = voteBtn.closest('.votes').querySelector('.upvote-btn');
+                    const downvoteBtn = voteBtn.closest('.votes').querySelector('.downvote-btn');
+
+                    // Update UI based on action
+                    if (response.data.action === 'upvote') {
+                        upvoteBtn.classList.add('fill');
+                        downvoteBtn.classList.remove('fill');
+                        upvoteBtn.setAttribute('data-action', 'downvote');
+                        downvoteBtn.setAttribute('data-action', 'upvote');
+                    } else if (response.data.action === 'downvote') {
+                        downvoteBtn.classList.add('fill');
+                        upvoteBtn.classList.remove('fill');
+                        upvoteBtn.setAttribute('data-action', 'upvote');
+                        downvoteBtn.setAttribute('data-action', 'downvote');
+                    } else {
+                        upvoteBtn.classList.remove('fill');
+                        downvoteBtn.classList.remove('fill');
+                    }
+
+                    counter.textContent = response.data.votesCount;
+                    showMessage('Vote submitted successfully', 'success', 'top-right');
+                } catch (error) {
+                    if (error.response && error.response.status === 401) {
+                        window.location.href = error.response.data.redirect_url;
+                    } else {
+                        showMessage('An error occurred. Please try again.', 'error', 'top-right');
+                    }
+                }
+            };
+        @endif
     </script>
 @endpush

@@ -1603,6 +1603,44 @@ body.fancybox-active.compensate-for-scrollbar {
 .case-actions-item i {
     font-size: 1.2rem;
 }
+.votes {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    top: -0.5rem;
+}
+a.votes * {
+    pointer-events: none;
+}
+
+.votes-btn {
+    width: 27px;
+    aspect-ratio: 1/1;
+    background: #333333;
+    color: #fff;
+    font-size: 0.6rem;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+}
+
+.votes-count {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+}
+.votes-btn.fill {
+    background: #fff;
+    color: #000;
+}
+
+.votes-btn:hover {
+    background: #33333349;
+}
 /* comments */
 /* reactions */
 .reaction-list {

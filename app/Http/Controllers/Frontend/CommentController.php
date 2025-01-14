@@ -148,6 +148,52 @@ class CommentController extends Controller
         }
     }
 
+    public function voteCase(Request $request, $slug, $comment_id)
+    {
+        if (! Auth::check()) {
+            return response()->json([
+                'status' => 'error',
+                'redirect_url' => route('auth.login', ['redirect_url' => $request->input('current_url')]),
+                'message' => 'Please login to vote.',
+            ], 401);
+        }
+
+        $case = DiagnosticCase::where('slug', $slug)->first();
+        $comment = CaseComment::find($comment_id);
+        $action = $request->input('action');
+
+        if (! $case || ! $comment) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Case or comment not found.',
+            ], 404);
+        }
+
+        $user = Auth::user();
+        $existingVote = $comment->votes()->where('user_id', $user->id)->first();
+
+        if ($action === 'upvote') {
+            if (! $existingVote) {
+                $comment->votes()->create(['user_id' => $user->id, 'is_upvote' => true]);
+            } else {
+                $existingVote->update(['is_upvote' => true]);
+            }
+        } elseif ($action === 'downvote') {
+            if (! $existingVote) {
+                $comment->votes()->create(['user_id' => $user->id, 'is_upvote' => false]);
+            } else {
+                $existingVote->update(['is_upvote' => false]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'action' => $action,
+            'message' => 'Vote submitted successfully.',
+            'votesCount' => $comment->upvotes()->count(),
+        ]);
+    }
+
     public function submitAnswer(Request $request, $slug)
     {
         $request->validate([
