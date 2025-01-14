@@ -350,8 +350,7 @@
                                                                 <hr>
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 mb-4"
-                                                            x-show="case_type !== 'ask_image_diagnosis'">
+                                                        <div class="col-lg-12 mb-4">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title </label>
                                                                 <input type="text" data-required=""

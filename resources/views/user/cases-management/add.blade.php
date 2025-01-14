@@ -299,7 +299,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 mb-4"
-                                                            x-show="case_type !== 'ask_image_diagnosis'">
+                                                            x-show="case_type === 'share_image_diagnosis'">
                                                             <div class="form-fields">
                                                                 <label class="title">Specific Diagnosis Title :</label>
                                                                 <input type="text"
@@ -382,7 +382,8 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-6 mb-4">
+                                                        <div class="col-lg-6 mb-4"
+                                                            x-show="case_type === 'share_image_diagnosis'">
                                                             @php
                                                                 $certaintyOptions = [
                                                                     'Certainty',
@@ -737,6 +738,8 @@
                 mcqs: [{
                     question: '',
                     answers: ['']
+                    is_correct: false
+                    correct_reason: ''
                 }],
                 addAnswer(index) {
                     this.mcqs[index].answers.push('');
