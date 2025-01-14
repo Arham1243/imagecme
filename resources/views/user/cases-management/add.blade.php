@@ -139,15 +139,35 @@
                                                                                                     <div
                                                                                                         class="d-flex align-items-center gap-3">
                                                                                                         <input
-                                                                                                            type="text"
-                                                                                                            x-model="mcq.answers[answerIndex]"
-                                                                                                            placeholder=""
-                                                                                                            class="field"
+                                                                                                            type="radio"
                                                                                                             :name="'mcqs[' +
                                                                                                             index +
-                                                                                                                '][answers][' +
-                                                                                                                answerIndex +
-                                                                                                                ']'" />
+                                                                                                                '][correct_answer]'"
+                                                                                                            :value="answerIndex"
+                                                                                                            x-model="mcq.correct_answer">
+                                                                                                        <div
+                                                                                                            class="w-100">
+
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                x-model="mcq.answers[answerIndex]"
+                                                                                                                placeholder=""
+                                                                                                                class="field"
+                                                                                                                :name="'mcqs[' +
+                                                                                                                index +
+                                                                                                                    '][answers][' +
+                                                                                                                    answerIndex +
+                                                                                                                    ']'" />
+                                                                                                            <input
+                                                                                                                x-show="mcq.correct_answer == answerIndex"
+                                                                                                                type="text"
+                                                                                                                x-model="mcq.correct_reason"
+                                                                                                                placeholder="Answer reason"
+                                                                                                                class="field mt-2"
+                                                                                                                :name="'mcqs[' +
+                                                                                                                index +
+                                                                                                                    '][correct_reason]'" />
+                                                                                                        </div>
                                                                                                         <button
                                                                                                             type="button"
                                                                                                             @click="removeAnswer(index, answerIndex)"
@@ -737,8 +757,8 @@
             return {
                 mcqs: [{
                     question: '',
-                    answers: ['']
-                    is_correct: false
+                    answers: [''],
+                    correct_answer: false,
                     correct_reason: ''
                 }],
                 addAnswer(index) {
