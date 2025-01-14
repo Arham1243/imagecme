@@ -1517,9 +1517,9 @@ a.custom-dropdown__active {
 /* progress */
 /* badge */
 .badge {
-    padding: 0.4rem 0.85rem;
+    padding: 0.45rem 0.85rem;
     font-size: 0.75em;
-    width: 75px;
+    width: 93px;
     text-transform: uppercase;
 }
 

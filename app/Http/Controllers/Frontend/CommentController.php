@@ -26,12 +26,15 @@ class CommentController extends Controller
             ->get()
             ->groupBy(fn ($image) => $image->imageType->name ?? 'Unknown');
 
-        $comments = $case->comments->map(function ($comment) {
+        $comments = $case->comments->sortByDesc(function ($comment) {
+            return $comment->upvotes->count();
+        })->map(function ($comment) {
             $editAllowedUntil = $comment->created_at->addMinutes(15);
             $comment->canEdit = now()->lessThan($editAllowedUntil);
 
             return $comment;
         });
+
         $data = compact('case', 'comments', 'groupImages');
 
         return view('frontend.cases.comments')->with('title', 'Comments on '.ucfirst(strtolower($case->title)))->with($data);
