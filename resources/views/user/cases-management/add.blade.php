@@ -24,7 +24,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 mb-4 pb-1">
                                             <div class="form-fields">
-                                                <div class="title title--sm mb-3">Case Type:</div>
+                                                <div class="title title--sm mb-3">Image Type:</div>
                                                 <div x-data="{
                                                     case_type: '{{ request('type') ?? 'share_image_diagnosis' }}'
                                                 }">
@@ -78,9 +78,9 @@
                                                     <div class="row" x-show="case_type !== 'ask_ai_image_diagnosis'">
                                                         <div class="col-lg-12 mt-3">
                                                             <div class="form-fields">
-                                                                <label class="title">Case Title :</label>
+                                                                <label class="title">Image Title :</label>
                                                                 <input type="text" data-required=""
-                                                                    data-error="Case Title" name="title" class="field">
+                                                                    data-error="Image Title" name="title" class="field">
                                                                 @error('title')
                                                                     <div class="text-danger">{{ $message }}</div>
                                                                 @enderror
@@ -185,11 +185,6 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-lg-12 mb-2">
-                                                            <div class="form-fields">
-                                                                <div class="title title--sm">Case Image:</div>
-                                                            </div>
-                                                        </div>
                                                         <div class="col-lg-12 mb-4">
                                                             @php
                                                                 $imageQualities = ['Low', 'Medium', 'High'];
