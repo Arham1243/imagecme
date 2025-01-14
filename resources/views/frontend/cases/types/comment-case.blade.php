@@ -48,11 +48,13 @@
                     @if (Auth::check() && !$userAnswer && !$case->is_finish)
                         <button class="action-btn comment-btn ms-auto" :disabled="!selectedAnswer">Submit</button>
                     @endif
-                    @if ($userAnswer)
+                    @if ($userAnswer || $case->is_finish)
                         <div class="explantion">
-                            <div class="title">
-                                {{ $mcqData->answers[$mcqData->correct_answer] === $userAnswer ? 'Correct' : 'Wrong' }}
-                                Answer</div>
+                            @if (Auth::check() && $userAnswer)
+                                <div class="title">
+                                    {{ $mcqData->answers[$mcqData->correct_answer] === $userAnswer ? 'Correct' : 'Wrong' }}
+                                    Answer</div>
+                            @endif
                             <p>Correct answer is {{ $mcqData->answers[$mcqData->correct_answer] }}</p>
                             <div class="title">Reason</div>
                             <p>{{ $mcqData->correct_reason }}</p>
