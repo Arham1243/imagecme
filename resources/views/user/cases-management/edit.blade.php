@@ -18,6 +18,10 @@
                                         src='{{ asset('user/assets/images/gpt.svg') }}' alt='image' class='imgFluid'
                                         loading='lazy'> Ask AI</a>
                             @endif
+                            @if ($case->case_type === 'challenge_image_diagnosis' && !$case->is_finish)
+                                <a href="{{ route('user.cases.finish', $case->id) }}" class="themeBtn"><i
+                                        class='bx bx-stop-circle'></i> Finish MCQ</a>
+                            @endif
                             <a href="{{ route('frontend.cases.comments.index', $case->slug) }}" class="themeBtn"><i
                                     class='bx bxs-show'></i> View Image</a>
                         </div>

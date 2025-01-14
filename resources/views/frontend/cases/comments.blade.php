@@ -185,15 +185,6 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/emoji-mart@5.6.0/dist/browser.min.js"></script>
     <script>
-        function toggleSubmitButton() {
-            const isAnyOptionChecked = document.querySelector('input[name="answer"]:checked');
-            if (document.getElementById('submitButton')) {
-                document.getElementById('submitButton').disabled = !isAnyOptionChecked;
-            }
-        }
-
-        window.onload = toggleSubmitButton;
-
         document.addEventListener("DOMContentLoaded", function() {
             const forms = document.querySelectorAll('.comment-form');
 

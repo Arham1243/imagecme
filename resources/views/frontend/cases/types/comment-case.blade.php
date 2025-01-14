@@ -25,7 +25,10 @@
 
                 </div>
                 <div class="comment comment--lg">{{ $mcqData->question }}</div>
-                <form action="{{ route('frontend.cases.comments.submitMcqAnswer', $case->slug) }}" method="POST">
+                <form action="{{ route('frontend.cases.comments.submitMcqAnswer', $case->slug) }}" method="POST"
+                    @if ($userAnswer) x-data="{selectedAnswer:'{{ $userAnswer }}'}"
+                    @else
+                    x-data="{selectedAnswer:''}" @endif>
                     @csrf
                     <ul class="options">
                         @foreach ($mcqData->answers as $i => $answer)
@@ -33,19 +36,28 @@
                                 class="option-item 
                         {{ !Auth::check() || (isset($userAnswer) && $userAnswer !== $answer && $userAnswer !== null) ? 'disabled' : '' }}">
                                 <input type="radio" name="answer" class="option-item__input"
-                                    id="answer-{{ $i }}" value="{{ $answer }}"
-                                    {{ $userAnswer === $answer ? 'checked' : '' }}
-                                    {{ !Auth::check() || (isset($userAnswer) && $userAnswer !== $answer) ? 'disabled' : '' }}
-                                    onclick="toggleSubmitButton()">
+                                    id="answer-{{ $i }}" value="{{ $answer }}" x-model="selectedAnswer"
+                                    {{ !Auth::check() || (isset($userAnswer) && $userAnswer !== $answer) || $case->is_finish ? 'disabled' : '' }}>
                                 <label for="answer-{{ $i }}"
-                                    class="option-item__label">{{ $answer }}</label>
+                                    class="option-item__label {{ $userAnswer ? ($mcqData->answers[$mcqData->correct_answer] === $userAnswer ? 'correct' : 'wrong') : '' }}">
+                                    {{ $answer }}
+                                </label>
                             </li>
                         @endforeach
                     </ul>
-                    @if (Auth::check() && !$userAnswer)
-                        <button class="action-btn comment-btn ms-auto" id="submitButton">Submit</button>
+                    @if (Auth::check() && !$userAnswer && !$case->is_finish)
+                        <button class="action-btn comment-btn ms-auto" :disabled="!selectedAnswer">Submit</button>
                     @endif
-
+                    @if ($userAnswer)
+                        <div class="explantion">
+                            <div class="title">
+                                {{ $mcqData->answers[$mcqData->correct_answer] === $userAnswer ? 'Correct' : 'Wrong' }}
+                                Answer</div>
+                            <p>Correct answer is {{ $mcqData->answers[$mcqData->correct_answer] }}</p>
+                            <div class="title">Reason</div>
+                            <p>{{ $mcqData->correct_reason }}</p>
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>
@@ -53,51 +65,58 @@
 @endif
 <div class="case-details__comments" id="comments-section">
     <div class="heading">{{ count($comments) }} {{ count($comments) === 1 ? 'Comment' : 'Comments' }}</div>
-    @if (Auth::check())
-        <div class="comment-card mb-4 pb-2">
-            <div class="comment-card__avatar">
-                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
-                    alt="image" class="imgFluid" loading="lazy">
+    @if (!$case->is_finish)
+        @if (Auth::check())
+            <div class="comment-card mb-4 pb-2">
+                <div class="comment-card__avatar">
+                    <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                        alt="image" class="imgFluid" loading="lazy">
+                </div>
+                <div class="comment-card__fields">
+                    <form action="{{ route('frontend.cases.comments.store', $case->slug) }}" method="POST"
+                        class="comment-form">
+                        @csrf
+
+                        @if (isset($userCaseAnswer) && $userAnswer)
+                            <input type="hidden" name="selected_answer" value="{{ $userCaseAnswer->id }}" />
+                            <div class="selected-answer ms-2">
+                                <span>Your Answer</span>
+                                {{ $userAnswer }}
+                            </div>
+                        @endif
+
+                        <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required name="comment"
+                            rows="1"></textarea>
+                        <div class="actions-wrapper">
+                            <div class="emoji-picker-wrapper">
+                                <button type="button" class="emoji-picker">
+                                    <i class="bx bx-smile"></i>
+                                </button>
+                                <div class="emoji-picker-container" style="display: none;"></div>
+                            </div>
+                            <div class="actions-btns">
+                                <button class="action-btn  comment-btn" disabled>Comment</button>
+                            </div>
+                        </div>
+                        @error('comment')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </form>
+                </div>
+
+
             </div>
-            <div class="comment-card__fields">
-                <form action="{{ route('frontend.cases.comments.store', $case->slug) }}" method="POST"
-                    class="comment-form">
-                    @csrf
-
-                    @if (isset($userCaseAnswer) && $userAnswer)
-                        <input type="hidden" name="selected_answer" value="{{ $userCaseAnswer->id }}" />
-                        <div class="selected-answer ms-2">
-                            <span>Your Answer</span>
-                            {{ $userAnswer }}
-                        </div>
-                    @endif
-
-                    <textarea class="comment-input" type="text" placeholder="Add a comment..." autocomplete="off" required name="comment"
-                        rows="1"></textarea>
-                    <div class="actions-wrapper">
-                        <div class="emoji-picker-wrapper">
-                            <button type="button" class="emoji-picker">
-                                <i class="bx bx-smile"></i>
-                            </button>
-                            <div class="emoji-picker-container" style="display: none;"></div>
-                        </div>
-                        <div class="actions-btns">
-                            <button class="action-btn  comment-btn" disabled>Comment</button>
-                        </div>
-                    </div>
-                    @error('comment')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </form>
+        @else
+            <div class="subHeading mb-4 pb-2">
+                Please <a href="{{ route('auth.login', ['redirect_url' => url()->current()]) }}"
+                    class="link">Login</a>
+                to your account
+                to write a comment.
             </div>
-
-
-        </div>
+        @endif
     @else
         <div class="subHeading mb-4 pb-2">
-            Please <a href="{{ route('auth.login', ['redirect_url' => url()->current()]) }}" class="link">Login</a>
-            to your account
-            to write a comment.
+            {{ $case->user->full_name ?? 'Anonymous' }} has finished the MCQ.
         </div>
     @endif
     @if ($comments->isNotEmpty())
@@ -135,41 +154,42 @@
                         x-text="expanded ? $el.getAttribute('data-less-content') : $el.getAttribute('data-more-content')"
                         style="background: #0E0E0E" type="button" data-more-content="Read more"
                         data-less-content="Show Less" data-show-more-btn></button>
-
-                    <div class="comment-actions">
-                        <button type="button" class="text-btn" @click="isReplyMode = true">Reply</button>
-                    </div>
-                    <div x-show="isReplyMode" class="comment-card">
-                        <div class="comment-card__avatar comment-card__avatar--sm">
-                            <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
-                                alt="image" class="imgFluid" loading="lazy">
+                    @if (!$case->is_finish)
+                        <div class="comment-actions">
+                            <button type="button" class="text-btn" @click="isReplyMode = true">Reply</button>
                         </div>
-                        <div class="comment-card__fields">
-                            <form
-                                action="{{ route('frontend.cases.comment.reply.store', ['slug' => $case->slug, 'id' => $comment->id]) }}"
-                                method="POST" class="comment-form">
-                                @csrf
-                                <textarea class="comment-input" type="text" placeholder="Add a reply..." autocomplete="off" required
-                                    name="reply_text" rows="1"></textarea>
-                                <div class="actions-wrapper">
-                                    <div class="emoji-picker-wrapper">
-                                        <button type="button" class="emoji-picker">
-                                            <i class="bx bx-smile"></i>
-                                        </button>
-                                        <div class="emoji-picker-container" style="display: none;"></div>
+                        <div x-show="isReplyMode" class="comment-card">
+                            <div class="comment-card__avatar comment-card__avatar--sm">
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->full_name ?? 'Anonymous') }}&amp;size=80&amp;rounded=true&amp;background=random"
+                                    alt="image" class="imgFluid" loading="lazy">
+                            </div>
+                            <div class="comment-card__fields">
+                                <form
+                                    action="{{ route('frontend.cases.comment.reply.store', ['slug' => $case->slug, 'id' => $comment->id]) }}"
+                                    method="POST" class="comment-form">
+                                    @csrf
+                                    <textarea class="comment-input" type="text" placeholder="Add a reply..." autocomplete="off" required
+                                        name="reply_text" rows="1"></textarea>
+                                    <div class="actions-wrapper">
+                                        <div class="emoji-picker-wrapper">
+                                            <button type="button" class="emoji-picker">
+                                                <i class="bx bx-smile"></i>
+                                            </button>
+                                            <div class="emoji-picker-container" style="display: none;"></div>
+                                        </div>
+                                        <div class="actions-btns">
+                                            <button @click="isReplyMode = false" type="button"
+                                                class="action-btn cancel-btn">Cancel</button>
+                                            <button class="action-btn  comment-btn" disabled>Reply</button>
+                                        </div>
                                     </div>
-                                    <div class="actions-btns">
-                                        <button @click="isReplyMode = false" type="button"
-                                            class="action-btn cancel-btn">Cancel</button>
-                                        <button class="action-btn  comment-btn" disabled>Reply</button>
-                                    </div>
-                                </div>
-                                @error('comment')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </form>
+                                    @error('comment')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     @if (count($comment->replies) > 0)
                         <div x-data="{ showReplies: false }">
@@ -200,7 +220,7 @@
                     @endif
 
                 </div>
-                @if (Auth::check() && Auth::user()->id === $comment->user_id)
+                @if (Auth::check() && Auth::user()->id === $comment->user_id && !$case->is_finish)
                     @if ($comment->canEdit)
                         <div x-show="isEditMode" class="comment-card__fields">
                             <form
@@ -239,32 +259,34 @@
                             </form>
                         </div>
                     @endif
-                    <div x-show="!isEditMode" class="dropstart bootsrap-dropdown">
-                        <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            <i class='bx bx-dots-vertical-rounded'></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            @if ($comment->canEdit)
+                    @if (!$case->is_finish)
+                        <div x-show="!isEditMode" class="dropstart bootsrap-dropdown">
+                            <button type="button" class="dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class='bx bx-dots-vertical-rounded'></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                @if ($comment->canEdit)
+                                    <li>
+                                        <a class="dropdown-item edit-btn" href="javascript:void(0)"
+                                            @click="isEditMode = true">
+                                            <i class='bx bx-pencil'></i>
+                                            Edit
+                                        </a>
+                                    </li>
+                                @endif
                                 <li>
-                                    <a class="dropdown-item edit-btn" href="javascript:void(0)"
-                                        @click="isEditMode = true">
-                                        <i class='bx bx-pencil'></i>
-                                        Edit
+                                    <a class="dropdown-item"
+                                        href="{{ route('frontend.cases.comments.deleteItem', ['slug' => $case->slug, 'id' => $comment->id]) }}"
+                                        onclick="return confirm('Are you sure you want to delete this comment?')">
+
+                                        <i class='bx bx-trash'></i>
+                                        delete
                                     </a>
                                 </li>
-                            @endif
-                            <li>
-                                <a class="dropdown-item"
-                                    href="{{ route('frontend.cases.comments.deleteItem', ['slug' => $case->slug, 'id' => $comment->id]) }}"
-                                    onclick="return confirm('Are you sure you want to delete this comment?')">
-
-                                    <i class='bx bx-trash'></i>
-                                    delete
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                            </ul>
+                        </div>
+                    @endif
                 @endif
             </div>
         @endforeach

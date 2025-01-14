@@ -8,6 +8,7 @@ use App\Models\DiagnosticCase;
 use App\Models\ImageType;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -289,6 +290,18 @@ class DiagnosticCaseController extends Controller
         return response()->json([
             'data' => $aiConversation,
         ], 200);
+    }
+
+    public function finishCase($id)
+    {
+        $diagnosticCase = DiagnosticCase::findOrFail($id);
+
+        $diagnosticCase->update([
+            'is_finish' => Carbon::now(),
+        ]);
+
+        return redirect()->back()
+            ->with('notify_success', 'Diagnosis Finished successfully.');
     }
 
     public function publishConversation(Request $request, $id)
