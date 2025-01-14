@@ -54,7 +54,7 @@
                                                             <label
                                                                 :class="{ 'active': case_type === 'challenge_image_diagnosis' }"
                                                                 class="form-check-label" for="case-type-2">
-                                                                Challenge
+                                                                MCQ
                                                                 image diagnosis
                                                             </label>
                                                         </div>

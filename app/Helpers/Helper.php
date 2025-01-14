@@ -58,7 +58,7 @@ if (! function_exists('getRelativeType')) {
     {
         $typeMapping = [
             'share_image_diagnosis' => 'Share image',
-            'challenge_image_diagnosis' => 'Challenge image',
+            'challenge_image_diagnosis' => 'MCQ image',
             'ask_image_diagnosis' => 'Help image',
             'ask_ai_image_diagnosis' => 'AI image',
         ];

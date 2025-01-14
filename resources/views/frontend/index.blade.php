@@ -19,10 +19,10 @@
                                 class="themeBtn themeBtn--secondary themeBtn--outline">Share <span>image
                                     diagnosis</span></a>
                             <a href="{{ route('user.cases.create', ['type' => 'challenge_image_diagnosis']) }}"
-                                class="themeBtn themeBtn--secondary themeBtn--outline"> Challenge <span>image
+                                class="themeBtn themeBtn--secondary themeBtn--outline"> MCQ <span>image
                                     diagnosis</span></a>
                             <a href="{{ route('user.cases.create', ['type' => 'ask_image_diagnosis']) }}"
-                                class="themeBtn themeBtn--secondary themeBtn--outline"> Ask <span>image
+                                class="themeBtn themeBtn--secondary themeBtn--outline"> Help <span>image
                                     diagnosis</span></a>
                             {{-- <a href="{{ route('user.cases.create', ['type' => 'ask_ai_image_diagnosis']) }}"
                                 class="themeBtn themeBtn--secondary themeBtn--outline"> Ask AI <span>image

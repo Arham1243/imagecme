@@ -690,7 +690,11 @@ body .select2-selection--single.select2-selection--single {
     color: #767779;
     padding: 1px 0;
 }
-
+.cases-card__content .content.title {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: #000;
+}
 .cases-card__content .image-badges {
     display: flex;
     align-items: center;

@@ -14,16 +14,19 @@
         <div class="col-md-8">
             <div class='cases-card__content'>
                 @if ($case->diagnosis_title)
-                    <div class="content">Diagnosis: {{ $case->diagnosis_title ?? 'N/A' }}</div>
+                    <div class="content title">Diagnosis: {{ $case->diagnosis_title ?? 'N/A' }}</div>
                 @endif
-
-                <div class="content certain">
-                    <div class="level {{ $case->certainty === 'Uncertain' ? 'yellow' : 'green' }}"></div>
-                    Certainty: {{ $case->certainty }}
-                </div>
+                @if ($case->certainty)
+                    <div class="content certain">
+                        <div class="level {{ $case->certainty === 'Uncertain' ? 'yellow' : 'green' }}"></div>
+                        Certainty: {{ $case->certainty }}
+                    </div>
+                @endif
                 <div class="content">Author: {{ $case->user->full_name ?? 'Anonymous' }}</div>
                 <div class="content">Date Published: {{ formatDate($case->created_at) }}</div>
-                <div class="content">Specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
+                @if ($case->diagnosed_disease)
+                    <div class="content">Specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
+                @endif
                 <div class="content">Image Type: {{ getRelativeType($case->case_type) }}</div>
                 @php
                     $groupImages = $case
