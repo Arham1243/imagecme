@@ -116,8 +116,8 @@
                                                                 <div x-data="mcqManager()" class="form-fields">
                                                                     <label
                                                                         class="d-flex align-items-center mb-3 justify-content-between">
-                                                                        <span class="title title--sm mb-0">Challenge
-                                                                            Others</span>
+                                                                        <span class="title title--sm mb-0">MCQs Image
+                                                                            Diagnosis</span>
                                                                     </label>
                                                                     <div class="repeater-table">
                                                                         <table class="table table-bordered">
