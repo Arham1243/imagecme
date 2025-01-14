@@ -157,7 +157,7 @@
                                             <label class="title">Institution Name<span class="text-danger">*</span>
                                                 :</label>
                                             <input type="text" name="institution_name" class="field"
-                                                value="{{ old('institution_name') }}" required="">
+                                                value="{{ old('institution_name') }}">
                                             @error('institution_name')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror

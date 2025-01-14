@@ -27,21 +27,24 @@
                 @if ($case->diagnosed_disease)
                     <div class="content">Specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
                 @endif
-                <div class="content">Image Type: {{ getRelativeType($case->case_type) }}</div>
-                @php
-                    $groupImages = $case
-                        ->images()
-                        ->with('imageType')
-                        ->get()
-                        ->groupBy(fn($image) => $image->imageType->name ?? 'Unknown');
-                @endphp
-                @if ($groupImages->isNotEmpty())
-                    <ul class="image-badges">
-                        @foreach ($groupImages as $type => $images)
-                            <li class="image-badge">{{ $type }}</li>
-                        @endforeach
-                    </ul>
-                @endif
+                <div class="content d-flex align-items-center gap-2">Image Type:
+                    @php
+                        $groupImages = $case
+                            ->images()
+                            ->with('imageType')
+                            ->get()
+                            ->groupBy(fn($image) => $image->imageType->name ?? 'Unknown');
+                    @endphp
+                    @if ($groupImages->isNotEmpty())
+                        <ul class="image-badges">
+                            @foreach ($groupImages as $type => $images)
+                                <li class="image-badge">{{ $type }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+
+
             </div>
         </div>
         <div class="col-md-12">

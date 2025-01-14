@@ -15,7 +15,6 @@ Route::prefix('auth')->name('auth.')->middleware('user_guest')->group(function (
     Route::post('signup', [AuthController::class, 'performSignup'])->name('signup.perform');
     Route::get('login', [AuthController::class, 'login'])->name('login');
     Route::post('login', [AuthController::class, 'performLogin'])->name('login.perform');
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::get('password/reset', [PasswordResetController::class, 'index'])->name('password.request');

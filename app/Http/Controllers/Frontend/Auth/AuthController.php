@@ -31,7 +31,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8',
             'role' => 'required|string',
             'speciality' => 'required|string',
-            'institution_name' => 'required|string|max:255',
+            'institution_name' => 'nullable|string|max:255',
             'country' => 'required|string',
             'city' => 'required|string|max:255',
         ]);

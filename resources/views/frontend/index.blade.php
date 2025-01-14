@@ -9,7 +9,9 @@
                             <img alt="xray" class="imgFluid" src="{{ asset('frontend/assets/images/xray.jpg') }}">
                         </div>
                         <h1 class="banner-content__heading">
-                            medical imaging <br>
+                            <span class="color-secondary">
+                                medical imaging</span>
+                            <br>
                             innovation in detection & diagnostic education <br>
 
                             <span>learners & experts share interpretation & insights</span>
