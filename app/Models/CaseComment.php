@@ -27,7 +27,7 @@ class CaseComment extends Model
 
     public function replies()
     {
-        return $this->hasMany(CaseCommentReply::class, 'comment_id', 'id');
+        return $this->hasMany(CaseCommentReply::class);
     }
 
     public function votes()

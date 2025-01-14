@@ -242,7 +242,7 @@ class CommentController extends Controller
 
         $reply = CaseCommentReply::create([
             'case_id' => $case->id,
-            'comment_id' => $id,
+            'case_comment_id' => $id,
             'user_id' => Auth::user()->id,
             'reply_text' => $request->reply_text,
             'parent_reply_id' => $parentReplyId,

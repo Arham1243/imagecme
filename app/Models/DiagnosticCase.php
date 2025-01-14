@@ -46,7 +46,7 @@ class DiagnosticCase extends Model
 
     public function commentReplies()
     {
-        return $this->hasManyThrough(CaseCommentReply::class, CaseComment::class, 'case_id', 'comment_id', 'id', 'id');
+        return $this->hasManyThrough(CaseCommentReply::class, CaseComment::class);
     }
 
     public function likes()
