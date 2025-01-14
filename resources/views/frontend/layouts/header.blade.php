@@ -9,7 +9,7 @@
                 @if (Auth::check())
                     <a href="{{ route('user.dashboard') }}"
                         class="themeBtn themeBtn--secondary themeBtn--outline">Dashboard</a>
-                    <a href="{{ route('auth.logout') }}" onclick="return confirm('Are you sure you want to log out')"
+                    <a href="{{ route('user.logout') }}" onclick="return confirm('Are you sure you want to log out')"
                         class="themeBtn themeBtn--secondary themeBtn--outline">Logout</a>
                 @else
                     <a href="{{ route('auth.login') }}" class="themeBtn themeBtn--secondary themeBtn--outline">Login</a>
