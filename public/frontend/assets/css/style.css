@@ -1158,6 +1158,7 @@ body .select2-selection--single.select2-selection--single {
     -webkit-box-orient: vertical;
     overflow: hidden;
     position: relative;
+    padding-bottom: 0.85rem;
 }
 
 [data-show-more-btn] {

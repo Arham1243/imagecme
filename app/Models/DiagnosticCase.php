@@ -54,6 +54,11 @@ class DiagnosticCase extends Model
         return $this->hasMany(CaseLike::class, 'case_id');
     }
 
+    public function userAnswers()
+    {
+        return $this->hasMany(UserMcqAnswer::class, 'case_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -61,6 +66,9 @@ class DiagnosticCase extends Model
             if ($item->isForceDeleting()) {
                 foreach ($item->images as $image) {
                     self::deleteImage($image->path);
+                }
+                if ($item->userAnswers()->exists()) {
+                    $item->userAnswers()->delete();
                 }
             }
         });
