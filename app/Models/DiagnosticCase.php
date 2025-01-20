@@ -64,6 +64,7 @@ class DiagnosticCase extends Model
         parent::boot();
         static::deleting(function ($item) {
             if ($item->isForceDeleting()) {
+                $item->images()->delete();
                 foreach ($item->images as $image) {
                     self::deleteImage($image->path);
                 }
