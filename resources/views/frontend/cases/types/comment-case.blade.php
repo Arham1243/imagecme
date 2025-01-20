@@ -1,12 +1,12 @@
-@if ($case->mcq_data)
-    @php
-        $userCaseAnswer = Auth::user()
-            ?->userMcqAnswers->where('case_id', $case->id)
-            ->first();
-        $mcqData = json_decode($case->mcq_data)[0];
+@php
+    $userCaseAnswer = Auth::user()
+        ?->userMcqAnswers->where('case_id', $case->id)
+        ->first();
+    $mcqData = json_decode($case->mcq_data)[0];
 
-        $userAnswer = $userCaseAnswer->answer ?? null;
-    @endphp
+    $userAnswer = $userCaseAnswer->answer ?? null;
+@endphp
+@if ($case->mcq_data && $mcqData->question)
     <div class="mt-5 mb-2">
         <div class="comment-card">
             <div class="comment-card__avatar">
