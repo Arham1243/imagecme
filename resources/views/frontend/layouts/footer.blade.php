@@ -105,11 +105,11 @@
                     </a>
                 </li>
                 <li class="platform">
-                    <a href="https://www.instagram.com/share?url=:url" target="_blank">
-                        <div class="icon" style="background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7)">
-                            <i class='bx bxl-instagram'></i>
+                    <a href="mailto:?subject=:title&body=:url" target="_blank">
+                        <div class="icon" style="background: #000;">
+                            <i class='bx bxs-envelope'></i>
                         </div>
-                        <div class="title">Instagram</div>
+                        <div class="title">Email</div>
                     </a>
                 </li>
             </ul>
