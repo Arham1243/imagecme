@@ -25,7 +25,7 @@
                 <div class="content">Author: {{ $case->user->full_name ?? 'Anonymous' }}</div>
                 <div class="content">Date Published: {{ formatDate($case->created_at) }}</div>
                 @if ($case->diagnosed_disease)
-                    <div class="content">Specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
+                    <div class="content">Disease specialty: {{ $case->diagnosed_disease ?? 'N/A' }}</div>
                 @endif
                 <div class="content d-flex align-items-center gap-2">Image Type:
                     @php

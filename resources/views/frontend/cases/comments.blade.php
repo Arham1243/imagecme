@@ -60,7 +60,7 @@
                                 <li><strong>Diagnosis Title:</strong> {{ $case->diagnosis_title }}</li>
                             @endif
                             @if (!empty($case->diagnosed_disease))
-                                <li><strong>Diagnosed Disease:</strong> {{ $case->diagnosed_disease }}</li>
+                                <li><strong>Disease Specialty:</strong> {{ $case->diagnosed_disease }}</li>
                             @endif
                             @if (!empty($case->ease_of_diagnosis))
                                 <li><strong>Ease of Diagnosis:</strong> {{ $case->ease_of_diagnosis }}</li>

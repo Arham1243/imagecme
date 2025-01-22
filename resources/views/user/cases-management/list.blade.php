@@ -136,8 +136,8 @@
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="form-fields">
-                                    <label class="title">Diagnosed Disease </label>
-                                    <select data-required data-error="Diagnosed Disease" name="diagnosed_disease"
+                                    <label class="title">Disease Specialty </label>
+                                    <select data-required data-error="Disease Specialty" name="diagnosed_disease"
                                         class="field select2-select">
                                         <option value="" selected disabled>Select</option>
                                         @foreach ($specialities as $speciality)

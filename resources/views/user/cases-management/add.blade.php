@@ -381,8 +381,8 @@
                                                                 ];
                                                             @endphp
                                                             <div class="form-fields">
-                                                                <label class="title">Diagnosed Disease :</label>
-                                                                <select data-error="Diagnosed Disease"
+                                                                <label class="title">Disease Specialty :</label>
+                                                                <select data-error="Disease Specialty"
                                                                     name="diagnosed_disease" class="field select2-select">
                                                                     <option value="" selected disabled>Select
                                                                     </option>

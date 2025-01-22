@@ -98,7 +98,7 @@
                                                     @endif
 
                                                     @if (!empty($case->diagnosed_disease))
-                                                        <li><strong>Diagnosed Disease:</strong>
+                                                        <li><strong>Disease Specialty:</strong>
                                                             {{ $case->diagnosed_disease }}</li>
                                                     @endif
 
