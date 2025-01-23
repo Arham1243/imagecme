@@ -653,7 +653,6 @@ body .select2-selection--single.select2-selection--single {
     -webkit-line-clamp: 1;
     overflow: hidden;
     align-self: center;
-    width: 75%;
 }
 
 .cases-card__header {
