@@ -1,7 +1,10 @@
 @php
-    $userCaseAnswer = Auth::user()
-        ?->userMcqAnswers->where('case_id', $case->id)
-        ->first();
+    $userCaseAnswer = Auth::check()
+        ? Auth::user()
+            ->userMcqAnswers()
+            ->where('case_id', $case->id)
+            ->first()
+        : null;
     $mcqData = json_decode($case->mcq_data)[0];
 
     $userAnswer = $userCaseAnswer->answer ?? null;
