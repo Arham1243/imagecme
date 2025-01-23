@@ -106,7 +106,7 @@
                 </li>
                 <li class="platform">
                     <a href="mailto:?subject=:title&body=:url" target="_blank">
-                        <div class="icon" style="background: #000;">
+                        <div class="icon" style="background: grey;">
                             <i class='bx bxs-envelope'></i>
                         </div>
                         <div class="title">Email</div>
