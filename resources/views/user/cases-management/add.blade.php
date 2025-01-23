@@ -430,7 +430,7 @@
                                                             x-show="case_type === 'share_image_diagnosis'">
                                                             @php
                                                                 $certaintyOptions = [
-                                                                    'Certainty',
+                                                                    'Certain',
                                                                     'Almost Certain',
                                                                     'Uncertain',
                                                                 ];

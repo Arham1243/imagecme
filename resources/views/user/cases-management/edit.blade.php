@@ -500,7 +500,7 @@
                                                         <div class="col-lg-6 mb-4">
                                                             @php
                                                                 $certainty_options = [
-                                                                    'Certainty',
+                                                                    'Certain',
                                                                     'Almost Certain',
                                                                     'Uncertain',
                                                                 ];
