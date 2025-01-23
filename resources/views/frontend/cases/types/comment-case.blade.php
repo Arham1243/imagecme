@@ -1,6 +1,6 @@
 @php
     $userCaseAnswer =
-        Auth::check() && Auth::user()->userMcqAnswers
+        Auth::check() && Auth::user()->userMcqAnswers->isNotEmpty()
             ? Auth::user()
                 ->userMcqAnswers()
                 ->where('case_id', $case->id)
