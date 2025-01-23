@@ -6,7 +6,7 @@
                 ->where('case_id', $case->id)
                 ->first()
             : null;
-    $mcqData = json_decode($case->mcq_data)[0];
+    $mcqData = $case->mcq_data ? json_decode($case->mcq_data)[0] : null;
 
     $userAnswer = $userCaseAnswer->answer ?? null;
 @endphp
