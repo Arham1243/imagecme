@@ -27,11 +27,12 @@ html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    text-decoration: none !important;
-    list-style-type: none;
     font-family: "Figtree", sans-serif;
 }
-
+*:not(.ck-editor *) {
+    text-decoration: none !important;
+    list-style-type: none;
+}
 ::selection {
     background-color: var(--color-primary);
     color: #fff;
@@ -47,9 +48,9 @@ a {
     transition: all 300ms ease-in-out;
 }
 
-ul,
-ol,
-dl {
+ul:not(.ck-editor *),
+ol:not(.ck-editor *),
+dl:not(.ck-editor *) {
     margin-bottom: 0;
     padding: 0;
 }
@@ -1505,7 +1506,7 @@ a.custom-dropdown__active {
 .badge {
     padding: 0.45rem 0.85rem;
     font-size: 0.75em;
-    width: 93px;
+    width: 100%;
     text-transform: uppercase;
 }
 
